@@ -268,6 +268,10 @@ body.has-banner .admin-head{top:calc(var(--bh) + 8px)}
 .modal .row .btn{flex:1 1 120px}
 .pw-err{min-height:22px;margin-bottom:8px;font:500 13px var(--ff);color:#c02646}
 #confetti{position:fixed;inset:0;z-index:85;pointer-events:none;width:100%;height:100%}
+.staff-status{position:fixed;left:calc(var(--sal) + 10px);top:calc(var(--sat) + 14px);z-index:60;display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;background:rgba(255,255,255,.8);font:700 10px/1 var(--ff);letter-spacing:.1em;color:var(--navy);box-shadow:0 3px 10px rgba(80,60,120,.15)}
+.staff-status i{width:8px;height:8px;border-radius:50%;background:#999}
+.staff-status.live i{background:#22c55e}.staff-status.offline i{background:#ef4444}.staff-status.demo i{background:#f59e0b}
+body.admin-mode .staff-status{display:none}
 .toasts{position:fixed;left:50%;bottom:calc(var(--sab) + 20px);transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:8px;width:min(92vw,460px);pointer-events:none}
 .toast{padding:12px 18px;border-radius:16px;background:rgba(37,48,107,.94);color:#fff;font:500 14px/1.45 var(--ff);text-align:center;box-shadow:0 10px 28px rgba(30,20,70,.3);opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s}
 .toast.show{opacity:1;transform:none}
@@ -474,6 +478,7 @@ body.has-banner .admin-head{top:calc(var(--bh) + 8px)}
   </div>
 </div>
 
+<div class="staff-status" id="staffStatus"><i></i><span>…</span></div>
 <canvas id="confetti"></canvas>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
@@ -1789,7 +1794,7 @@ function showStaff() {
   go('welcome'); refreshSentState();
 }
 /* เวอร์ชันของแอป — ถ้าเบราว์เซอร์เปิดไฟล์เก่าจากแคช จะโหลดเวอร์ชันใหม่ให้อัตโนมัติ */
-const APP_VERSION = '2026-11-04.live2';
+const APP_VERSION = '2026-11-04.live3';
 async function checkFreshVersion() {
   if (!/^https?:/.test(location.protocol)) return;
   try {
@@ -1801,8 +1806,17 @@ async function checkFreshVersion() {
     }
   } catch (e) { /* offline or blocked — keep current version */ }
 }
+/* ป้ายสถานะเล็ก ๆ บนหน้าพนักงาน: บอกว่าต่อฐานข้อมูลกลาง (LIVE) ได้หรือไม่ */
+async function checkStaffConnection() {
+  const el = $('#staffStatus'); if (!el) return;
+  const set = (cls, txt) => { el.className = 'staff-status ' + cls; el.querySelector('span').textContent = txt; };
+  if (store.mode === 'demo') { set('demo', 'DEMO · ' + APP_VERSION); return; }
+  try { await store.exists('krathongs'); set('live', 'LIVE · ' + APP_VERSION); }
+  catch (e) { set('offline', 'OFFLINE'); toast('เชื่อมต่อฐานข้อมูลกลางไม่ได้: ' + errMsg(e), 'err', 8000); }
+}
 async function init() {
   checkFreshVersion();
+  checkStaffConnection();
   buildScene();
   if (DBINFO.bad) toast('URL ฐานข้อมูลไม่ถูกต้อง (ต้องขึ้นต้นด้วย https://) — ระบบใช้โหมดเดโมแทน', 'err', 7000);
 

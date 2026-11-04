@@ -326,6 +326,7 @@ body.admin-mode .staff-status{display:none}
         <h1 class="title">YOUR KRATHONG<br>IS AFLOAT!</h1>
         <img id="myKrathong" class="my-k" alt="กระทงของคุณ" hidden>
         <p class="sub glass">คุณได้ลอยกระทงเรียบร้อยแล้ว ✨<br>กิจกรรมนี้ลอยได้ 1 กระทงต่อ 1 เครื่อง<br>ขอบคุณที่ร่วมเป็นส่วนหนึ่งของแม่น้ำ Thai Wah</p>
+        <button class="link-btn" id="btnReplace" type="button">ลอยใบใหม่แทนใบเดิม</button>
       </div>
       <div class="stack" id="welcomeChecking" hidden><div class="spinner"></div></div>
       <div class="grow"></div>
@@ -1362,8 +1363,11 @@ async function onFloat() {
         name: S.name, img: S.cutout, status: 'floating', lucky: false, luckyRank: 0, at: store.serverTime()
       });
     } else {
-      toast('เครื่องนี้ลอยกระทงไปแล้ว (1 เครื่อง / 1 กระทง)', 'warn');
+      // 1 เครื่อง = 1 กระทง: ลอยใหม่จะ "แทนที่" กระทงใบเดิมของเครื่องนี้ (สถานะผู้โชคดีเดิมยังคงอยู่)
+      await store.patch('krathongs/' + id, { name: S.name, img: S.cutout, at: store.serverTime() });
     }
+    // double-check the krathong really reached the shared database
+    if (!local && !(await store.exists('krathongs/' + id))) throw new Error('ไม่พบกระทงในฐานข้อมูลหลังส่ง');
     if (!local) { LS.set('rotw_sent', '1'); LS.set('rotw_my_img', S.cutout); }
     await sleep(Math.max(0, 2600 - (Date.now() - t0)));
     S.original = null;
@@ -1794,7 +1798,7 @@ function showStaff() {
   go('welcome'); refreshSentState();
 }
 /* เวอร์ชันของแอป — ถ้าเบราว์เซอร์เปิดไฟล์เก่าจากแคช จะโหลดเวอร์ชันใหม่ให้อัตโนมัติ */
-const APP_VERSION = '2026-11-04.live3';
+const APP_VERSION = '2026-11-04.live4';
 async function checkFreshVersion() {
   if (!/^https?:/.test(location.protocol)) return;
   try {
@@ -1833,6 +1837,7 @@ async function init() {
   // staff
   const savedName = store.mode === 'demo' ? '' : LS.get('rotw_name'); if (savedName) $('#nameInput').value = cleanText(savedName, CONFIG.NAME_MAX);
   $('#btnStart').addEventListener('click', onStart);
+  $('#btnReplace').addEventListener('click', () => { $('#welcomeDone').hidden = true; $('#welcomeForm').hidden = false; $('#nameInput').focus(); });
   $('#nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') onStart(); });
   $$('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
   $('#btnTake').addEventListener('click', capture);

@@ -1,0 +1,36 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "krathongs": {
+      ".read": true,
+      ".write": true,
+      "$id": {
+        ".validate": "$id.matches(/^[A-Za-z0-9_-]{6,64}$/) && newData.hasChildren(['name', 'img', 'at'])",
+        "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 40" },
+        "img": { ".validate": "newData.isString() && newData.val().length < 700000 && newData.val().beginsWith('data:image/png;base64,')" },
+        "wish": { ".validate": "newData.isString() && newData.val().length <= 150" },
+        "status": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "lucky": { ".validate": "newData.isBoolean()" },
+        "luckyRank": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5" },
+        "at": { ".validate": "newData.isNumber() && newData.val() <= now" },
+        "$other": { ".validate": false }
+      }
+    },
+    "originals": {
+      ".read": false,
+      ".write": true,
+      "$id": {
+        ".validate": "$id.matches(/^[A-Za-z0-9_-]{6,64}$/) && newData.hasChildren(['img', 'at'])",
+        "img": { ".validate": "newData.isString() && newData.val().length < 3000000 && newData.val().beginsWith('data:image/jpeg;base64,')" },
+        "name": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "at": { ".validate": "newData.isNumber() && newData.val() <= now" },
+        "$other": { ".validate": false }
+      }
+    },
+    "draw": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

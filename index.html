@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e8bfd6">
+<title>THE RIVER OF THAI WAH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ff:'Prompt',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;
+  --navy:#25306b; --navy2:#3b4a9a; --ink:#2b2f5e; --pinkdeep:#e0457f;
+  --bh:0px;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:#e7c4d8;font-family:var(--ff);color:var(--ink)}
+button,input{font-family:inherit}
+[hidden]{display:none !important}
+body.has-banner{--bh:calc(28px + var(--sat))}
+
+/* ---------- demo banner ---------- */
+.demo-banner{position:fixed;left:0;right:0;top:0;z-index:95;padding:calc(var(--sat) + 5px) 12px 5px;height:var(--bh);background:#B45309;color:#fff;font:500 12px/18px var(--ff);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- scene ---------- */
+.scene{position:fixed;inset:0;overflow:hidden;z-index:0;--hzv:.58;--hz:calc(var(--hzv) * 100%)}
+body.admin-mode .scene{--hzv:.36}
+.sky{position:absolute;left:0;right:0;top:0;height:calc(var(--hz) + 2%);background:linear-gradient(180deg,#9b92bd 0%,#b3a3cc 16%,#d4b1d2 34%,#efbad0 52%,#fbc9cc 70%,#ffd9c6 88%,#ffe3cf 100%)}
+.moon{position:absolute;right:9%;top:calc(var(--bh) + var(--hz) * .12);width:clamp(84px,21vmin,210px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 44% 40%,#fff 0%,#fffaf7 40%,#fbeef3 66%,#f1dce9 100%);box-shadow:0 0 34px 14px rgba(255,255,255,.6),0 0 110px 56px rgba(255,236,246,.38);animation:moonglow 7s ease-in-out infinite}
+.moon::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 62% 60%,rgba(226,206,224,.16) 0 9%,transparent 10%),radial-gradient(circle at 35% 66%,rgba(226,206,224,.13) 0 6%,transparent 7%),radial-gradient(circle at 58% 30%,rgba(226,206,224,.1) 0 5%,transparent 6%)}
+@keyframes moonglow{0%,100%{box-shadow:0 0 34px 14px rgba(255,255,255,.6),0 0 110px 56px rgba(255,236,246,.38)}50%{box-shadow:0 0 44px 18px rgba(255,255,255,.7),0 0 140px 70px rgba(255,236,246,.45)}}
+.sparkles,.lanterns,.glints{position:absolute;inset:0;pointer-events:none}
+.spk{position:absolute;width:var(--z);height:var(--z);filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 7px rgba(255,255,255,.85));animation:twinkle var(--t) ease-in-out infinite;animation-delay:var(--dl)}
+.spk::before{content:'';position:absolute;inset:0;background:#fff;clip-path:polygon(50% 0,57% 43%,100% 50%,57% 57%,50% 100%,43% 57%,0 50%,43% 43%)}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.55) rotate(0)}50%{opacity:1;transform:scale(1) rotate(25deg)}}
+.lan{position:absolute;top:calc(var(--hz) - 4%);width:var(--w);height:calc(var(--w) * 1.3);border-radius:42% 42% 28% 28%;background:radial-gradient(ellipse at 50% 72%,#fff6d0 0%,#ffc85e 42%,#f08a3c 100%);box-shadow:0 0 10px 3px rgba(255,190,90,.55),0 0 26px 9px rgba(255,170,80,.22);opacity:0;animation:rise var(--t) linear infinite;animation-delay:var(--dl)}
+@keyframes rise{0%{transform:translate(0,0) scale(1);opacity:0}8%{opacity:.95}50%{transform:translate(var(--sx),calc(var(--hzv) * -50vh)) scale(.8)}85%{opacity:.75}100%{transform:translate(calc(var(--sx) * -.4),calc(var(--hzv) * -100vh)) scale(.5);opacity:0}}
+.temples{position:absolute;left:0;right:0;--th:clamp(120px,28vh,330px);height:var(--th);bottom:calc(100% - var(--hz));overflow:hidden;pointer-events:none}
+body.admin-mode .temples{--th:clamp(110px,24vh,300px)}
+.temples svg{position:absolute;left:50%;bottom:0;height:100%;width:max(100vw,calc(var(--th) * 5));transform:translateX(-50%);display:block}
+.temples.refl{bottom:auto;top:var(--hz);height:calc(var(--th) * .8);transform:scaleY(-1);transform-origin:50% 0;top:calc(var(--hz) + var(--th) * .8);opacity:.26;filter:blur(1.2px);-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 80%);mask-image:linear-gradient(to top,#000 0%,transparent 80%)}
+.temples.refl svg{height:125%}
+.mist{position:absolute;left:-10%;right:-10%;top:calc(var(--hz) - 9%);height:15%;background:radial-gradient(ellipse at 50% 60%,rgba(255,244,240,.9),rgba(255,236,238,0) 70%);filter:blur(6px);pointer-events:none;animation:mist 14s ease-in-out infinite alternate}
+@keyframes mist{to{transform:translateX(3%)}}
+.water{position:absolute;left:0;right:0;top:var(--hz);bottom:0;overflow:hidden;background:linear-gradient(180deg,#f8cbd6 0%,#f0c2d8 14%,#d9c3e6 34%,#b9cfe9 55%,#98d6e2 78%,#7fd0d8 100%)}
+.water::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);filter:blur(1px)}
+.wband{position:absolute;left:0;width:calc(100% + var(--tw) * 2);background-image:var(--seig);background-size:var(--tw) calc(var(--tw) / 2);animation:drift var(--dur) linear infinite;will-change:transform;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 22%,#000 78%,transparent 100%)}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(calc(var(--tw) * -1))}}
+.moonrefl{position:absolute;top:0;right:calc(9% + clamp(84px,21vmin,210px) / 2 - 34px);width:68px;height:70%;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.18) 60%,transparent);filter:blur(7px);opacity:.55;animation:shimmer 3.4s ease-in-out infinite;transform-origin:50% 0}
+@keyframes shimmer{0%,100%{transform:scaleX(1)}50%{transform:scaleX(1.5)}}
+.gl{position:absolute;width:var(--w);height:2px;border-radius:2px;background:#fff;box-shadow:0 0 6px 2px rgba(255,255,255,.75);opacity:0;animation:glint var(--t) ease-in-out infinite;animation-delay:var(--dl)}
+@keyframes glint{0%,100%{opacity:0;transform:scaleX(.4)}50%{opacity:.85;transform:scaleX(1)}}
+.lotus{position:absolute;bottom:calc(var(--sab) - 6px);width:clamp(110px,24vmin,250px);pointer-events:none;filter:drop-shadow(0 4px 10px rgba(200,90,140,.25));animation:lsway 6s ease-in-out infinite;transform-origin:50% 100%}
+.lotus svg{display:block;width:100%;height:auto}
+.lotus-l{left:-14px}.lotus-r{right:-14px;animation-delay:-3s}
+@keyframes lsway{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1.2deg) translateY(-2px)}}
+
+/* ---------- menu & status ---------- */
+.menu{position:fixed;top:calc(var(--bh) + var(--sat) + 10px);right:calc(var(--sar) + 10px);z-index:60;display:flex;gap:6px}
+body.has-banner .menu,body.has-banner .status{top:calc(var(--bh) + 10px)}
+.menu-btn{border:0;border-radius:999px;height:36px;padding:0 14px;background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--navy);font:600 13px var(--ff);box-shadow:0 4px 14px rgba(80,60,120,.18);cursor:pointer;transition:background .2s,color .2s}
+.menu-btn.active{background:var(--navy);color:#fff}
+.menu-btn.icon{width:36px;padding:0;font-size:16px}
+.status{position:fixed;top:calc(var(--bh) + var(--sat) + 10px);left:calc(var(--sal) + 12px);z-index:40;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.88);box-shadow:0 4px 14px rgba(80,60,120,.18);font:700 12px var(--ff);letter-spacing:.12em;color:var(--navy)}
+.status i{width:10px;height:10px;border-radius:50%;background:#999}
+.status.live i{background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:pulse 1.6s infinite}
+.status.live span{color:#15803d}
+.status.offline i{background:#ef4444}.status.offline span{color:#b91c1c}
+.status.demo i{background:#f59e0b}.status.demo span{color:#B45309}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}70%{box-shadow:0 0 0 9px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+/* ---------- logo ---------- */
+.logo{display:flex;flex-direction:column;align-items:center;line-height:1;user-select:none;--ls:1}
+.logo-top{font:700 calc(15px * var(--ls)) var(--ff);letter-spacing:.22em;color:#fff;text-shadow:0 1px 0 rgba(120,90,160,.5),0 2px 10px rgba(110,80,160,.45);margin-bottom:2px;padding-left:.22em}
+.logo-main{font:italic 800 calc(48px * var(--ls)) var(--ff);letter-spacing:.01em;padding:0 .12em;background:linear-gradient(180deg,#fff7d0 0%,#ffe08a 30%,#f2b947 60%,#d38c24 85%,#b87019 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #7b4b86) drop-shadow(0 5px 12px rgba(80,40,110,.35))}
+.logo-swoosh{width:calc(230px * var(--ls));height:auto;margin-top:-4px}
+.logo.big{--ls:clamp(1, 0.28vw + .9, 1.35)}
+.logo.mid{--ls:.95}
+.logo.small{--ls:.7}
+.slogan{margin:4px 0 0;font:500 italic 13px var(--ff);color:#fff;letter-spacing:.03em;text-shadow:0 1px 6px rgba(110,80,160,.55)}
+
+/* ---------- buttons & fields ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 28px;border-radius:999px;border:0;font:700 16px/1 var(--ff);letter-spacing:.04em;cursor:pointer;transition:transform .15s,box-shadow .2s,opacity .2s,filter .2s;user-select:none;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.55;cursor:not-allowed;filter:grayscale(.3)}
+.btn .chev{font-size:22px;line-height:0;margin-top:-2px}
+.btn-primary{color:#fff;background:linear-gradient(180deg,#5263bd 0%,#2c387e 55%,#1f285e 100%);box-shadow:0 7px 18px rgba(37,48,107,.38),inset 0 1px 0 rgba(255,255,255,.3)}
+.btn-gold{color:#3b2a06;background:linear-gradient(180deg,#fff2b8 0%,#f8d466 38%,#e6aa3a 72%,#c98a22 100%);box-shadow:0 7px 20px rgba(201,138,34,.45),inset 0 1px 0 rgba(255,255,255,.75),inset 0 -2px 0 rgba(150,90,10,.28)}
+.btn-white{color:var(--navy);background:rgba(255,255,255,.94);box-shadow:0 5px 14px rgba(80,60,120,.18)}
+.btn-danger{color:#fff;background:linear-gradient(180deg,#f06a7d,#c9304a)}
+.btn-sm{min-height:42px;padding:0 18px;font-size:14px}
+.btn-wide{width:100%;max-width:320px}
+.link-btn{background:none;border:0;color:var(--navy);font:500 14px var(--ff);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 10px}
+.field{display:flex;align-items:center;gap:10px;width:100%;max-width:320px;height:54px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.93);box-shadow:0 5px 16px rgba(90,60,130,.16),inset 0 0 0 1.5px rgba(255,255,255,.9);transition:box-shadow .2s}
+.field:focus-within{box-shadow:0 5px 16px rgba(90,60,130,.2),inset 0 0 0 2px #8f80c9}
+.field svg{flex:none;width:20px;height:20px;color:#9b8fc4}
+.field input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:500 16px var(--ff);color:var(--navy)}
+.field input::placeholder{color:#a79fc6}
+.field.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+
+/* ---------- staff screens ---------- */
+.app{position:fixed;inset:0;z-index:5}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(var(--bh) + var(--sat) + 54px) calc(var(--sar) + 18px) calc(var(--sab) + 20px) calc(var(--sal) + 18px);opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .45s,transform .45s,visibility 0s .45s}
+body.has-banner .screen{padding-top:calc(var(--bh) + 54px)}
+.screen.on{opacity:1;visibility:visible;transform:none;transition:opacity .45s,transform .45s}
+.inner{width:100%;max-width:440px;min-height:100%;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.grow{flex:1 1 0;min-height:4px}
+.stack{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+.title{margin:0;font:800 clamp(22px,6.3vw,29px)/1.18 var(--ff);color:var(--navy);letter-spacing:.01em;text-shadow:0 1px 0 rgba(255,255,255,.65),0 0 18px rgba(255,255,255,.45)}
+.sub{margin:0;max-width:360px;font:400 15px/1.6 var(--ff);color:#3b3770;text-shadow:0 0 12px rgba(255,255,255,.7)}
+.glass{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:18px;padding:10px 16px}
+.my-k{max-width:200px;max-height:160px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(255,214,120,.7))}
+.back{align-self:flex-start;margin:-6px 0 -8px -6px}
+
+/* camera */
+.cam{position:relative;width:min(80vw,330px,44vh);aspect-ratio:1;border-radius:26px;overflow:hidden;flex:none;background:linear-gradient(#fff,#f4eff8);box-shadow:0 12px 30px rgba(90,60,130,.25),0 0 0 4px rgba(255,255,255,.75)}
+.cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.cam video.mirror{transform:scaleX(-1)}
+.corner{position:absolute;width:36px;height:36px;border:4px solid #fff;filter:drop-shadow(0 0 2px rgba(40,30,80,.45));pointer-events:none}
+.c1{left:14px;top:14px;border-right:0;border-bottom:0;border-top-left-radius:14px}
+.c2{right:14px;top:14px;border-left:0;border-bottom:0;border-top-right-radius:14px}
+.c3{left:14px;bottom:14px;border-right:0;border-top:0;border-bottom-left-radius:14px}
+.c4{right:14px;bottom:14px;border-left:0;border-top:0;border-bottom-right-radius:14px}
+.cam-hint{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);background:rgba(37,48,107,.72);color:#fff;font:500 12px var(--ff);padding:5px 12px;border-radius:999px;white-space:nowrap}
+.cam-msg{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:26px;text-align:center;color:var(--navy);font:500 14px/1.55 var(--ff);background:rgba(255,255,255,.94)}
+.cam-msg b{font-size:30px}
+.cam.fail .cam-msg,.cam.loading .cam-msg{display:flex}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%}
+.row .btn{flex:1 1 140px;max-width:220px;padding:0 16px}
+
+/* ready */
+.preview{position:relative;width:min(70vw,270px,38vh);aspect-ratio:1;flex:none;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#fff 0%,rgba(255,255,255,.85) 55%,rgba(255,255,255,.35) 72%,rgba(255,255,255,0) 74%)}
+.preview img{max-width:78%;max-height:78%;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(120,60,90,.22))}
+.badge{position:absolute;right:6%;top:6%;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;font:800 26px var(--ff);box-shadow:0 0 0 5px rgba(255,255,255,.85),0 8px 18px rgba(40,120,80,.35);animation:pop .5s cubic-bezier(.2,1.6,.4,1) both}
+.badge.ok{background:linear-gradient(#63d790,#27a95f)}
+.badge.warn{background:linear-gradient(#ffc560,#e8920f);box-shadow:0 0 0 5px rgba(255,255,255,.85),0 8px 18px rgba(200,120,20,.35)}
+.badge.err{background:linear-gradient(#ff8a8a,#d63c3c);box-shadow:0 0 0 5px rgba(255,255,255,.85),0 8px 18px rgba(200,40,40,.35)}
+.badge svg{width:26px;height:26px}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.spinner{width:56px;height:56px;border-radius:50%;border:5px solid rgba(143,128,201,.25);border-top-color:#8f80c9;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.msg{font:500 14px/1.55 var(--ff);color:var(--navy);max-width:340px}
+.msg.warn{color:#9a5a05}.msg.err{color:#b4233a}
+.ready-ok{font:800 20px var(--ff);color:#1f8f50;letter-spacing:.02em}
+
+/* wish */
+.stage{position:relative;display:flex;align-items:flex-end;justify-content:center;min-height:min(34vh,250px);padding-top:50px}
+.stage::before{content:'';position:absolute;left:50%;bottom:-6px;width:min(70vw,280px);height:56px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(255,224,150,.6),rgba(255,224,150,0) 70%)}
+.kwrap{position:relative;display:inline-block;line-height:0}
+.kwrap img{max-width:min(62vw,250px);max-height:min(30vh,230px);object-fit:contain;filter:drop-shadow(0 0 12px rgba(255,214,120,.55)) drop-shadow(0 6px 10px rgba(120,60,90,.2))}
+.fx{position:absolute;width:0;height:0;pointer-events:none}
+.flame-glow{position:absolute;left:-30px;top:-44px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,120,.75),rgba(255,200,120,0) 70%);animation:glowp 1.8s ease-in-out infinite}
+.flame{position:absolute;left:-6px;top:-24px;width:12px;height:24px;border-radius:50% 50% 45% 45%/62% 62% 38% 38%;background:radial-gradient(ellipse at 50% 72%,#fff 0%,#fff1b5 26%,#ffbc45 55%,rgba(255,120,30,0) 78%);animation:flick .16s infinite alternate;transform-origin:50% 100%}
+.smoke{position:absolute;left:-7px;top:-34px;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.7);filter:blur(4px);opacity:0;animation:smoke 3.3s ease-out infinite}
+.smoke.s2{animation-delay:1.1s;--sx:-14px}.smoke.s3{animation-delay:2.2s;--sx:8px}
+@keyframes smoke{0%{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.75}100%{transform:translate(var(--sx,12px),-120px) scale(3.4);opacity:0}}
+@keyframes flick{0%{transform:scale(1,1) rotate(-3deg)}100%{transform:scale(.9,1.1) rotate(3deg)}}
+@keyframes glowp{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.25);opacity:1}}
+.stage.wished .kwrap{animation:wishglow 1s ease-out}
+@keyframes wishglow{0%{filter:none}40%{filter:drop-shadow(0 0 30px #ffe08a) brightness(1.15)}100%{filter:none}}
+
+/* float */
+.chip{display:inline-flex;align-items:center;gap:8px;max-width:100%;padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.9);color:var(--navy);font:700 15px var(--ff);box-shadow:0 4px 12px rgba(80,60,120,.15)}
+.chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wishq{max-width:340px;margin:0;font:italic 400 15px/1.55 var(--ff);color:#463c7c;background:rgba(255,255,255,.55);padding:10px 16px;border-radius:16px;word-break:break-word}
+.pond{position:relative;width:min(86vw,340px);height:clamp(170px,30vh,260px);display:flex;align-items:flex-end;justify-content:center;flex:none}
+.pond::before{content:'';position:absolute;left:0;right:0;bottom:0;height:48%;border-radius:50%;background:radial-gradient(ellipse at 50% 42%,rgba(255,255,255,.6),rgba(200,226,244,.4) 55%,rgba(160,210,230,0) 72%)}
+.pond .rip{position:absolute;left:50%;bottom:14%;width:74%;height:20%;border:2px solid rgba(255,255,255,.8);border-radius:50%;transform:translateX(-50%) scale(.35);opacity:0;animation:rip2 3.2s ease-out infinite}
+.pond .rip.r2{animation-delay:1.05s}.pond .rip.r3{animation-delay:2.1s}
+@keyframes rip2{0%{transform:translateX(-50%) scale(.35);opacity:0}15%{opacity:.9}100%{transform:translateX(-50%) scale(1.15);opacity:0}}
+.pk{position:relative;margin-bottom:15%;animation:bob2 4s ease-in-out infinite;transform-origin:50% 90%}
+.pk img{max-width:min(54vw,220px);max-height:min(24vh,190px);object-fit:contain;filter:drop-shadow(0 0 12px rgba(255,214,120,.6))}
+@keyframes bob2{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+.pk.away{animation:away 2.6s cubic-bezier(.45,0,.55,1) forwards}
+@keyframes away{0%{transform:none;opacity:1}30%{transform:translateY(-10px) rotate(3deg) scale(.95)}100%{transform:translate(18px,-110px) rotate(-4deg) scale(.22);opacity:0}}
+
+/* done */
+.check{width:84px;height:84px;border-radius:50%;flex:none;display:grid;place-items:center;background:linear-gradient(#66d993,#25a65d);box-shadow:0 0 0 7px rgba(255,255,255,.8),0 10px 26px rgba(40,160,90,.45);animation:pop .6s cubic-bezier(.2,1.6,.4,1) both}
+.check svg{width:44px;height:44px}
+
+/* ---------- admin ---------- */
+#admin{position:fixed;inset:0;z-index:5;display:none}
+body.admin-mode #admin{display:block}
+body.admin-mode #staff{display:none}
+.admin-head{position:absolute;left:50%;top:calc(var(--bh) + var(--sat) + 8px);transform:translateX(-50%);z-index:20;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+body.has-banner .admin-head{top:calc(var(--bh) + 8px)}
+.admin-head .logo{--ls:clamp(.62, calc(.06vh + .42), 1.05)}
+.count-badge{display:flex;flex-direction:column;align-items:center;margin-top:6px;padding:8px 24px 9px;border-radius:18px;background:rgba(255,255,255,.75);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(90,60,130,.2)}
+.count-row{display:flex;align-items:center;gap:10px}
+.count-row svg{width:clamp(26px,3vw,40px);height:auto}
+.count-num{font:800 clamp(24px,4.4vh,46px)/1 var(--ff);color:var(--navy);font-variant-numeric:tabular-nums}
+.count-num.bump{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.18);color:var(--pinkdeep)}}
+.count-lbl{margin-top:3px;font:700 clamp(9px,1.25vh,13px) var(--ff);letter-spacing:.16em;color:#6a5a9a}
+.river{position:absolute;inset:0;z-index:10;pointer-events:none;--amp:1}
+.river.fast{--amp:2.4}
+.kt{position:absolute;width:var(--s);height:calc(var(--s) * var(--ar,.8));transform:translate(-50%,-100%);transition:left .8s ease,top .8s ease,width .8s ease,height .8s ease}
+.kt-drop{position:absolute;inset:0;transition:scale .14s ease}
+.kt-bob{position:absolute;inset:0;transform-origin:50% 92%;animation:bob var(--d) ease-in-out infinite;animation-delay:var(--dl);will-change:transform}
+.river.fast .kt-bob{animation-duration:calc(var(--d) * .28)}
+@keyframes bob{0%,100%{transform:translate(0,0) rotate(calc(var(--r) * -1 * var(--amp)))}25%{transform:translate(calc(var(--dx) * var(--amp)),calc(-3px * var(--amp))) rotate(0deg)}50%{transform:translate(0,-1px) rotate(calc(var(--r) * var(--amp)))}75%{transform:translate(calc(var(--dx) * -1 * var(--amp)),calc(-4px * var(--amp))) rotate(0deg)}}
+.kt-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 0 5px rgba(255,210,110,.7))}
+.kt-glow{position:absolute;left:0;right:0;bottom:-12%;height:34%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,214,120,.7),rgba(255,200,120,0) 70%)}
+.kt-rip{position:absolute;left:50%;bottom:-8%;width:120%;height:26%;border:1.5px solid rgba(255,255,255,.75);border-radius:50%;transform:translateX(-50%) scale(.45);opacity:0;animation:rip var(--rd,3.8s) ease-out infinite;animation-delay:var(--dl)}
+.kt-rip.r2{animation-delay:calc(var(--dl) - 1.9s)}
+@keyframes rip{0%{transform:translateX(-50%) scale(.45);opacity:0}20%{opacity:.85}100%{transform:translateX(-50%) scale(1.15);opacity:0}}
+.kt-label{position:absolute;left:50%;bottom:100%;margin-bottom:2px;transform:translateX(-50%);max-width:max(150%,84px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:1px 8px 2px;border-radius:999px;background:#fff;color:var(--navy);font:600 var(--fs,12px)/1.25 var(--ff);box-shadow:0 2px 6px rgba(60,40,100,.25)}
+.kt.win .kt-label{background:linear-gradient(180deg,#fff7d1,#f5cf62);color:#5a3a06}
+.kt.win .kt-label::before{content:'★' attr(data-rank) ' '}
+.kt.hl{z-index:100000 !important}
+.kt.hl .kt-drop{scale:1.35}
+.kt.hl .kt-img{filter:drop-shadow(0 0 8px #ffe27a) drop-shadow(0 0 20px #ffb320)}
+.kt.hl .kt-drop::after{content:'';position:absolute;left:-22%;right:-22%;top:-6%;bottom:-18%;border-radius:50%;border:3px solid #ffd860;box-shadow:0 0 18px #ffcf40,inset 0 0 14px rgba(255,214,96,.6)}
+.kt.drop .kt-drop{animation:dropIn 1.15s cubic-bezier(.3,.7,.3,1) both}
+@keyframes dropIn{0%{transform:translateY(-160%) scale(1.25);opacity:0}40%{opacity:1}60%{transform:translateY(7%) scale(.95)}80%{transform:translateY(-3%) scale(1.02)}100%{transform:none;opacity:1}}
+.kt-splash{position:absolute;left:50%;bottom:-8%;width:170%;height:40%;border-radius:50%;border:2px solid #fff;transform:translateX(-50%) scale(.2);opacity:0;pointer-events:none}
+.kt.drop .kt-splash{animation:splash 1.2s ease-out .62s}
+@keyframes splash{0%{transform:translateX(-50%) scale(.2);opacity:1}100%{transform:translateX(-50%) scale(1.3);opacity:0}}
+.empty{position:absolute;left:50%;top:62%;transform:translate(-50%,-50%);z-index:12;text-align:center;font:500 clamp(14px,1.8vw,20px)/1.6 var(--ff);color:var(--navy);background:rgba(255,255,255,.6);padding:14px 26px;border-radius:20px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.admin-actions{position:absolute;left:0;right:0;bottom:calc(var(--sab) + 18px);z-index:30;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;padding:0 12px}
+.admin-actions .btn-gold{min-height:58px;font-size:18px;padding:0 34px}
+.draw-banner{position:absolute;left:50%;bottom:calc(var(--sab) + 92px);transform:translateX(-50%);z-index:31;padding:10px 26px;border-radius:999px;background:rgba(37,48,107,.86);color:#ffe08a;font:700 clamp(14px,1.7vw,20px) var(--ff);letter-spacing:.04em;white-space:nowrap;box-shadow:0 8px 24px rgba(37,48,107,.35)}
+
+/* ---------- overlays ---------- */
+.overlay{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:calc(var(--bh) + var(--sat) + 16px) 16px calc(var(--sab) + 16px);background:rgba(48,36,92,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
+.overlay.on{opacity:1;visibility:visible;transition:opacity .35s}
+.reveal-card{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.overlay.on .reveal-card{animation:zoomin .7s cubic-bezier(.2,1.3,.4,1) both}
+@keyframes zoomin{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+.rv-rays{position:absolute;left:50%;top:46%;width:min(150vmin,820px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,226,140,.38) 0 9deg,rgba(255,226,140,0) 9deg 18deg);-webkit-mask-image:radial-gradient(circle,#000 18%,transparent 66%);mask-image:radial-gradient(circle,#000 18%,transparent 66%);animation:spinc 22s linear infinite;pointer-events:none}
+@keyframes spinc{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.rv-rank{position:relative;font:italic 800 clamp(18px,2.6vw,28px) var(--ff);color:#ffe08a;letter-spacing:.14em;text-shadow:0 2px 12px rgba(120,60,0,.6)}
+.rv-img{position:relative;display:flex;align-items:flex-end;justify-content:center;height:min(46vh,380px)}
+.rv-img img{max-width:min(70vw,440px);max-height:100%;object-fit:contain;filter:drop-shadow(0 0 22px rgba(255,214,110,.95)) drop-shadow(0 0 50px rgba(255,190,80,.6));animation:bob2 3s ease-in-out infinite}
+.rv-name{position:relative;max-width:90vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:10px 34px;border-radius:999px;background:#fff;color:var(--navy);font:800 clamp(26px,5vw,52px)/1.2 var(--ff);box-shadow:0 0 0 4px #f5cf62,0 10px 34px rgba(255,200,90,.65)}
+.rv-actions{position:relative;margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.winners{position:relative;width:min(1120px,96vw);max-height:calc(100vh - var(--bh) - 32px);overflow:auto;border-radius:30px;padding:30px 24px 24px;text-align:center;background:linear-gradient(180deg,rgba(255,243,248,.97),rgba(252,222,236,.97));box-shadow:0 30px 80px rgba(60,30,90,.4)}
+.w-close{position:absolute;right:14px;top:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(37,48,107,.08);color:var(--navy);font:700 20px var(--ff);cursor:pointer}
+.w-title{margin:6px 0 0;font:800 clamp(22px,3.4vw,40px)/1.2 var(--ff);color:var(--navy)}
+.w-title b{color:var(--pinkdeep)}
+.w-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin:46px 0 26px}
+@media (max-width:820px){.w-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:44px}}
+.w-card{position:relative;background:#fff;border-radius:20px;padding:30px 10px 14px;box-shadow:0 8px 24px rgba(120,60,120,.15);animation:pop .5s cubic-bezier(.2,1.4,.4,1) both}
+.w-medal{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:38px;height:38px;border-radius:50%;background:linear-gradient(#ff96bb,#e0457f);color:#fff;font:800 17px/38px var(--ff);box-shadow:0 0 0 3px #fff,0 4px 10px rgba(200,60,120,.4)}
+.w-card.first .w-medal{background:linear-gradient(#ffe68e,#d7961f);color:#4a2f04}
+.w-crown{position:absolute;top:-50px;left:50%;transform:translateX(-50%);font-size:28px;filter:drop-shadow(0 2px 4px rgba(150,90,10,.4))}
+.w-img{height:clamp(90px,14vh,130px);display:flex;align-items:flex-end;justify-content:center;border-radius:14px;background:radial-gradient(ellipse at 50% 92%,#c9eef3 0%,#e9e3f3 45%,#fdf1f6 75%)}
+.w-img img{max-width:88%;max-height:96%;object-fit:contain}
+.w-img .ph{font-size:44px;opacity:.5;align-self:center}
+.w-name{margin-top:10px;font:700 clamp(14px,1.5vw,18px) var(--ff);color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w-card.pending{opacity:.55}
+.ribbon{display:inline-block;max-width:100%;padding:12px clamp(28px,6vw,70px);color:#3b2a06;background:linear-gradient(180deg,#fff2b8,#f5cd5c 45%,#dc9d2e);clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);filter:drop-shadow(0 6px 12px rgba(180,110,20,.35))}
+.ribbon b{display:block;font:800 clamp(13px,1.9vw,22px)/1.3 var(--ff);letter-spacing:.02em}
+.ribbon span{display:block;font:500 clamp(12px,1.4vw,16px)/1.4 var(--ff)}
+.modal{width:min(400px,100%);border-radius:26px;padding:26px 22px 22px;text-align:center;background:linear-gradient(180deg,#fff,#fbf0f6);box-shadow:0 30px 70px rgba(50,30,90,.4)}
+.overlay.on .modal{animation:zoomin .4s cubic-bezier(.2,1.3,.4,1) both}
+.modal h3{margin:0 0 8px;font:800 20px var(--ff);color:var(--navy)}
+.modal p{margin:0 0 16px;font:400 15px/1.6 var(--ff);color:#4a4478}
+.modal .field{margin:0 auto 10px;max-width:none}
+.modal .field input{text-align:center;letter-spacing:.4em;font-size:22px}
+.modal .row .btn{flex:1 1 120px}
+.pw-err{min-height:22px;margin-bottom:8px;font:500 13px var(--ff);color:#c02646}
+#confetti{position:fixed;inset:0;z-index:85;pointer-events:none;width:100%;height:100%}
+.toasts{position:fixed;left:50%;bottom:calc(var(--sab) + 20px);transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:8px;width:min(92vw,460px);pointer-events:none}
+.toast{padding:12px 18px;border-radius:16px;background:rgba(37,48,107,.94);color:#fff;font:500 14px/1.45 var(--ff);text-align:center;box-shadow:0 10px 28px rgba(30,20,70,.3);opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s}
+.toast.show{opacity:1;transform:none}
+.toast.err{background:rgba(180,35,58,.95)}.toast.warn{background:rgba(180,83,9,.95)}.toast.ok{background:rgba(22,128,72,.95)}
+@media (min-width:900px){.screen .inner{max-width:460px}}
+@media (max-width:700px){.admin-head{top:calc(var(--bh) + var(--sat) + 52px)}body.has-banner .admin-head{top:calc(var(--bh) + 52px)}.admin-head .logo{--ls:.6}.status{height:30px;padding:0 10px}}
+@media (prefers-reduced-motion:reduce){.wband,.lan,.spk,.gl,.kt-bob,.kt-rip{animation-duration:0s !important;animation-iteration-count:1 !important}}
+</style>
+</head>
+<body>
+<div id="demoBanner" class="demo-banner" hidden>⚠ โหมดเดโม — ยังไม่ได้ตั้งค่าฐานข้อมูลกลาง ข้อมูลเก็บไว้ในเบราว์เซอร์เครื่องนี้เท่านั้น</div>
+
+<!-- ===== ฉากพื้นหลัง ===== -->
+<div class="scene" id="scene" aria-hidden="true">
+  <div class="sky"></div>
+  <div class="moon"></div>
+  <div class="sparkles" id="sparkles"></div>
+  <div class="lanterns" id="lanterns"></div>
+  <div class="temples" id="temples"></div>
+  <div class="mist"></div>
+  <div class="water" id="water"><div id="wbands"></div><div class="moonrefl"></div><div class="glints" id="glints"></div></div>
+  <div class="temples refl" id="templesRefl"></div>
+  <div class="lotus lotus-l" id="lotusL"></div>
+  <div class="lotus lotus-r" id="lotusR"></div>
+</div>
+
+<!-- ===== เมนูลอยมุมขวาบน ===== -->
+<nav class="menu" aria-label="เมนู">
+  <button class="menu-btn active" id="mHome" type="button">หน้าหลัก</button>
+  <button class="menu-btn" id="mAdmin" type="button">แอดมิน</button>
+  <button class="menu-btn icon" id="mSound" type="button" aria-label="เปิด/ปิดเสียง">🔊</button>
+</nav>
+
+<!-- ===== หน้าพนักงาน ===== -->
+<main id="staff" class="app">
+  <!-- 1. ต้อนรับ -->
+  <section class="screen" id="s-welcome">
+    <div class="inner">
+      <div class="logo-slot" data-size="big"></div>
+      <p class="slogan">One River. Countless Krathongs. Countless Wishes.</p>
+      <div class="grow"></div>
+      <div class="stack" id="welcomeForm">
+        <h1 class="title">WELCOME TO<br>THE RIVER OF THAI WAH!</h1>
+        <p class="sub">มาร่วมลอยกระทงและส่งคำอธิษฐานของคุณไปพร้อมกับเพื่อน ๆ ชาว Thai Wah กัน!</p>
+        <label class="field" id="nameField">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/></svg>
+          <input id="nameInput" type="text" maxlength="40" placeholder="Your Name" autocomplete="name" enterkeyhint="go" aria-label="ชื่อของคุณ">
+        </label>
+        <button class="btn btn-primary btn-wide" id="btnStart" type="button">LET'S GET STARTED! <span class="chev">›</span></button>
+      </div>
+      <div class="stack" id="welcomeDone" hidden>
+        <h1 class="title">YOUR KRATHONG<br>IS AFLOAT!</h1>
+        <img id="myKrathong" class="my-k" alt="กระทงของคุณ" hidden>
+        <p class="sub glass">คุณได้ลอยกระทงเรียบร้อยแล้ว ✨<br>กิจกรรมนี้ลอยได้ 1 กระทงต่อ 1 เครื่อง<br>ขอบคุณที่ร่วมเป็นส่วนหนึ่งของแม่น้ำ Thai Wah</p>
+      </div>
+      <div class="stack" id="welcomeChecking" hidden><div class="spinner"></div></div>
+      <div class="grow"></div>
+    </div>
+  </section>
+
+  <!-- 2. ถ่ายรูป -->
+  <section class="screen" id="s-camera">
+    <div class="inner">
+      <button class="link-btn back" type="button" data-go="welcome">‹ ย้อนกลับ</button>
+      <div class="logo-slot" data-size="small"></div>
+      <h1 class="title">YOUR KRATHONG,<br>YOUR CREATION!</h1>
+      <p class="sub">ถ่ายรูปกระทง DIY ที่คุณทำเสร็จแล้ว<br>วางบน<b>พื้นหลังสีขาว</b> ให้อยู่กลางกรอบ</p>
+      <div class="cam loading" id="cam">
+        <video id="video" playsinline muted autoplay></video>
+        <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+        <span class="cam-hint" id="camHint">วางกระทงกลางภาพบนพื้นสีขาว</span>
+        <div class="cam-msg" id="camMsg"><div class="spinner"></div><div>กำลังเปิดกล้อง…</div></div>
+      </div>
+      <div class="row">
+        <button class="btn btn-primary" id="btnTake" type="button" disabled>📷 TAKE PHOTO</button>
+        <button class="btn btn-white" id="btnUpload" type="button">⬆ UPLOAD PHOTO</button>
+      </div>
+      <button class="link-btn" id="btnFlip" type="button">🔄 สลับกล้องหน้า/หลัง</button>
+      <input type="file" id="fileInput" accept="image/*" hidden>
+      <div class="grow"></div>
+    </div>
+  </section>
+
+  <!-- 3. ตัดพื้นหลัง -->
+  <section class="screen" id="s-ready">
+    <div class="inner">
+      <div class="logo-slot" data-size="small"></div>
+      <h1 class="title">LET'S GET<br>YOUR KRATHONG READY!</h1>
+      <div class="preview" id="preview"><div class="spinner" id="readySpin"></div><img id="readyImg" alt="กระทงของคุณ" hidden><div id="readyBadge"></div></div>
+      <div class="ready-ok" id="readyOk" hidden>YOUR KRATHONG IS READY!</div>
+      <div class="msg" id="readyMsg">กำลังตัดพื้นหลังกระทงของคุณ…</div>
+      <div class="row" id="readyBtns"></div>
+      <div class="grow"></div>
+    </div>
+  </section>
+
+  <!-- 4. อธิษฐาน -->
+  <section class="screen" id="s-wish">
+    <div class="inner">
+      <button class="link-btn back" type="button" data-go="camera">‹ ถ่ายใหม่</button>
+      <div class="logo-slot" data-size="small"></div>
+      <h1 class="title">CLOSE YOUR EYES.<br>MAKE A WISH.</h1>
+      <p class="sub">ไม่ว่าจะเป็นเรื่องงาน ความสุข ความสำเร็จ หรือเรื่องเล็ก ๆ ที่อยากให้เกิดขึ้น ลองนึกถึงสิ่งนั้นไว้ในใจ</p>
+      <div class="stage" id="wishStage">
+        <div class="kwrap"><img id="wishImg" alt="กระทงของคุณ"><div class="fx" id="wishFx"><div class="flame-glow"></div><div class="smoke"></div><div class="smoke s2"></div><div class="smoke s3"></div><div class="flame"></div></div></div>
+      </div>
+      <label class="field">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.4 6.6L21 9l-5.2 4.3L17.6 20 12 16.3 6.4 20l1.8-6.7L3 9l6.6-.4Z"/></svg>
+        <input id="wishInput" type="text" maxlength="150" placeholder="Write Your Wish (Optional)" enterkeyhint="done" aria-label="คำอธิษฐาน (ไม่บังคับ)">
+      </label>
+      <button class="btn btn-primary btn-wide" id="btnWish" type="button" data-nosfx>MAKE A WISH</button>
+      <div class="grow"></div>
+    </div>
+  </section>
+
+  <!-- 5. พร้อมลอย -->
+  <section class="screen" id="s-float">
+    <div class="inner">
+      <button class="link-btn back" type="button" data-go="wish">‹ แก้คำอธิษฐาน</button>
+      <div class="logo-slot" data-size="small"></div>
+      <h1 class="title">YOUR KRATHONG<br>IS READY TO FLOAT!</h1>
+      <div class="chip">🪷 <span id="floatName"></span></div>
+      <p class="wishq" id="floatWish" hidden></p>
+      <div class="pond"><span class="rip"></span><span class="rip r2"></span><span class="rip r3"></span><div class="pk" id="floatK"><img id="floatImg" alt="กระทงของคุณ"></div></div>
+      <button class="btn btn-gold btn-wide" id="btnFloat" type="button" data-nosfx>FLOAT MY KRATHONG! <span class="chev">›</span></button>
+      <div class="grow"></div>
+    </div>
+  </section>
+
+  <!-- 6. ลอยแล้ว -->
+  <section class="screen" id="s-done">
+    <div class="inner">
+      <div class="logo-slot" data-size="small"></div>
+      <div class="grow"></div>
+      <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19.5 7"/></svg></div>
+      <h1 class="title">YOUR KRATHONG<br>IS AFLOAT!</h1>
+      <p class="sub glass">ขอให้คำอธิษฐานของคุณเป็นจริง ✨<br>กระทงของคุณได้ร่วมเป็นส่วนหนึ่งของแม่น้ำ Thai Wah เรียบร้อยแล้ว!</p>
+      <button class="btn btn-white btn-wide" id="btnHome" type="button">BACK TO HOME</button>
+      <div class="grow"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== หน้าแอดมิน ===== -->
+<section id="admin" aria-label="หน้าแอดมิน">
+  <div class="status demo" id="statusBadge"><i></i><span>DEMO</span></div>
+  <header class="admin-head">
+    <div class="logo-slot" data-size="mid"></div>
+    <div class="count-badge">
+      <div class="count-row">
+        <svg viewBox="0 0 64 44" aria-hidden="true"><g stroke="#e98ab0" stroke-width=".8"><path d="M32 40C22 30 22 14 32 3c10 11 10 27 0 37Z" fill="#f7a7c6"/><path d="M30 40C18 36 10 24 9 12c11 3 19 14 21 28Z" fill="#f9bcd3"/><path d="M34 40c12-4 20-16 21-28-11 3-19 14-21 28Z" fill="#f9bcd3"/><path d="M28 41C16 42 5 36 1 27c10-1 21 4 27 14Z" fill="#fbd1e0"/><path d="M36 41c12 1 23-5 27-14-10-1-21 4-27 14Z" fill="#fbd1e0"/></g></svg>
+        <span class="count-num" id="countNum">0</span>
+      </div>
+      <div class="count-lbl">KRATHONGS FLOATING TOGETHER</div>
+    </div>
+  </header>
+  <div class="river" id="river"></div>
+  <div class="empty" id="emptyRiver">🪷 แม่น้ำกำลังรอกระทงใบแรก…<br><small>ให้พนักงานเปิดลิงก์บนมือถือแล้วลอยกระทงได้เลย</small></div>
+  <div class="draw-banner" id="drawBanner" hidden></div>
+  <div class="admin-actions">
+    <button class="btn btn-gold" id="btnLucky" type="button">★ LUCKY KRATHONG</button>
+    <button class="btn btn-white btn-sm" id="btnReset" type="button">↻ RESET RIVER</button>
+  </div>
+</section>
+
+<!-- ===== หน้าต่างประกาศผู้โชคดี ===== -->
+<div class="overlay" id="revealOv" role="dialog" aria-modal="true">
+  <div class="reveal-card">
+    <div class="rv-rays"></div>
+    <div class="rv-rank" id="rvRank">LUCKY FLOATER #1</div>
+    <div class="rv-img"><img id="rvImg" alt=""></div>
+    <div class="rv-name" id="rvName"></div>
+    <div class="rv-actions" id="rvActions"></div>
+  </div>
+</div>
+
+<!-- ===== รายชื่อผู้โชคดี ===== -->
+<div class="overlay" id="winnersOv" role="dialog" aria-modal="true">
+  <div class="winners">
+    <button class="w-close" id="wClose" type="button" aria-label="ปิด">✕</button>
+    <h2 class="w-title">WHO WILL BE OUR <b>LUCKY FLOATERS?</b></h2>
+    <div class="w-grid" id="wGrid"></div>
+    <div class="ribbon"><b>CONGRATULATIONS TO OUR 5 LUCKY FLOATERS!</b><span>ขอแสดงความยินดีกับผู้โชคดีทั้ง 5 คน</span></div>
+  </div>
+</div>
+
+<!-- ===== หน้าต่างรหัสแอดมิน ===== -->
+<div class="overlay" id="pwOv" role="dialog" aria-modal="true">
+  <form class="modal" id="pwForm" autocomplete="off">
+    <h3>🔒 เข้าสู่หน้าแอดมิน</h3>
+    <p>กรุณาใส่รหัสแอดมิน</p>
+    <label class="field" id="pwField"><input id="pwInput" type="password" inputmode="numeric" maxlength="12" aria-label="รหัสแอดมิน"></label>
+    <div class="pw-err" id="pwErr"></div>
+    <div class="row"><button class="btn btn-white btn-sm" type="button" id="pwCancel">ยกเลิก</button><button class="btn btn-primary btn-sm" type="submit" id="pwOk">เข้าสู่ระบบ</button></div>
+  </form>
+</div>
+
+<!-- ===== หน้าต่างยืนยัน ===== -->
+<div class="overlay" id="confirmOv" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h3 id="cfTitle"></h3>
+    <p id="cfText"></p>
+    <div class="row"><button class="btn btn-white btn-sm" type="button" id="cfNo">ยกเลิก</button><button class="btn btn-primary btn-sm" type="button" id="cfYes">ยืนยัน</button></div>
+  </div>
+</div>
+
+<canvas id="confetti"></canvas>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   CONFIG — จุดตั้งค่าหลักของระบบ
+   ===================================================================== */
+const CONFIG = {
+  // URL ของ Firebase Realtime Database (ไม่ต้องมี / ปิดท้าย)
+  // ตัวอย่าง: 'https://thaiwah-krathong-default-rtdb.asia-southeast1.firebasedatabase.app'
+  // ถ้าเว้นว่าง ระบบจะทำงานเป็น "โหมดเดโม" เก็บข้อมูลใน localStorage ของเบราว์เซอร์นี้เท่านั้น
+  // หรือส่ง URL ผ่านลิงก์ได้: the-river-of-thai-wah.html?db=https://....firebasedatabase.app
+  DB_URL: '',
+
+  // รหัสแอดมิน — เก็บเป็นค่าแฮช SHA-256 เท่านั้น ไม่เก็บรหัสตรง ๆ
+  // ค่าปัจจุบันคือแฮชของรหัส "1234"
+  // วิธีเปลี่ยนรหัส: เปิดหน้าเว็บ > กด F12 > แท็บ Console > พิมพ์  await sha256Hex('รหัสใหม่')
+  // แล้วนำค่าที่ได้ (ตัวอักษร 64 ตัว) มาใส่แทนค่าด้านล่าง
+  ADMIN_HASH: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',
+  ADMIN_MAX_TRIES: 5,     // ใส่รหัสผิดได้กี่ครั้งก่อนล็อก
+  ADMIN_LOCK_MS: 30000,   // ระยะเวลาล็อก (มิลลิวินาที) = 30 วินาที
+
+  WINNERS: 5,             // จำนวนผู้โชคดี
+  IMG_MAX: 256,           // ขนาดภาพกระทง PNG สูงสุด (px)
+  ORIGINAL_MAX: 1024,     // ขนาดภาพต้นฉบับสูงสุด (px)
+  NAME_MAX: 40,           // ความยาวชื่อสูงสุด
+  WISH_MAX: 150,          // ความยาวคำอธิษฐานสูงสุด
+};
+
+/* =====================================================================
+   UTILITIES
+   ===================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const frac = x => x - Math.floor(x);
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"'`]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c]));
+}
+function cleanText(s, max) {
+  return String(s || '').replace(/[\u0000-\u001F\u007F​-‏‪-‮⁦-⁩]/g, '').replace(/\s+/g, ' ').trim().slice(0, max);
+}
+const LS = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } }
+};
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+/** Uniform random integer in [0, n) using crypto.getRandomValues (rejection sampling, no modulo bias). */
+function randInt(n) {
+  if (n <= 1) return 0;
+  const lim = Math.floor(0x100000000 / n) * n, a = new Uint32Array(1);
+  let x;
+  do { crypto.getRandomValues(a); x = a[0]; } while (x >= lim);
+  return x % n;
+}
+const IMG_RE = /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/]+=*$/;
+function validImg(s, maxLen = 700000) { return typeof s === 'string' && s.length < maxLen && IMG_RE.test(s); }
+const ID_RE = /^[A-Za-z0-9_-]{6,64}$/;
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+function errMsg(e) { return (e && e.message) ? e.message : String(e || 'unknown'); }
+
+function toast(msg, type = 'info', ms = 4200) {
+  const box = $('#toasts'); if (!box) return;
+  const el = document.createElement('div');
+  el.className = 'toast ' + type; el.textContent = msg;
+  box.appendChild(el);
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, ms);
+}
+
+/* ---------- SHA-256 (WebCrypto with pure-JS fallback for non-secure contexts) ---------- */
+function sha256Fallback(msg) {
+  const primes = []; for (let n = 2; primes.length < 64; n++) if (primes.every(p => n % p)) primes.push(n);
+  const fr = x => ((x - Math.floor(x)) * 4294967296) >>> 0;
+  const K = primes.map(p => fr(Math.cbrt(p)));
+  const H = primes.slice(0, 8).map(p => fr(Math.sqrt(p)));
+  const l = msg.length, total = Math.ceil((l + 9) / 64) * 64;
+  const buf = new Uint8Array(total); buf.set(msg); buf[l] = 0x80;
+  const dv = new DataView(buf.buffer), bits = l * 8;
+  dv.setUint32(total - 4, bits >>> 0); dv.setUint32(total - 8, Math.floor(bits / 4294967296));
+  const W = new Uint32Array(64);
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let off = 0; off < total; off += 64) {
+    for (let i = 0; i < 16; i++) W[i] = dv.getUint32(off + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const s0 = rotr(W[i - 15], 7) ^ rotr(W[i - 15], 18) ^ (W[i - 15] >>> 3);
+      const s1 = rotr(W[i - 2], 17) ^ rotr(W[i - 2], 19) ^ (W[i - 2] >>> 10);
+      W[i] = (W[i - 16] + s0 + W[i - 7] + s1) >>> 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for (let i = 0; i < 64; i++) {
+      const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[i] + W[i]) >>> 0;
+      const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+      const mj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    H[0] = (H[0] + a) >>> 0; H[1] = (H[1] + b) >>> 0; H[2] = (H[2] + c) >>> 0; H[3] = (H[3] + d) >>> 0;
+    H[4] = (H[4] + e) >>> 0; H[5] = (H[5] + f) >>> 0; H[6] = (H[6] + g) >>> 0; H[7] = (H[7] + h) >>> 0;
+  }
+  return H.map(x => x.toString(16).padStart(8, '0')).join('');
+}
+async function sha256Hex(str) {
+  const data = new TextEncoder().encode(String(str));
+  try {
+    if (window.crypto && crypto.subtle && crypto.subtle.digest) {
+      const buf = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+  } catch (e) { /* fall through to JS implementation */ }
+  return sha256Fallback(data);
+}
+window.sha256Hex = sha256Hex;
+
+/* =====================================================================
+   DATA LAYER — Firebase Realtime Database (REST + SSE) or localStorage demo
+   ===================================================================== */
+function segs(p) { return String(p || '').split('/').filter(Boolean); }
+function joinPath(a, b) { return segs(a).concat(segs(b)).join('/'); }
+function getAt(obj, p) {
+  let o = obj;
+  for (const s of segs(p)) { if (o == null || typeof o !== 'object') return null; o = o[s]; }
+  return o === undefined ? null : o;
+}
+function setAt(obj, p, val) {
+  const ss = segs(p);
+  if (!ss.length) return (val === undefined ? null : val);
+  const root = (obj && typeof obj === 'object') ? obj : {};
+  let o = root;
+  for (let i = 0; i < ss.length - 1; i++) {
+    if (o[ss[i]] == null || typeof o[ss[i]] !== 'object') o[ss[i]] = {};
+    o = o[ss[i]];
+  }
+  const last = ss[ss.length - 1];
+  if (val === null || val === undefined) delete o[last]; else o[last] = val;
+  return root;
+}
+function resolveSv(v) {
+  if (v && typeof v === 'object') {
+    if (v['.sv'] === 'timestamp') return Date.now();
+    const o = Array.isArray(v) ? [] : {};
+    for (const k in v) o[k] = resolveSv(v[k]);
+    return o;
+  }
+  return v;
+}
+
+class RemoteStore {
+  constructor(base) { this.base = base; this.mode = 'live'; }
+  url(path, q = '') { const p = segs(path).map(encodeURIComponent).join('/'); return `${this.base}/${p}.json${q}`; }
+  async req(method, path, body, q = '') {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 25000);
+    const opt = { method, signal: ctrl.signal, headers: {} };
+    if (body !== undefined) { opt.body = JSON.stringify(body); opt.headers['Content-Type'] = 'application/json'; }
+    try {
+      const r = await fetch(this.url(path, q), opt);
+      if (!r.ok) {
+        if (r.status === 401 || r.status === 403) throw new Error('ฐานข้อมูลปฏิเสธการเข้าถึง (ตรวจสอบ Security Rules)');
+        throw new Error('ฐานข้อมูลตอบกลับผิดพลาด (HTTP ' + r.status + ')');
+      }
+      if (r.status === 204) return null;
+      const txt = await r.text();
+      return txt ? JSON.parse(txt) : null;
+    } catch (e) {
+      if (e.name === 'AbortError') throw new Error('เชื่อมต่อฐานข้อมูลนานเกินไป กรุณาลองใหม่');
+      if (e instanceof TypeError) throw new Error('เชื่อมต่อฐานข้อมูลไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ต');
+      throw e;
+    } finally { clearTimeout(timer); }
+  }
+  get(path) { return this.req('GET', path); }
+  async exists(path) { return (await this.req('GET', path, undefined, '?shallow=true')) != null; }
+  put(path, v) { return this.req('PUT', path, v, '?print=silent'); }
+  patch(path, v) { return this.req('PATCH', path, v, '?print=silent'); }
+  remove(path) { return this.req('DELETE', path, undefined, '?print=silent'); }
+  serverTime() { return { '.sv': 'timestamp' }; }
+  /** Subscribe to a path via Server-Sent Events. cb(fullValue) is called on every change. */
+  listen(path, cb, onStatus) {
+    let cache = null, es = null, closed = false;
+    const emit = () => { try { cb(cache); } catch (e) { console.error(e); } };
+    const handle = (type, ev) => {
+      let m; try { m = JSON.parse(ev.data); } catch (e) { return; }
+      if (!m || typeof m !== 'object') return;
+      if (type === 'put') cache = setAt(cache, m.path, m.data);
+      else if (m.data && typeof m.data === 'object') for (const k in m.data) cache = setAt(cache, joinPath(m.path, k), m.data[k]);
+      emit();
+    };
+    try {
+      es = new EventSource(this.url(path));
+      es.addEventListener('put', ev => handle('put', ev));
+      es.addEventListener('patch', ev => handle('patch', ev));
+      es.addEventListener('cancel', () => { onStatus('offline'); toast('ฐานข้อมูลยกเลิกการเชื่อมต่อ (ตรวจสอบ Security Rules)', 'err'); });
+      es.addEventListener('auth_revoked', () => onStatus('offline'));
+      es.onopen = () => { if (!closed) onStatus('live'); };
+      es.onerror = () => { if (!closed) onStatus('offline'); };
+    } catch (e) {
+      onStatus('offline');
+      toast('เปิดการเชื่อมต่อแบบเรียลไทม์ไม่ได้: ' + errMsg(e), 'err');
+    }
+    return () => { closed = true; try { es && es.close(); } catch (e) { /* ignore */ } };
+  }
+}
+
+class LocalStore {
+  constructor() {
+    this.key = 'rotw_demo_db_v1'; this.mode = 'demo'; this.subs = new Set();
+    window.addEventListener('storage', e => { if (e.key === this.key || e.key === null) this.emit(); });
+  }
+  read() { try { return JSON.parse(localStorage.getItem(this.key) || '{}') || {}; } catch (e) { return {}; } }
+  write(db) {
+    try { localStorage.setItem(this.key, JSON.stringify(db || {})); }
+    catch (e) { throw new Error('พื้นที่จัดเก็บของโหมดเดโมเต็ม หรือเบราว์เซอร์ไม่อนุญาตให้บันทึก'); }
+    this.emit();
+  }
+  emit() { const db = this.read(); this.subs.forEach(s => { try { s.cb(getAt(db, s.path)); } catch (e) { console.error(e); } }); }
+  async get(path) { return getAt(this.read(), path); }
+  async exists(path) { return getAt(this.read(), path) != null; }
+  async put(path, v) { this.write(setAt(this.read(), path, resolveSv(v))); }
+  async patch(path, obj) { let db = this.read(); for (const k in obj) db = setAt(db, joinPath(path, k), resolveSv(obj[k])); this.write(db); }
+  async remove(path) { this.write(setAt(this.read(), path, null)); }
+  serverTime() { return { '.sv': 'timestamp' }; }
+  listen(path, cb, onStatus) {
+    const s = { path, cb }; this.subs.add(s); onStatus('demo');
+    setTimeout(() => { if (this.subs.has(s)) cb(getAt(this.read(), path)); }, 0);
+    return () => this.subs.delete(s);
+  }
+}
+
+function resolveDbUrl() {
+  let u = '', fromParam = false;
+  try { const p = new URLSearchParams(location.search).get('db'); if (p) { u = p.trim(); fromParam = true; } } catch (e) { /* ignore */ }
+  if (!u) u = String(CONFIG.DB_URL || '').trim();
+  if (!u) return { url: '' };
+  try {
+    const x = new URL(u);
+    if (x.protocol !== 'https:') throw new Error('not https');
+    return { url: x.origin + x.pathname.replace(/\/+$/, '') };
+  } catch (e) { return { url: '', bad: fromParam ? 'param' : 'config' }; }
+}
+const DBINFO = resolveDbUrl();
+const store = DBINFO.url ? new RemoteStore(DBINFO.url) : new LocalStore();
+
+/** Per-device id (used as the record key → 1 device = 1 krathong). */
+const DEVICE = (() => {
+  let id = LS.get('rotw_device_id');
+  if (!id || !/^[a-f0-9]{24}$/.test(id)) {
+    const a = new Uint8Array(12); crypto.getRandomValues(a);
+    id = Array.from(a, b => b.toString(16).padStart(2, '0')).join('');
+    LS.set('rotw_device_id', id);
+  }
+  return id;
+})();
+
+/* =====================================================================
+   SOUND — Web Audio synthesis only (no external files)
+   ===================================================================== */
+const Sound = (() => {
+  let ctx = null, master, comp, musicGain, sfxGain, noiseBuf;
+  let muted = LS.get('rotw_muted') === '1';
+  let playing = false, timer = null, nextTime = 0, step = 0;
+  const BPM = 130, STEP = 60 / BPM / 2; // eighth notes
+  const SC = [60, 62, 64, 67, 69, 72, 74, 76, 79, 81, 84, 86, 88]; // Thai-flavoured pentatonic C D E G A
+  const _ = null;
+  // 4 ท่อน × 4 ห้อง × 8 ตัวเขบ็ต (ทำนองแต่งใหม่ สไตล์รำวง)
+  const MEL = [
+    [7, 8, 9, 8, 7, 6, 5, 6, 7, _, 8, 7, 6, 5, 6, _, 5, 6, 7, 8, 9, 10, 9, 8, 7, 8, 7, 6, 5, _, 5, _],
+    [9, 9, 10, 9, 8, 7, 8, 9, 10, 11, 10, 9, 8, _, 8, _, 7, 8, 9, 8, 7, 6, 5, 6, 7, 6, 5, 4, 5, _, 5, _],
+    [5, 7, 8, 7, 5, 7, 8, 9, 8, 7, 6, 7, 8, _, 8, _, 10, 9, 8, 9, 10, 11, 12, 11, 10, 9, 8, 7, 8, _, 8, _],
+    [12, 11, 10, 9, 10, 9, 8, 7, 8, 7, 6, 5, 6, 7, 8, _, 7, 8, 9, 10, 9, 8, 7, 6, 5, 6, 7, 6, 5, _, 5, _]
+  ];
+  const ROOTS = [[48, 55], [43, 50], [45, 52], [48, 55]];
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+
+  function init() {
+    if (ctx) return true;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return false;
+    try {
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = muted ? 0 : 1; master.connect(ctx.destination);
+      comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4; comp.connect(master);
+      musicGain = ctx.createGain(); musicGain.gain.value = 0.3; musicGain.connect(comp);
+      sfxGain = ctx.createGain(); sfxGain.gain.value = 0.85; sfxGain.connect(comp);
+      noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+      const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      return true;
+    } catch (e) { ctx = null; return false; }
+  }
+  function env(g, t, a, peak, dec) {
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), t + a);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + a + dec);
+  }
+  function osc(type, f, t, dur, out, vol, a = 0.004) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t);
+    env(g, t, a, vol, dur); o.connect(g); g.connect(out);
+    o.start(t); o.stop(t + a + dur + 0.05); return o;
+  }
+  function noise(t, dur, type, freq, q, vol, out) {
+    const s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    s.buffer = noiseBuf; f.type = type; f.frequency.setValueAtTime(freq, t); f.Q.value = q;
+    env(g, t, 0.002, vol, dur); s.connect(f); f.connect(g); g.connect(out);
+    s.start(t, Math.random() * 0.5); s.stop(t + dur + 0.05); return f;
+  }
+  // ระนาด (wooden bar): triangle + inharmonic overtone + click
+  function ranat(m, t, vol = 0.3, out = musicGain, dec = 0.3) {
+    const f = mtof(m);
+    osc('triangle', f, t, dec, out, vol, 0.003);
+    osc('sine', f * 3.93, t, dec * 0.28, out, vol * 0.22, 0.002);
+    noise(t, 0.015, 'bandpass', Math.min(f * 4, 9000), 2, vol * 0.25, out);
+  }
+  // ฉิ่ง (open) / ฉับ (closed)
+  function ching(t, open, out = musicGain) {
+    const fs = open ? [2637, 3523, 4186, 5274] : [2950, 4380];
+    const dec = open ? 0.55 : 0.06;
+    fs.forEach((f, i) => osc('sine', f, t, dec, out, (open ? 0.06 : 0.05) / (i * 0.6 + 1), 0.001));
+    noise(t, open ? 0.1 : 0.05, 'highpass', 6500, 0.7, open ? 0.06 : 0.09, out);
+  }
+  // ฉาบ
+  function chap(t, out = musicGain, vol = 0.12) { noise(t, 0.22, 'highpass', 4200, 0.8, vol, out); noise(t, 0.08, 'bandpass', 2800, 2, vol * 0.6, out); }
+  // โทน
+  function thon(t, high, out = musicGain) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(high ? 330 : 150, t);
+    o.frequency.exponentialRampToValueAtTime(high ? 240 : 78, t + 0.12);
+    env(g, t, 0.003, high ? 0.26 : 0.5, high ? 0.13 : 0.3);
+    o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.42);
+    noise(t, 0.03, 'bandpass', high ? 2600 : 1100, 1, 0.1, out);
+  }
+  // ฆ้อง
+  function gong(t, vol = 0.35, out = sfxGain, base = 98) {
+    [[1, 1], [1.004, 0.6], [2.01, 0.42], [2.76, 0.24], [4.12, 0.1]].forEach(([m, a]) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(base * m * 1.012, t);
+      o.frequency.exponentialRampToValueAtTime(base * m, t + 0.45);
+      env(g, t, 0.01, vol * a, 2.6); o.connect(g); g.connect(out); o.start(t); o.stop(t + 2.8);
+    });
+    noise(t, 0.08, 'lowpass', 900, 1, vol * 0.35, out);
+  }
+  function bass(m, t) { osc('triangle', mtof(m), t, 0.38, musicGain, 0.16, 0.006); }
+  function splash(t, v = 1) {
+    const f = noise(t, 0.6, 'bandpass', 2600, 0.9, 0.35 * v, sfxGain);
+    f.frequency.exponentialRampToValueAtTime(380, t + 0.55);
+    noise(t, 0.25, 'highpass', 3000, 0.7, 0.12 * v, sfxGain);
+    for (let i = 0; i < 5; i++) {
+      const tt = t + 0.05 + Math.random() * 0.35, o = ctx.createOscillator(), g = ctx.createGain();
+      const f0 = 500 + Math.random() * 500;
+      o.type = 'sine'; o.frequency.setValueAtTime(f0, tt); o.frequency.exponentialRampToValueAtTime(f0 * 2.4, tt + 0.07);
+      env(g, tt, 0.004, 0.08 * v, 0.07); o.connect(g); g.connect(sfxGain); o.start(tt); o.stop(tt + 0.12);
+    }
+  }
+
+  function scheduleStep(s, t) {
+    const sec = Math.floor(s / 32) % 4, i = s % 32, b = i % 8;
+    const n = MEL[sec][i];
+    if (n != null) { ranat(SC[n], t, 0.2); ranat(SC[n] - 12, t, 0.08, musicGain, 0.22); }
+    if (b === 0 || b === 4) ching(t, true); else if (b === 2 || b === 6) ching(t, false);
+    if (b === 0 || b === 4) thon(t, false);
+    if (b === 3 || b === 6 || b === 7) thon(t, true);
+    if (b === 0) bass(ROOTS[sec][0], t); else if (b === 4) bass(ROOTS[sec][1], t);
+    if (i === 0) gong(t, 0.1, musicGain, 82);
+    if (i === 30 && sec % 2 === 1) chap(t);
+  }
+  function tick() {
+    if (!ctx) return;
+    if (nextTime < ctx.currentTime - 0.25) nextTime = ctx.currentTime + 0.05;
+    while (nextTime < ctx.currentTime + 0.15) { try { scheduleStep(step, nextTime); } catch (e) { /* ignore */ } step++; nextTime += STEP; }
+  }
+  function startMusic() {
+    if (!ctx || playing || muted) return;
+    playing = true; step = 0; nextTime = ctx.currentTime + 0.12;
+    timer = setInterval(tick, 30);
+  }
+  function stopMusic() { playing = false; clearInterval(timer); timer = null; }
+  function unlock() {
+    if (!init()) return;
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+    if (!muted && !document.hidden) startMusic();
+  }
+  function setMuted(m) {
+    muted = !!m; LS.set('rotw_muted', muted ? '1' : '0');
+    if (ctx) {
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(muted ? 0 : 1, ctx.currentTime, 0.05);
+      if (muted) stopMusic(); else { if (ctx.state === 'suspended') ctx.resume().catch(() => {}); startMusic(); }
+    } else if (!muted) unlock();
+    return muted;
+  }
+  function sfx(name) {
+    if (!ctx || muted) return;
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+    const t = ctx.currentTime + 0.02;
+    try {
+      switch (name) {
+        case 'click': ranat(96, t, 0.16, sfxGain, 0.07); break;
+        case 'tick': ranat(SC[8 + randInt(5)] + 12, t, 0.13, sfxGain, 0.06); noise(t, 0.02, 'highpass', 5000, 1, 0.05, sfxGain); break;
+        case 'wish': gong(t, 0.34); [72, 74, 76, 79, 81, 84, 86, 88].forEach((m, i) => ranat(m, t + 0.06 + i * 0.07, 0.28, sfxGain, 0.35)); break;
+        case 'float': splash(t); gong(t + 0.05, 0.3); [88, 86, 84, 81, 79, 76, 74, 72].forEach((m, i) => ranat(m, t + 0.3 + i * 0.085, 0.24, sfxGain, 0.4)); break;
+        case 'drop': splash(t, 0.55); ranat(79, t + 0.08, 0.18, sfxGain); ranat(84, t + 0.18, 0.18, sfxGain); break;
+        case 'celebrate':
+          gong(t, 0.42, sfxGain, 87);
+          [72, 76, 79, 81, 84, 88, 91, 93, 96].forEach((m, i) => ranat(m, t + 0.05 + i * 0.06, 0.26, sfxGain, 0.4));
+          for (let i = 0; i < 6; i++) ching(t + 0.1 + i * 0.12, i % 2 === 0, sfxGain);
+          chap(t + 0.6, sfxGain, 0.22); chap(t + 0.84, sfxGain, 0.22);
+          break;
+      }
+    } catch (e) { /* audio failures must never break the app */ }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) { stopMusic(); ctx.suspend().catch(() => {}); }
+    else if (!muted) { ctx.resume().catch(() => {}); startMusic(); }
+  });
+  return { unlock, sfx, setMuted, isMuted: () => muted };
+})();
+
+/* =====================================================================
+   SCENE — sky, temples, seigaiha water, sparkles, lanterns, lotus
+   ===================================================================== */
+const LOGO_HTML = '<div class="logo"><div class="logo-top">THE RIVER OF</div><div class="logo-main">THAI WAH</div>' +
+  '<svg class="logo-swoosh" viewBox="0 0 320 34" aria-hidden="true"><defs><linearGradient id="lgSw" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".25" stop-color="#fff"/><stop offset=".7" stop-color="#ffe08a"/><stop offset="1" stop-color="#f3b94a" stop-opacity="0"/></linearGradient></defs>' +
+  '<path d="M6 20C70 4 120 30 170 19S270 3 314 13" fill="none" stroke="url(#lgSw)" stroke-width="4" stroke-linecap="round"/>' +
+  '<path d="M44 28C100 18 150 34 210 26S278 18 298 22" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="2" stroke-linecap="round"/></svg></div>';
+
+function profilePath(cx, base, pts, sc) {
+  const R = pts.map(([dy, w]) => [cx + w * sc, base - dy * sc]);
+  const L = pts.map(([dy, w]) => [cx - w * sc, base - dy * sc]).reverse();
+  return 'M' + R.concat(L).map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L') + 'Z';
+}
+const PRANG = [[0, 70], [16, 70], [16, 61], [30, 61], [30, 52], [42, 52], [42, 46], [52, 44], [66, 43], [84, 41], [102, 38], [120, 34], [138, 28], [154, 22], [168, 16], [180, 11], [190, 7.5], [196, 6], [200, 4.5], [204, 3], [224, 2], [246, 0.8]];
+const CHEDI = [[0, 58], [12, 58], [12, 50], [22, 50], [22, 43], [30, 43], [33, 39], [44, 41], [58, 40], [72, 36], [84, 29], [92, 21], [96, 14], [98, 12], [103, 12], [103, 9], [108, 9], [110, 7], [122, 6], [136, 4.4], [150, 3], [166, 1.8], [182, 0.6]];
+function hallPaths(cx, sc) {
+  const b = 320, w = 118 * sc, bodyH = 34 * sc;
+  const y1 = b - bodyH + 2 * sc, y2 = y1 - 24 * sc, y3 = y2 - 21 * sc, y4 = y3 - 26 * sc;
+  const P = [];
+  P.push(`M${cx - w * .74} ${b}V${b - bodyH}H${cx + w * .74}V${b}Z`);
+  P.push(`M${cx - w * .84} ${b}V${b - 6 * sc}H${cx + w * .84}V${b}Z`);
+  const tier = (yb, yt, wb, wt) => `M${cx - wb} ${yb}L${cx - wt} ${yt}L${cx + wt} ${yt}L${cx + wb} ${yb}Z`;
+  P.push(tier(y1, y2, w, w * .84));
+  P.push(tier(y2 + 6 * sc, y3, w * .86, w * .66));
+  P.push(tier(y3 + 6 * sc, y4, w * .68, w * .46));
+  const cho = (x, dir) => `M${x} ${y4 + 2 * sc}C${x + dir * 2 * sc} ${y4 - 8 * sc} ${x + dir * 6 * sc} ${y4 - 14 * sc} ${x + dir * 11 * sc} ${y4 - 17 * sc}L${x + dir * 8 * sc} ${y4 - 10 * sc}C${x + dir * 5 * sc} ${y4 - 6 * sc} ${x + dir * 4 * sc} ${y4 - 2 * sc} ${x + dir * 4 * sc} ${y4 + 2 * sc}Z`;
+  P.push(cho(cx - w * .46, -1), cho(cx + w * .46, 1));
+  [[y1, w], [y2 + 6 * sc, w * .86], [y3 + 6 * sc, w * .68]].forEach(([y, ww]) => {
+    P.push(`M${cx - ww} ${y}l${-7 * sc} ${-8 * sc}l${2 * sc} ${-1 * sc}l${6 * sc} ${7 * sc}Z`);
+    P.push(`M${cx + ww} ${y}l${7 * sc} ${-8 * sc}l${-2 * sc} ${-1 * sc}l${-6 * sc} ${7 * sc}Z`);
+  });
+  return P;
+}
+function templeSVG() {
+  const pth = d => `<path d="${d}"/>`;
+  const trees = [[40, 300, 26], [70, 296, 30], [560, 302, 22], [585, 298, 26], [1060, 300, 24], [1530, 298, 30], [1565, 302, 24]]
+    .map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join('');
+  const far = [profilePath(140, 320, CHEDI, .6), ...hallPaths(380, .6), profilePath(615, 320, CHEDI, .5), profilePath(1010, 320, CHEDI, .52), profilePath(1290, 320, PRANG, .52), profilePath(1475, 320, CHEDI, .62)];
+  const near = [...hallPaths(250, .8), profilePath(480, 320, CHEDI, .95), profilePath(680, 320, PRANG, .56), profilePath(920, 320, PRANG, .56), profilePath(800, 320, PRANG, 1), ...hallPaths(1135, .92), profilePath(1395, 320, CHEDI, .8)];
+  return `<svg viewBox="0 0 1600 320" preserveAspectRatio="xMidYMax meet" aria-hidden="true">` +
+    `<g fill="#c5b5d8" opacity=".55">${trees}${far.map(pth).join('')}</g>` +
+    `<g fill="#a495c3" opacity=".62">${near.map(pth).join('')}<rect x="0" y="314" width="1600" height="6"/></g></svg>`;
+}
+function lotusSVG(id) {
+  const petal = (x, y, ang, len, wid, fill) => `<path d="M0 0C${-wid} ${-len * .3} ${-wid * .8} ${-len * .75} 0 ${-len}C${wid * .8} ${-len * .75} ${wid} ${-len * .3} 0 0Z" transform="translate(${x} ${y}) rotate(${ang})" fill="${fill}" stroke="#e98ab0" stroke-width="1" stroke-opacity=".45"/>`;
+  const fx = 118, fy = 152;
+  let back = '', front = '';
+  [-66, -40, -15, 15, 40, 66].forEach(a => { back += petal(fx, fy, a, 68, 22, `url(#${id}b)`); });
+  [-46, -22, 0, 22, 46].forEach(a => { front += petal(fx, fy + 4, a, a === 0 ? 80 : 66, 21, `url(#${id}f)`); });
+  const bud = `<path d="M204 196C206 180 204 168 200 160" stroke="#5f9e8f" stroke-width="3" fill="none"/>` + petal(200, 162, -12, 46, 15, `url(#${id}f)`) + petal(200, 162, 14, 44, 14, `url(#${id}b)`);
+  return `<svg viewBox="0 0 260 210" aria-hidden="true"><defs>` +
+    `<linearGradient id="${id}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ee79a6"/><stop offset=".6" stop-color="#f7b2cd"/><stop offset="1" stop-color="#fde4ee"/></linearGradient>` +
+    `<linearGradient id="${id}f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f287b2"/><stop offset=".5" stop-color="#fbc6da"/><stop offset="1" stop-color="#fff6fa"/></linearGradient>` +
+    `<linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fcbb8"/><stop offset="1" stop-color="#4f9a8c"/></linearGradient></defs>` +
+    `<ellipse cx="78" cy="186" rx="96" ry="22" fill="url(#${id}l)"/><path d="M78 186L20 178M78 186L60 166M78 186l60-10M78 186l30 16" stroke="#cfeee4" stroke-opacity=".6" stroke-width="1.4"/>` +
+    `<ellipse cx="214" cy="198" rx="58" ry="12" fill="url(#${id}l)" opacity=".9"/>` +
+    bud + back + front + `<circle cx="${fx}" cy="${fy - 8}" r="7" fill="#ffe08a" opacity=".9"/></svg>`;
+}
+function buildScene() {
+  // ลายคลื่นญี่ปุ่น (seigaiha) — draws only the visible arcs of each fan
+  const fan = (cx, cy) => `M${cx - 17.42} ${cy - 9.83}A20 20 0 0 1 ${cx + 17.42} ${cy - 9.83}M${cx - 12.37} ${cy - 8.49}A15 15 0 0 1 ${cx + 12.37} ${cy - 8.49}M${cx - 8} ${cy - 6}A10 10 0 0 1 ${cx + 8} ${cy - 6}M${cx - 4.35} ${cy - 2.46}A5 5 0 0 1 ${cx + 4.35} ${cy - 2.46}`;
+  const seig = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 40 20"><path fill="none" stroke="#ffffff" stroke-opacity=".75" stroke-width="1.1" d="${fan(20, 10) + fan(0, 20) + fan(40, 20) + fan(20, 30)}"/></svg>`;
+  document.documentElement.style.setProperty('--seig', `url("data:image/svg+xml,${encodeURIComponent(seig)}")`);
+  const bands = [[0, 24, 20, 60, .5], [14, 30, 32, 52, .55], [34, 36, 48, 44, .6], [60, 42, 72, 36, .62]];
+  $('#wbands').innerHTML = bands.map(([top, h, tw, dur, op]) => `<div class="wband" style="top:${top}%;height:${h}%;--tw:${tw}px;--dur:${dur}s;opacity:${op}"></div>`).join('');
+
+  $('#temples').innerHTML = templeSVG();
+  $('#templesRefl').innerHTML = templeSVG();
+  $('#lotusL').innerHTML = lotusSVG('lta');
+  $('#lotusR').innerHTML = lotusSVG('ltb');
+  $('#lotusR').firstElementChild.style.transform = 'scaleX(-1)';
+
+  const rnd = Math.random;
+  let h = '';
+  for (let i = 0; i < 26; i++) {
+    const z = 6 + rnd() * 14;
+    h += `<span class="spk" style="left:${(rnd() * 96 + 2).toFixed(1)}%;top:calc(var(--hz) * ${(0.04 + rnd() * .72).toFixed(3)});--z:${z.toFixed(1)}px;--t:${(2.4 + rnd() * 3).toFixed(2)}s;--dl:${(-rnd() * 5).toFixed(2)}s"></span>`;
+  }
+  $('#sparkles').innerHTML = h;
+  h = '';
+  for (let i = 0; i < 11; i++) {
+    h += `<span class="lan" style="left:${(rnd() * 92 + 4).toFixed(1)}%;--w:${(7 + rnd() * 8).toFixed(1)}px;--t:${(20 + rnd() * 18).toFixed(1)}s;--dl:${(-rnd() * 36).toFixed(1)}s;--sx:${((rnd() - .5) * 80).toFixed(0)}px"></span>`;
+  }
+  $('#lanterns').innerHTML = h;
+  h = '';
+  for (let i = 0; i < 26; i++) {
+    h += `<span class="gl" style="left:${(rnd() * 94 + 2).toFixed(1)}%;top:${(rnd() * 92 + 3).toFixed(1)}%;--w:${(8 + rnd() * 22).toFixed(0)}px;--t:${(2 + rnd() * 3).toFixed(2)}s;--dl:${(-rnd() * 4).toFixed(2)}s"></span>`;
+  }
+  $('#glints').innerHTML = h;
+
+  $$('.logo-slot').forEach(el => {
+    el.innerHTML = LOGO_HTML;
+    el.firstElementChild.classList.add(el.dataset.size || 'small');
+  });
+}
+
+/* =====================================================================
+   STAFF FLOW
+   ===================================================================== */
+const S = { name: '', original: null, cutout: null, tip: { x: .5, y: 0 }, wish: '', stream: null, facing: 'environment', busy: false, screen: 'welcome' };
+
+function go(name) {
+  if (S.screen === 'camera' && name !== 'camera') stopCamera();
+  S.screen = name;
+  $$('#staff .screen').forEach(s => s.classList.toggle('on', s.id === 's-' + name));
+  const sc = $('#s-' + name); if (sc) sc.scrollTop = 0;
+  if (name === 'camera') startCamera();
+  if (name === 'wish') setupWish();
+  if (name === 'float') setupFloat();
+}
+
+async function refreshSentState() {
+  $('#welcomeForm').hidden = true; $('#welcomeDone').hidden = true; $('#welcomeChecking').hidden = false;
+  let sent = LS.get('rotw_sent') === '1';
+  try {
+    sent = await store.exists('krathongs/' + DEVICE);
+    if (sent) LS.set('rotw_sent', '1'); else { LS.del('rotw_sent'); LS.del('rotw_my_img'); }
+  } catch (e) {
+    toast('ตรวจสอบสถานะกับฐานข้อมูลไม่สำเร็จ: ' + errMsg(e), 'err');
+  }
+  $('#welcomeChecking').hidden = true;
+  $('#welcomeForm').hidden = sent;
+  $('#welcomeDone').hidden = !sent;
+  const my = LS.get('rotw_my_img');
+  const img = $('#myKrathong');
+  if (sent && validImg(my)) { img.src = my; img.hidden = false; } else img.hidden = true;
+  return sent;
+}
+
+function onStart() {
+  const v = cleanText($('#nameInput').value, CONFIG.NAME_MAX);
+  if (!v) {
+    const f = $('#nameField'); f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
+    toast('กรุณากรอกชื่อของคุณก่อนนะ', 'warn'); $('#nameInput').focus(); return;
+  }
+  S.name = v; $('#nameInput').value = v; LS.set('rotw_name', v);
+  go('camera');
+}
+
+/* ---------- camera ---------- */
+function camState(state, html) {
+  const cam = $('#cam');
+  cam.classList.toggle('loading', state === 'loading');
+  cam.classList.toggle('fail', state === 'fail');
+  if (html != null) $('#camMsg').innerHTML = html;
+  $('#btnTake').disabled = state !== 'ok';
+  $('#camHint').hidden = state !== 'ok';
+}
+function stopCamera() {
+  if (S.stream) { S.stream.getTracks().forEach(t => { try { t.stop(); } catch (e) { /* ignore */ } }); S.stream = null; }
+  const v = $('#video'); try { v.srcObject = null; } catch (e) { /* ignore */ }
+}
+async function startCamera() {
+  stopCamera();
+  camState('loading', '<div class="spinner"></div><div>กำลังเปิดกล้อง…</div>');
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    camState('fail', '<b>📷</b><div>อุปกรณ์หรือเบราว์เซอร์นี้เปิดกล้องไม่ได้<br>กรุณากด <b style="font-size:inherit">UPLOAD PHOTO</b> เพื่อเลือกรูปแทน</div>');
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: S.facing }, width: { ideal: 1280 }, height: { ideal: 1280 } }, audio: false });
+    if (S.screen !== 'camera') { stream.getTracks().forEach(t => t.stop()); return; }
+    S.stream = stream;
+    const v = $('#video'); v.srcObject = stream; v.classList.toggle('mirror', S.facing === 'user');
+    try { await v.play(); } catch (e) { /* autoplay muted should be fine */ }
+    camState('ok');
+  } catch (e) {
+    const denied = e && (e.name === 'NotAllowedError' || e.name === 'SecurityError');
+    camState('fail', denied
+      ? '<b>🔒</b><div>ไม่ได้รับอนุญาตให้ใช้กล้อง<br>กดอนุญาตในการตั้งค่าเบราว์เซอร์ หรือกด <b style="font-size:inherit">UPLOAD PHOTO</b></div>'
+      : '<b>📷</b><div>เปิดกล้องไม่ได้<br>กรุณากด <b style="font-size:inherit">UPLOAD PHOTO</b> เพื่อเลือกรูปแทน</div>');
+  }
+}
+function capture() {
+  const v = $('#video'), vw = v.videoWidth, vh = v.videoHeight;
+  if (!vw || !vh) { toast('กล้องยังไม่พร้อม ลองอีกครั้ง', 'warn'); return; }
+  const side = Math.min(vw, vh), out = Math.min(side, CONFIG.ORIGINAL_MAX);
+  const c = document.createElement('canvas'); c.width = c.height = out;
+  c.getContext('2d').drawImage(v, (vw - side) / 2, (vh - side) / 2, side, side, 0, 0, out, out);
+  processPhoto(c);
+}
+function onFile(e) {
+  const f = e.target.files && e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  if (!/^image\//.test(f.type)) { toast('กรุณาเลือกไฟล์รูปภาพ', 'warn'); return; }
+  const url = URL.createObjectURL(f), img = new Image();
+  img.onload = () => {
+    const sc = Math.min(1, CONFIG.ORIGINAL_MAX / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(img.naturalWidth * sc)); c.height = Math.max(1, Math.round(img.naturalHeight * sc));
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url);
+    processPhoto(c);
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); toast('เปิดไฟล์รูปนี้ไม่ได้ ลองรูปอื่น', 'err'); };
+  img.src = url;
+}
+
+/* ---------- step 3: background removal ---------- */
+function processPhoto(canvas) {
+  S.original = canvas.toDataURL('image/jpeg', 0.85);
+  S.cutout = null;
+  go('ready');
+  $('#readySpin').hidden = false; $('#readyImg').hidden = true; $('#readyBadge').innerHTML = ''; $('#readyOk').hidden = true;
+  const msg = $('#readyMsg'); msg.className = 'msg'; msg.textContent = 'กำลังตัดพื้นหลังกระทงของคุณ…';
+  $('#readyBtns').innerHTML = '';
+  setTimeout(() => {
+    let r;
+    try { r = removeBackground(canvas); } catch (e) { console.error(e); r = { ok: false, msg: 'ประมวลผลภาพไม่สำเร็จ กรุณาถ่ายใหม่' }; }
+    showReady(r);
+  }, 60);
+}
+const ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19.5 7"/></svg>';
+function showReady(r) {
+  $('#readySpin').hidden = true;
+  const msg = $('#readyMsg'), btns = $('#readyBtns'), img = $('#readyImg');
+  if (r.dataUrl) { img.src = r.dataUrl; img.hidden = false; }
+  const retake = '<button class="btn btn-white" type="button" data-act="retake">↺ RETAKE</button>';
+  if (r.ok && !r.partial) {
+    S.cutout = r.dataUrl; S.tip = r.tip;
+    $('#readyBadge').innerHTML = `<div class="badge ok">${ICON_OK}</div>`;
+    $('#readyOk').hidden = false;
+    msg.className = 'msg'; msg.textContent = 'ตัดพื้นหลังเรียบร้อย พร้อมสำหรับขั้นตอนถัดไป';
+    btns.innerHTML = retake + '<button class="btn btn-primary" type="button" data-act="continue">CONTINUE <span class="chev">›</span></button>';
+  } else if (r.ok && r.partial) {
+    S.cutout = r.dataUrl; S.tip = r.tip;
+    $('#readyBadge').innerHTML = '<div class="badge warn">!</div>';
+    msg.className = 'msg warn'; msg.textContent = '⚠ ' + r.msg + ' — แนะนำให้ถ่ายใหม่บนพื้นหลังสีขาวเรียบ ๆ';
+    btns.innerHTML = '<button class="btn btn-primary" type="button" data-act="retake">↺ RETAKE</button><button class="btn btn-white" type="button" data-act="continue">ใช้ภาพนี้ต่อ</button>';
+  } else {
+    $('#readyBadge').innerHTML = '<div class="badge err">✕</div>';
+    msg.className = 'msg err'; msg.textContent = '✕ ' + (r.msg || 'ตัดพื้นหลังไม่สำเร็จ');
+    btns.innerHTML = '<button class="btn btn-primary" type="button" data-act="retake">↺ RETAKE</button>';
+  }
+}
+
+/**
+ * Local background removal (no AI, keeps the real krathong pixels):
+ * 1) estimate background colour from the image border, 2) flood-fill whitish pixels from the edges
+ * with an edge-stop, 3) keep the main object, 4) soften & de-white the outline, 5) crop + resize ≤ IMG_MAX.
+ */
+function removeBackground(src) {
+  const sc0 = Math.min(1, 480 / Math.max(src.width, src.height));
+  const W = Math.max(8, Math.round(src.width * sc0)), H = Math.max(8, Math.round(src.height * sc0)), N = W * H;
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const g = cv.getContext('2d', { willReadFrequently: true });
+  g.drawImage(src, 0, 0, W, H);
+  const im = g.getImageData(0, 0, W, H), d = im.data;
+
+  // 1. background reference = median of border pixels
+  const rs = [], gs = [], bs = [];
+  const take = i => { rs.push(d[i * 4]); gs.push(d[i * 4 + 1]); bs.push(d[i * 4 + 2]); };
+  for (let x = 0; x < W; x++) { take(x); take((H - 1) * W + x); take(W + x); take((H - 2) * W + x); }
+  for (let y = 0; y < H; y++) { take(y * W); take(y * W + W - 1); take(y * W + 1); take(y * W + W - 2); }
+  const med = a => { a.sort((p, q) => p - q); return a[a.length >> 1]; };
+  const br = med(rs), bgc = med(gs), bb = med(bs);
+  const bLum = .299 * br + .587 * bgc + .114 * bb;
+  const bSat = Math.max(br, bgc, bb) - Math.min(br, bgc, bb);
+  if (bLum < 115 || bSat > 70) return { ok: false, msg: 'พื้นหลังไม่ใช่สีขาวหรือแสงน้อยเกินไป กรุณาวางกระทงบนพื้นหลังสีขาวในที่สว่าง' };
+
+  const SAT_TOL = 16, MIN_LUM = Math.max(85, bLum - 80), EDGE = 34;
+  // 3x3 box blur copy → reduces camera noise before classifying pixels
+  const sm = new Float32Array(N * 3);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    let r = 0, gg = 0, b = 0, c = 0;
+    for (let yy = Math.max(0, y - 1); yy <= Math.min(H - 1, y + 1); yy++) for (let xx = Math.max(0, x - 1); xx <= Math.min(W - 1, x + 1); xx++) {
+      const k = (yy * W + xx) * 4; r += d[k]; gg += d[k + 1]; b += d[k + 2]; c++;
+    }
+    const o = (y * W + x) * 3; sm[o] = r / c; sm[o + 1] = gg / c; sm[o + 2] = b / c;
+  }
+  const lum = new Float32Array(N), sat = new Float32Array(N), dist = new Float32Array(N);
+  const cr0 = br - bLum, cg0 = bgc - bLum, cb0 = bb - bLum; // paper tint (lighting colour cast)
+  for (let i = 0; i < N; i++) {
+    const r = sm[i * 3], gg = sm[i * 3 + 1], b = sm[i * 3 + 2];
+    const l = .299 * r + .587 * gg + .114 * b, k = l / bLum;
+    lum[i] = l;
+    // tint difference vs. the paper (scaled for shading) — pale pink/cream parts have a tint, paper does not
+    sat[i] = Math.abs(r - l - cr0 * k) + Math.abs(gg - l - cg0 * k) + Math.abs(b - l - cb0 * k);
+    const dr = r - br, dg = gg - bgc, db = b - bb; dist[i] = Math.sqrt(dr * dr + dg * dg + db * db);
+  }
+  // background-like = (almost) the paper colour, or the same tint & bright enough (paper in shade)
+  const like = i => dist[i] < 14 || (sat[i] <= SAT_TOL && lum[i] >= MIN_LUM);
+  // edge-stop: do not cross strong colour edges (protects pale petals / candles that touch the paper)
+  const near = (i, j) => Math.abs(sm[i * 3] - sm[j * 3]) + Math.abs(sm[i * 3 + 1] - sm[j * 3 + 1]) + Math.abs(sm[i * 3 + 2] - sm[j * 3 + 2]) < EDGE;
+
+  // 2. flood fill from border
+  const bg = new Uint8Array(N), q = new Int32Array(N); let qh = 0, qt = 0;
+  const seed = i => { if (!bg[i] && like(i)) { bg[i] = 1; q[qt++] = i; } };
+  for (let x = 0; x < W; x++) { seed(x); seed((H - 1) * W + x); }
+  for (let y = 0; y < H; y++) { seed(y * W); seed(y * W + W - 1); }
+  while (qh < qt) {
+    const i = q[qh++], x = i % W, y = (i / W) | 0;
+    if (x > 0) { const j = i - 1; if (!bg[j] && like(j) && near(i, j)) { bg[j] = 1; q[qt++] = j; } }
+    if (x < W - 1) { const j = i + 1; if (!bg[j] && like(j) && near(i, j)) { bg[j] = 1; q[qt++] = j; } }
+    if (y > 0) { const j = i - W; if (!bg[j] && like(j) && near(i, j)) { bg[j] = 1; q[qt++] = j; } }
+    if (y < H - 1) { const j = i + W; if (!bg[j] && like(j) && near(i, j)) { bg[j] = 1; q[qt++] = j; } }
+  }
+
+  // 3. keep main object(s): connected components of foreground
+  const lab = new Int32Array(N); const areas = [0]; let nl = 0;
+  for (let s = 0; s < N; s++) {
+    if (bg[s] || lab[s]) continue;
+    nl++; let area = 0; qh = 0; qt = 0; q[qt++] = s; lab[s] = nl;
+    while (qh < qt) {
+      const i = q[qh++], x = i % W, y = (i / W) | 0; area++;
+      if (x > 0 && !bg[i - 1] && !lab[i - 1]) { lab[i - 1] = nl; q[qt++] = i - 1; }
+      if (x < W - 1 && !bg[i + 1] && !lab[i + 1]) { lab[i + 1] = nl; q[qt++] = i + 1; }
+      if (y > 0 && !bg[i - W] && !lab[i - W]) { lab[i - W] = nl; q[qt++] = i - W; }
+      if (y < H - 1 && !bg[i + W] && !lab[i + W]) { lab[i + W] = nl; q[qt++] = i + W; }
+    }
+    areas.push(area);
+  }
+  let largest = 0; for (let k = 1; k <= nl; k++) largest = Math.max(largest, areas[k]);
+  const minKeep = Math.max(30, largest * 0.04);
+  let fgCount = 0;
+  for (let i = 0; i < N; i++) { if (!bg[i] && areas[lab[i]] < minKeep) bg[i] = 1; if (!bg[i]) fgCount++; }
+
+  const ratio = fgCount / N;
+  if (ratio < 0.015) return { ok: false, msg: 'ไม่พบกระทงในภาพ กรุณาวางกระทงให้อยู่กลางกรอบแล้วถ่ายใหม่' };
+  if (ratio > 0.9) return { ok: false, msg: 'ตัดพื้นหลังไม่ได้ — พื้นหลังอาจไม่ใช่สีขาวเรียบ กรุณาถ่ายใหม่บนกระดาษหรือผ้าสีขาว' };
+  let borderFg = 0, borderTot = 0;
+  for (let x = 0; x < W; x++) { borderTot += 2; if (!bg[x]) borderFg++; if (!bg[(H - 1) * W + x]) borderFg++; }
+  for (let y = 0; y < H; y++) { borderTot += 2; if (!bg[y * W]) borderFg++; if (!bg[y * W + W - 1]) borderFg++; }
+  let partial = '';
+  if (borderFg / borderTot > 0.12) partial = 'กระทงอาจล้นขอบภาพ หรือมีสิ่งของอื่นปนอยู่ในพื้นหลัง';
+  else if (ratio > 0.72) partial = 'ลบพื้นหลังได้เพียงบางส่วน';
+
+  // 4. alpha + soften outline + remove white fringe (colour decontamination)
+  const A = new Float32Array(N);
+  for (let i = 0; i < N; i++) A[i] = bg[i] ? 0 : 1;
+  const ring = new Uint8Array(N);
+  const isBgN = (i, x, y) => (x > 0 && bg[i - 1]) || (x < W - 1 && bg[i + 1]) || (y > 0 && bg[i - W]) || (y < H - 1 && bg[i + W]);
+  for (let i = 0; i < N; i++) { if (bg[i]) continue; const x = i % W, y = (i / W) | 0; if (isBgN(i, x, y)) ring[i] = 1; }
+  for (let i = 0; i < N; i++) {
+    if (bg[i] || ring[i]) continue; const x = i % W, y = (i / W) | 0;
+    if ((x > 0 && ring[i - 1] === 1) || (x < W - 1 && ring[i + 1] === 1) || (y > 0 && ring[i - W] === 1) || (y < H - 1 && ring[i + W] === 1)) ring[i] = 2;
+  }
+  for (let i = 0; i < N; i++) {
+    if (!ring[i]) continue;
+    const a = ring[i] === 1 ? clamp(dist[i] / 110, 0.12, 1) : clamp(dist[i] / 70, 0.55, 1);
+    A[i] = a;
+    if (a < 1) {
+      d[i * 4] = clamp((d[i * 4] - (1 - a) * br) / a, 0, 255);
+      d[i * 4 + 1] = clamp((d[i * 4 + 1] - (1 - a) * bgc) / a, 0, 255);
+      d[i * 4 + 2] = clamp((d[i * 4 + 2] - (1 - a) * bb) / a, 0, 255);
+    }
+  }
+  let minX = W, minY = H, maxX = -1, maxY = -1;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const i = y * W + x;
+    let a = A[i];
+    if (ring[i]) { // light 3x3 smoothing on the outline only
+      let s = 0, c = 0;
+      for (let yy = Math.max(0, y - 1); yy <= Math.min(H - 1, y + 1); yy++) for (let xx = Math.max(0, x - 1); xx <= Math.min(W - 1, x + 1); xx++) { s += A[yy * W + xx]; c++; }
+      a = (a + s / c) / 2;
+    }
+    d[i * 4 + 3] = Math.round(a * 255);
+    if (d[i * 4 + 3] > 24) { if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y; }
+  }
+  if (maxX < 0) return { ok: false, msg: 'ไม่พบกระทงในภาพ กรุณาถ่ายใหม่' };
+  g.putImageData(im, 0, 0);
+
+  // 5. crop tight + scale ≤ IMG_MAX
+  const pad = 2;
+  minX = Math.max(0, minX - pad); minY = Math.max(0, minY - pad); maxX = Math.min(W - 1, maxX + pad); maxY = Math.min(H - 1, maxY + pad);
+  const bw = maxX - minX + 1, bh = maxY - minY + 1, s2 = Math.min(1, CONFIG.IMG_MAX / Math.max(bw, bh));
+  const ow = Math.max(1, Math.round(bw * s2)), oh = Math.max(1, Math.round(bh * s2));
+  const out = document.createElement('canvas'); out.width = ow; out.height = oh;
+  const og = out.getContext('2d', { willReadFrequently: true });
+  og.imageSmoothingEnabled = true; og.imageSmoothingQuality = 'high';
+  og.drawImage(cv, minX, minY, bw, bh, 0, 0, ow, oh);
+  // tip (highest opaque point) → where the candle flame / incense smoke is drawn
+  const od = og.getImageData(0, 0, ow, oh).data;
+  let tip = { x: .5, y: 0 };
+  outer: for (let y = 0; y < oh; y++) {
+    let sx = 0, c = 0;
+    for (let x = 0; x < ow; x++) if (od[(y * ow + x) * 4 + 3] > 140) { sx += x; c++; }
+    if (c) { tip = { x: (sx / c) / ow, y: y / oh }; break outer; }
+  }
+  return { ok: true, partial: !!partial, msg: partial, dataUrl: out.toDataURL('image/png'), tip };
+}
+
+/* ---------- step 4: wish ---------- */
+function setupWish() {
+  if (!S.cutout) { go('camera'); return; }
+  const img = $('#wishImg'); img.src = S.cutout;
+  const fx = $('#wishFx');
+  fx.style.left = (S.tip.x * 100).toFixed(1) + '%';
+  fx.style.top = (S.tip.y * 100).toFixed(1) + '%';
+  $('#wishInput').value = S.wish || '';
+}
+async function onWish() {
+  S.wish = cleanText($('#wishInput').value, CONFIG.WISH_MAX);
+  Sound.sfx('wish');
+  const st = $('#wishStage'); st.classList.remove('wished'); void st.offsetWidth; st.classList.add('wished');
+  $('#btnWish').disabled = true;
+  await sleep(950);
+  $('#btnWish').disabled = false;
+  go('float');
+}
+
+/* ---------- step 5: float ---------- */
+function setupFloat() {
+  if (!S.cutout) { go('camera'); return; }
+  $('#floatName').textContent = S.name;
+  const w = $('#floatWish');
+  if (S.wish) { w.textContent = '“' + S.wish + '”'; w.hidden = false; } else w.hidden = true;
+  $('#floatImg').src = S.cutout;
+  const k = $('#floatK'); k.classList.remove('away');
+  const b = $('#btnFloat'); b.disabled = false; b.innerHTML = 'FLOAT MY KRATHONG! <span class="chev">›</span>';
+}
+function shrinkJpeg(dataUrl, max) {
+  return new Promise(res => {
+    const im = new Image();
+    im.onload = () => {
+      const s = Math.min(1, max / Math.max(im.width, im.height));
+      const c = document.createElement('canvas'); c.width = Math.round(im.width * s); c.height = Math.round(im.height * s);
+      c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+      res(c.toDataURL('image/jpeg', 0.7));
+    };
+    im.onerror = () => res(null);
+    im.src = dataUrl;
+  });
+}
+async function onFloat() {
+  if (S.busy || !S.cutout) return;
+  if (!S.name) { go('welcome'); return; }
+  S.busy = true;
+  const btn = $('#btnFloat'), k = $('#floatK');
+  btn.disabled = true; btn.textContent = 'กำลังลอยกระทง…';
+  Sound.sfx('float');
+  k.classList.add('away');
+  const t0 = Date.now();
+  try {
+    let already = false;
+    try { already = await store.exists('krathongs/' + DEVICE); } catch (e) { /* the write below will report the real error */ }
+    if (!already) {
+      await store.put('krathongs/' + DEVICE, {
+        name: S.name, img: S.cutout, wish: S.wish, status: 'floating', lucky: false, luckyRank: 0, at: store.serverTime()
+      });
+    }
+    LS.set('rotw_sent', '1'); LS.set('rotw_my_img', S.cutout);
+    if (!already) {
+      try {
+        const orig = store.mode === 'demo' ? await shrinkJpeg(S.original, 480) : S.original;
+        if (orig) await store.put('originals/' + DEVICE, { img: orig, name: S.name, at: store.serverTime() });
+      } catch (e) { toast('บันทึกภาพต้นฉบับไม่สำเร็จ (กระทงของคุณลอยเรียบร้อยแล้ว): ' + errMsg(e), 'warn', 5500); }
+    } else {
+      toast('เครื่องนี้ลอยกระทงไปแล้ว (1 เครื่อง / 1 กระทง)', 'warn');
+    }
+    await sleep(Math.max(0, 2600 - (Date.now() - t0)));
+    S.original = null;
+    go('done');
+  } catch (e) {
+    k.classList.remove('away');
+    btn.disabled = false; btn.innerHTML = 'ลองอีกครั้ง — FLOAT MY KRATHONG! <span class="chev">›</span>';
+    toast('ส่งกระทงไม่สำเร็จ: ' + errMsg(e) + ' — กดปุ่มอีกครั้งเพื่อลองใหม่', 'err', 6500);
+  } finally { S.busy = false; }
+}
+
+/* =====================================================================
+   DIALOGS
+   ===================================================================== */
+function openOv(id) { $('#' + id).classList.add('on'); }
+function closeOv(id) { $('#' + id).classList.remove('on'); }
+function confirmDialog({ title, text, ok = 'ยืนยัน', cancel = 'ยกเลิก', danger = false, hideCancel = false }) {
+  return new Promise(res => {
+    $('#cfTitle').textContent = title; $('#cfText').textContent = text;
+    const y = $('#cfYes'), n = $('#cfNo');
+    y.textContent = ok; n.textContent = cancel; n.hidden = hideCancel;
+    y.className = 'btn btn-sm ' + (danger ? 'btn-danger' : 'btn-primary');
+    const done = v => { y.onclick = n.onclick = null; closeOv('confirmOv'); res(v); };
+    y.onclick = () => done(true); n.onclick = () => done(false);
+    openOv('confirmOv'); setTimeout(() => y.focus(), 50);
+  });
+}
+
+/* ---------- admin password (client-side gate only — not a security boundary) ---------- */
+const PW = { timer: null };
+function pwLock() { try { return JSON.parse(LS.get('rotw_admin_lock') || '{}') || {}; } catch (e) { return {}; } }
+function pwSetLock(o) { LS.set('rotw_admin_lock', JSON.stringify(o)); }
+function pwRender() {
+  const L = pwLock(), left = (L.until || 0) - Date.now();
+  const locked = left > 0;
+  $('#pwInput').disabled = locked; $('#pwOk').disabled = locked;
+  if (locked) $('#pwErr').textContent = `ใส่รหัสผิดเกิน ${CONFIG.ADMIN_MAX_TRIES} ครั้ง — ลองใหม่ได้ใน ${Math.ceil(left / 1000)} วินาที`;
+  else if (PW.timer && $('#pwErr').dataset.locked === '1') { $('#pwErr').textContent = ''; }
+  $('#pwErr').dataset.locked = locked ? '1' : '0';
+  return locked;
+}
+function askAdmin() {
+  if (document.body.classList.contains('admin-mode')) return;
+  $('#pwInput').value = ''; $('#pwErr').textContent = '';
+  openOv('pwOv');
+  clearInterval(PW.timer); PW.timer = setInterval(pwRender, 250);
+  if (!pwRender()) setTimeout(() => $('#pwInput').focus(), 80);
+}
+function closePw() { clearInterval(PW.timer); PW.timer = null; closeOv('pwOv'); }
+async function submitPw(e) {
+  e.preventDefault();
+  if (pwRender()) return;
+  const val = $('#pwInput').value;
+  if (!val) { $('#pwErr').textContent = 'กรุณาใส่รหัส'; return; }
+  const h = await sha256Hex(val);
+  if (h === String(CONFIG.ADMIN_HASH).toLowerCase()) {
+    pwSetLock({}); closePw(); enterAdmin();
+  } else {
+    const L = pwLock(); L.fails = (L.fails || 0) + 1;
+    if (L.fails >= CONFIG.ADMIN_MAX_TRIES) { L.fails = 0; L.until = Date.now() + CONFIG.ADMIN_LOCK_MS; }
+    pwSetLock(L);
+    $('#pwInput').value = '';
+    const f = $('#pwField'); f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
+    if (!pwRender()) $('#pwErr').textContent = `รหัสไม่ถูกต้อง (เหลือ ${CONFIG.ADMIN_MAX_TRIES - L.fails} ครั้ง)`;
+  }
+}
+
+/* =====================================================================
+   ADMIN — live river
+   ===================================================================== */
+const A = { items: new Map(), unsub: [], initial: true, result: { winners: {}, locked: false }, drawing: false, lastDrop: 0, status: '' };
+
+function setStatus(s) {
+  if (A.status === s) return;
+  const prev = A.status; A.status = s;
+  const el = $('#statusBadge');
+  el.className = 'status ' + s;
+  el.querySelector('span').textContent = s === 'live' ? 'LIVE' : s === 'offline' ? 'OFFLINE' : 'DEMO';
+  if (s === 'offline' && prev === 'live') toast('การเชื่อมต่อฐานข้อมูลขาดหาย กำลังเชื่อมต่อใหม่…', 'err');
+  if (s === 'live' && prev === 'offline') toast('เชื่อมต่อฐานข้อมูลได้แล้ว', 'ok');
+}
+function sanitizeK(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const name = cleanText(raw.name, CONFIG.NAME_MAX);
+  if (!name || !validImg(raw.img)) return null;
+  const at = typeof raw.at === 'number' ? raw.at : Number.MAX_SAFE_INTEGER;
+  const rank = parseInt(raw.luckyRank, 10);
+  return { name, img: raw.img, wish: cleanText(raw.wish, CONFIG.WISH_MAX), at, lucky: raw.lucky === true, luckyRank: rank >= 1 && rank <= CONFIG.WINNERS ? rank : 0 };
+}
+function sanitizeResult(raw) {
+  const out = { winners: {}, locked: false };
+  if (!raw || typeof raw !== 'object') return out;
+  out.locked = raw.locked === true;
+  const ws = raw.winners && typeof raw.winners === 'object' ? raw.winners : {};
+  Object.keys(ws).forEach(key => {
+    const w = ws[key]; if (!w || typeof w !== 'object') return;
+    const r = parseInt(w.rank, 10);
+    if (r >= 1 && r <= CONFIG.WINNERS && typeof w.id === 'string' && ID_RE.test(w.id)) out.winners[r] = { id: w.id, name: cleanText(w.name, CONFIG.NAME_MAX), rank: r };
+  });
+  return out;
+}
+function winnerRankOf(id) {
+  for (const r in A.result.winners) if (A.result.winners[r].id === id) return +r;
+  return 0;
+}
+function createKt(id, k) {
+  const el = document.createElement('div');
+  el.className = 'kt'; el.dataset.id = id;
+  const rnd = mulberry32(hashStr(id));
+  el.style.setProperty('--d', (4.6 + rnd() * 3.4).toFixed(2) + 's');
+  el.style.setProperty('--dl', (-rnd() * 8).toFixed(2) + 's');
+  el.style.setProperty('--r', (1.6 + rnd() * 2.6).toFixed(2) + 'deg');
+  el.style.setProperty('--dx', (1.5 + rnd() * 3.5).toFixed(2) + 'px');
+  el.style.setProperty('--rd', (3.2 + rnd() * 1.6).toFixed(2) + 's');
+  el.innerHTML = '<div class="kt-drop"><div class="kt-bob"><div class="kt-glow"></div><span class="kt-rip"></span><span class="kt-rip r2"></span><img class="kt-img" alt="" draggable="false"><div class="kt-label"></div></div><span class="kt-splash"></span></div>';
+  el.querySelector('.kt-label').textContent = k.name;
+  const img = el.querySelector('img');
+  img.onload = () => { if (img.naturalWidth) el.style.setProperty('--ar', clamp(img.naturalHeight / img.naturalWidth, 0.45, 1.5).toFixed(3)); };
+  img.src = k.img;
+  return el;
+}
+function applyMarks(it) {
+  const r = winnerRankOf(it.id) || (it.k.lucky ? it.k.luckyRank : 0);
+  it.el.classList.toggle('win', r > 0);
+  it.el.querySelector('.kt-label').dataset.rank = r || '';
+}
+function onKrathongs(raw) {
+  const data = raw && typeof raw === 'object' ? raw : {};
+  const river = $('#river');
+  for (const [id, it] of A.items) {
+    if (!data[id] || !sanitizeK(data[id])) { it.el.remove(); A.items.delete(id); }
+  }
+  let added = 0;
+  Object.keys(data).forEach(id => {
+    if (!ID_RE.test(id)) return;
+    const k = sanitizeK(data[id]); if (!k) return;
+    let it = A.items.get(id);
+    if (!it) {
+      it = { id, k, el: createKt(id, k) };
+      A.items.set(id, it); river.appendChild(it.el);
+      if (!A.initial) {
+        added++;
+        it.el.classList.add('drop');
+        setTimeout(() => it.el.classList.remove('drop'), 1900);
+      }
+    } else {
+      if (it.k.img !== k.img) it.el.querySelector('img').src = k.img;
+      if (it.k.name !== k.name) it.el.querySelector('.kt-label').textContent = k.name;
+      it.k = k;
+    }
+    applyMarks(it);
+  });
+  if (added && Date.now() - A.lastDrop > 700) { A.lastDrop = Date.now(); Sound.sfx('drop'); }
+  A.initial = false;
+  layoutRiver();
+  updateCount();
+}
+function updateCount() {
+  const el = $('#countNum'), n = A.items.size, txt = n.toLocaleString('en-US');
+  if (el.textContent !== txt) { el.textContent = txt; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+}
+/** Place every krathong inside the river using an R2 low-discrepancy sequence with perspective sizing. */
+function layoutRiver() {
+  if (!document.body.classList.contains('admin-mode')) return;
+  const W = window.innerWidth, H = window.innerHeight;
+  const list = Array.from(A.items.values()).sort((p, q) => (p.k.at - q.k.at) || (p.id < q.id ? -1 : 1));
+  const n = list.length;
+  $('#emptyRiver').hidden = n > 0;
+  if (!n) return;
+  const hzY = H * 0.36, botY = H - Math.max(92, H * 0.1);
+  const a = 0.5, b = 0.5, kk = 1 / a - 1 / (a + b);
+  const cap = n <= 150 ? 1 : n <= 400 ? 0.72 : 0.52;   // ย่ออัตโนมัติเมื่อเกิน 150 / 400 ใบ
+  let S = Math.sqrt((W * (botY - hzY) * 0.5) / (n * 1.45 * 0.55));
+  S = clamp(Math.min(S, Math.min(W, H) * 0.24 * cap, 175 * cap), 22, 400);
+  const yMin = hzY + S * a * 0.9 + 26, yMax = Math.max(yMin + 10, botY);
+  list.forEach((it, i) => {
+    const u = frac(0.5 + i * 0.7548776662466927), v = frac(0.5 + i * 0.5698402909980532);
+    const t = clamp(0.5 * v + 0.5 * (1 / (1 / a - v * kk) - a) / b, 0, 1);
+    const s = S * (a + b * t), y = yMin + t * (yMax - yMin), m = s * 0.62 + 12;
+    const x = m + u * Math.max(1, W - 2 * m);
+    const st = it.el.style;
+    st.left = x.toFixed(1) + 'px'; st.top = y.toFixed(1) + 'px';
+    st.setProperty('--s', s.toFixed(1) + 'px');
+    st.setProperty('--fs', clamp(s * 0.13, 9.5, 16).toFixed(1) + 'px');
+    st.zIndex = String(10 + Math.round(y));
+  });
+}
+function onResult(raw) {
+  A.result = sanitizeResult(raw);
+  for (const it of A.items.values()) applyMarks(it);
+  const b = $('#btnLucky');
+  if (!A.drawing) b.textContent = A.result.locked ? '★ VIEW WINNERS' : (Object.keys(A.result.winners).length ? '★ LUCKY KRATHONG (ต่อ)' : '★ LUCKY KRATHONG');
+  if ($('#winnersOv').classList.contains('on')) renderWinners();
+}
+function enterAdmin() {
+  stopCamera();
+  document.body.classList.add('admin-mode');
+  $('#mAdmin').classList.add('active'); $('#mHome').classList.remove('active');
+  A.initial = true; A.status = '';
+  setStatus(store.mode === 'demo' ? 'demo' : 'offline');
+  A.unsub.forEach(f => f()); A.unsub = [];
+  try {
+    A.unsub.push(store.listen('krathongs', onKrathongs, setStatus));
+    A.unsub.push(store.listen('draw/result', onResult, () => {}));
+  } catch (e) { toast('เชื่อมต่อฐานข้อมูลไม่สำเร็จ: ' + errMsg(e), 'err'); }
+  layoutRiver();
+}
+function leaveAdmin() {
+  A.unsub.forEach(f => f()); A.unsub = [];
+  A.items.forEach(it => it.el.remove()); A.items.clear();
+  document.body.classList.remove('admin-mode');
+  $('#mAdmin').classList.remove('active'); $('#mHome').classList.add('active');
+  closeOv('revealOv'); closeOv('winnersOv');
+}
+
+/* ---------- lucky draw ---------- */
+function highlight(id) {
+  $$('.kt.hl').forEach(e => e.classList.remove('hl'));
+  const it = A.items.get(id); if (it) it.el.classList.add('hl');
+}
+async function spin(pool, winId) {
+  const total = 3400 + randInt(900);
+  let elapsed = 0, delay = 55, prev = null;
+  while (elapsed < total) {
+    let id = pool[randInt(pool.length)];
+    if (pool.length > 1 && id === prev) id = pool[(pool.indexOf(id) + 1) % pool.length];
+    prev = id; highlight(id); Sound.sfx('tick');
+    await sleep(delay); elapsed += delay;
+    delay = 55 + Math.pow(elapsed / total, 2.3) * 420;
+  }
+  highlight(winId); Sound.sfx('tick');
+  await sleep(700);
+}
+async function saveWithRetry(fn, label) {
+  for (;;) {
+    try { await fn(); return; } catch (e) {
+      const again = await confirmDialog({ title: '⚠ ' + label + 'ไม่สำเร็จ', text: errMsg(e) + '\nต้องการลองบันทึกอีกครั้งหรือไม่?', ok: 'ลองอีกครั้ง', cancel: 'หยุดชั่วคราว' });
+      if (!again) throw new Error('cancel');
+    }
+  }
+}
+function reveal(rank, k, hasNext) {
+  return new Promise(res => {
+    $('#rvRank').textContent = `★ LUCKY FLOATER #${rank} ★`;
+    const img = $('#rvImg'); if (k && k.img) { img.src = k.img; img.hidden = false; } else img.hidden = true;
+    $('#rvName').textContent = k ? k.name : '';
+    const act = $('#rvActions');
+    act.innerHTML = '';
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'btn btn-gold';
+    btn.textContent = hasNext ? `★ สุ่มคนถัดไป (${rank + 1}/${CONFIG.WINNERS})` : '🏆 ดูผู้โชคดีทั้งหมด';
+    btn.onclick = () => { closeOv('revealOv'); res(); };
+    act.appendChild(btn);
+    openOv('revealOv');
+    Sound.sfx('celebrate'); Confetti.burst();
+    setTimeout(() => btn.focus(), 400);
+  });
+}
+async function onLucky() {
+  if (A.drawing) return;
+  if (A.result.locked) { renderWinners(); openOv('winnersOv'); return; }
+  if (!A.items.size) { toast('ยังไม่มีกระทงในแม่น้ำ', 'warn'); return; }
+  const won = new Set(Object.values(A.result.winners).map(w => w.id));
+  let rank = 1; while (A.result.winners[rank]) rank++;
+  const eligible = () => Array.from(A.items.keys()).filter(id => !won.has(id));
+  const need = CONFIG.WINNERS - (rank - 1);
+  let target = CONFIG.WINNERS;
+  if (eligible().length < need) {
+    const ok = await confirmDialog({ title: 'กระทงไม่ครบจำนวน', text: `มีกระทงที่ยังสุ่มได้ ${eligible().length} ใบ (ต้องการ ${need} ใบ) ต้องการสุ่มเท่าที่มีและล็อกผลหรือไม่?`, ok: 'สุ่มเท่าที่มี' });
+    if (!ok) return;
+    target = rank - 1 + eligible().length;
+  }
+  A.drawing = true;
+  const river = $('#river'), bL = $('#btnLucky'), bR = $('#btnReset'), banner = $('#drawBanner');
+  river.classList.add('fast'); bL.disabled = true; bR.disabled = true;
+  try {
+    for (; rank <= target; rank++) {
+      const pool = eligible(); if (!pool.length) break;
+      banner.hidden = false; banner.textContent = `★ กำลังสุ่มผู้โชคดีคนที่ ${rank} / ${CONFIG.WINNERS} ★`;
+      const winId = pool[randInt(pool.length)];
+      await spin(pool, winId);
+      const it = A.items.get(winId), k = it ? it.k : null;
+      const nm = k ? k.name : '';
+      await saveWithRetry(async () => {
+        await store.put('draw/result/winners/r' + rank, { id: winId, name: nm, rank, at: store.serverTime() });
+        await store.patch('krathongs/' + winId, { lucky: true, luckyRank: rank, status: 'lucky' });
+      }, `บันทึกผู้โชคดีคนที่ ${rank} `);
+      won.add(winId);
+      A.result.winners[rank] = { id: winId, name: nm, rank };
+      if (it) applyMarks(it);
+      banner.hidden = true;
+      await reveal(rank, k, rank < target);
+      highlight(null);
+    }
+    await saveWithRetry(() => store.patch('draw/result', { locked: true, lockedAt: store.serverTime(), total: won.size }), 'ล็อกผลการสุ่ม ');
+    A.result.locked = true;
+    renderWinners(); openOv('winnersOv');
+    Sound.sfx('celebrate'); Confetti.burst(220);
+  } catch (e) {
+    if (errMsg(e) === 'cancel') toast('หยุดการสุ่มชั่วคราว — กด LUCKY KRATHONG เพื่อสุ่มต่อ', 'warn', 6000);
+    else toast('การสุ่มผิดพลาด: ' + errMsg(e), 'err', 6000);
+  } finally {
+    A.drawing = false; highlight(null); banner.hidden = true;
+    river.classList.remove('fast'); bL.disabled = false; bR.disabled = false;
+    onResult(Object.assign({}, { locked: A.result.locked, winners: Object.fromEntries(Object.entries(A.result.winners).map(([r, w]) => ['r' + r, w])) }));
+  }
+}
+function renderWinners() {
+  const g = $('#wGrid'); g.innerHTML = '';
+  for (let r = 1; r <= CONFIG.WINNERS; r++) {
+    const w = A.result.winners[r];
+    const card = document.createElement('div');
+    card.className = 'w-card' + (r === 1 ? ' first' : '') + (w ? '' : ' pending');
+    card.style.animationDelay = (r * 0.08) + 's';
+    const it = w ? A.items.get(w.id) : null;
+    card.innerHTML = (r === 1 ? '<div class="w-crown">👑</div>' : '') + `<div class="w-medal">${r}</div><div class="w-img"></div><div class="w-name"></div>`;
+    const box = card.querySelector('.w-img');
+    if (it && it.k.img) { const im = document.createElement('img'); im.alt = ''; im.src = it.k.img; box.appendChild(im); }
+    else { const ph = document.createElement('span'); ph.className = 'ph'; ph.textContent = w ? '🪷' : '?'; box.appendChild(ph); }
+    card.querySelector('.w-name').textContent = w ? w.name : '—';
+    g.appendChild(card);
+  }
+}
+
+/* ---------- reset ---------- */
+async function onReset() {
+  if (A.drawing) return;
+  const ok = await confirmDialog({
+    title: '↻ RESET RIVER',
+    text: `ลบกระทงทั้งหมด ${A.items.size.toLocaleString('en-US')} ใบ ภาพต้นฉบับ และผลการสุ่มผู้โชคดี ออกจากฐานข้อมูล\nการลบนี้ย้อนกลับไม่ได้ — พนักงานจะส่งกระทงใหม่ได้อีกครั้ง`,
+    ok: 'ยืนยันล้างแม่น้ำ', danger: true
+  });
+  if (!ok) return;
+  const b = $('#btnReset'); b.disabled = true;
+  try {
+    await store.patch('', { krathongs: null, originals: null, draw: null });
+    closeOv('winnersOv');
+    toast('ล้างแม่น้ำเรียบร้อย พร้อมเริ่มรอบใหม่ 🌊', 'ok');
+  } catch (e) {
+    toast('ล้างแม่น้ำไม่สำเร็จ: ' + errMsg(e), 'err', 6000);
+  } finally { b.disabled = false; }
+}
+
+/* ---------- confetti ---------- */
+const Confetti = (() => {
+  let cv, g, parts = [], raf = 0, W = 0, H = 0, dpr = 1, rainUntil = 0;
+  const COLORS = ['#ff8fb6', '#ffd45e', '#f5b041', '#b9a3ff', '#7fd8e0', '#ffffff', '#ff6f9f', '#9be3c4'];
+  function size() { dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  function add(x, y, vx, vy) {
+    parts.push({ x, y, vx, vy, w: 6 + Math.random() * 7, h: 8 + Math.random() * 9, r: Math.random() * 6.28, vr: (Math.random() - .5) * .3, c: COLORS[(Math.random() * COLORS.length) | 0], f: Math.random() * 6.28, round: Math.random() < .25 });
+  }
+  function loop() {
+    g.clearRect(0, 0, W, H);
+    if (Date.now() < rainUntil) for (let i = 0; i < 4; i++) add(Math.random() * W, -20, (Math.random() - .5) * 2, Math.random() * 2 + 1);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.vy += 0.22; p.vx *= 0.99; p.vy = Math.min(p.vy, 6.5); p.f += 0.12;
+      p.x += p.vx + Math.sin(p.f) * 0.6; p.y += p.vy; p.r += p.vr;
+      if (p.y > H + 30) { parts.splice(i, 1); continue; }
+      g.save(); g.translate(p.x, p.y); g.rotate(p.r); g.scale(1, Math.cos(p.f)); g.fillStyle = p.c;
+      if (p.round) { g.beginPath(); g.arc(0, 0, p.w / 2, 0, 6.28); g.fill(); } else g.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      g.restore();
+    }
+    raf = (parts.length || Date.now() < rainUntil) ? requestAnimationFrame(loop) : 0;
+    if (!raf) g.clearRect(0, 0, W, H);
+  }
+  function burst(n = 160) {
+    if (!cv) { cv = $('#confetti'); g = cv.getContext('2d'); window.addEventListener('resize', size); }
+    size();
+    for (let i = 0; i < n; i++) {
+      const side = i % 3;
+      if (side === 0) add(W / 2 + (Math.random() - .5) * 120, H * .42, (Math.random() - .5) * 18, -Math.random() * 15 - 4);
+      else if (side === 1) add(-10, H * .8, Math.random() * 12 + 4, -Math.random() * 16 - 6);
+      else add(W + 10, H * .8, -Math.random() * 12 - 4, -Math.random() * 16 - 6);
+    }
+    rainUntil = Date.now() + 2600;
+    if (!raf) raf = requestAnimationFrame(loop);
+  }
+  return { burst };
+})();
+
+/* ---------- demo-only sample data: ?seed=N (works in DEMO mode only) ---------- */
+function makeSampleKrathong(rnd) {
+  const c = document.createElement('canvas'); c.width = 220; c.height = 190;
+  const g = c.getContext('2d'); const cx = 110, by = 160;
+  g.fillStyle = '#4f8f3f'; g.beginPath(); g.ellipse(cx, by, 96, 24, 0, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#6fae55';
+  for (let i = 0; i < 14; i++) { const x = 20 + i * 13; g.beginPath(); g.moveTo(x, by - 4); g.lineTo(x + 6.5, by - 22); g.lineTo(x + 13, by - 4); g.fill(); }
+  const hues = [[246, 150, 190], [250, 190, 215], [235, 120, 170], [255, 225, 235], [210, 160, 230]];
+  const base = hues[(rnd() * hues.length) | 0];
+  for (let i = 0; i < 9; i++) {
+    const ang = -Math.PI * 0.9 + (i / 8) * Math.PI * 0.8;
+    g.save(); g.translate(cx + Math.cos(ang) * 40, by - 20 + Math.sin(ang) * 12); g.rotate(ang + Math.PI / 2);
+    g.fillStyle = `rgb(${base[0]},${base[1] + ((i % 2) * 20)},${base[2]})`;
+    g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(-16, -26, 0, -52); g.quadraticCurveTo(16, -26, 0, 0); g.fill(); g.restore();
+  }
+  for (let i = 0; i < 7; i++) { g.fillStyle = i % 2 ? '#ffb020' : '#ffd23f'; g.beginPath(); g.arc(cx - 30 + i * 10, by - 34 - (i % 3) * 5, 9, 0, 6.28); g.fill(); }
+  g.fillStyle = '#fff6dc'; g.fillRect(cx - 4, by - 92, 8, 46);
+  g.fillStyle = '#ff9a2a'; g.beginPath(); g.ellipse(cx, by - 98, 4, 8, 0, 0, 6.28); g.fill();
+  g.strokeStyle = '#8b2c2c'; g.lineWidth = 2; [-14, 14, 22].forEach(dx => { g.beginPath(); g.moveTo(cx + dx * .6, by - 40); g.lineTo(cx + dx, by - 120); g.stroke(); });
+  return c.toDataURL('image/png');
+}
+async function seedDemo() {
+  let n = 0;
+  try { n = parseInt(new URLSearchParams(location.search).get('seed'), 10) || 0; } catch (e) { /* ignore */ }
+  if (!n || store.mode !== 'demo') return;
+  n = clamp(n, 1, 200);
+  const NAMES = ['Somchai', 'Ploy', 'Narin', 'Mint', 'Krit', 'Nok', 'Ann', 'Beam', 'Fah', 'Ton', 'Pim', 'Golf', 'Jane', 'Bank', 'Mai', 'Oat', 'Praew', 'Arm', 'Nan', 'Bow', 'สมศรี', 'วิภา', 'ธนา', 'กมล', 'ปิยะ'];
+  const rnd = mulberry32(Date.now() & 0xffff);
+  const imgs = [0, 1, 2, 3, 4].map(() => makeSampleKrathong(rnd));
+  const patch = {}; const now = Date.now();
+  for (let i = 0; i < n; i++) {
+    const id = 'demo' + i.toString(16).padStart(4, '0') + Math.floor(rnd() * 1e8).toString(16);
+    patch[id] = { name: NAMES[i % NAMES.length] + (i >= NAMES.length ? ' ' + (1 + Math.floor(i / NAMES.length)) : ''), img: imgs[i % imgs.length], wish: 'ขอให้มีความสุข', status: 'floating', lucky: false, luckyRank: 0, at: now - (n - i) * 1000 };
+  }
+  try { await store.patch('krathongs', patch); toast(`เพิ่มกระทงตัวอย่าง ${n} ใบ (โหมดเดโม)`, 'ok'); }
+  catch (e) { toast('เพิ่มข้อมูลตัวอย่างไม่สำเร็จ: ' + errMsg(e), 'err'); }
+  try { const u = new URL(location.href); u.searchParams.delete('seed'); history.replaceState(null, '', u.toString()); } catch (e) { /* ignore */ }
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+function updateSoundBtn() { const m = Sound.isMuted(); const b = $('#mSound'); b.textContent = m ? '🔇' : '🔊'; b.setAttribute('aria-label', m ? 'เปิดเสียง' : 'ปิดเสียง'); }
+function showStaff() {
+  if (document.body.classList.contains('admin-mode')) leaveAdmin();
+  if (location.hash === '#admin') { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ } }
+  go('welcome'); refreshSentState();
+}
+async function init() {
+  buildScene();
+  if (store.mode === 'demo') { document.body.classList.add('has-banner'); $('#demoBanner').hidden = false; }
+  if (DBINFO.bad) toast('URL ฐานข้อมูลไม่ถูกต้อง (ต้องขึ้นต้นด้วย https://) — ระบบใช้โหมดเดโมแทน', 'err', 7000);
+
+  // sound: start after first user interaction
+  ['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, () => Sound.unlock(), { capture: true, passive: true }));
+  document.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (b && !b.disabled && !b.hasAttribute('data-nosfx') && b.id !== 'mSound') Sound.sfx('click');
+  });
+  updateSoundBtn();
+  $('#mSound').addEventListener('click', () => { Sound.setMuted(!Sound.isMuted()); updateSoundBtn(); });
+  $('#mHome').addEventListener('click', showStaff);
+  $('#mAdmin').addEventListener('click', askAdmin);
+
+  // staff
+  const savedName = LS.get('rotw_name'); if (savedName) $('#nameInput').value = cleanText(savedName, CONFIG.NAME_MAX);
+  $('#btnStart').addEventListener('click', onStart);
+  $('#nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') onStart(); });
+  $$('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
+  $('#btnTake').addEventListener('click', capture);
+  $('#btnUpload').addEventListener('click', () => $('#fileInput').click());
+  $('#fileInput').addEventListener('change', onFile);
+  $('#btnFlip').addEventListener('click', () => { S.facing = S.facing === 'environment' ? 'user' : 'environment'; startCamera(); });
+  $('#readyBtns').addEventListener('click', e => {
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    if (b.dataset.act === 'retake') go('camera');
+    else if (b.dataset.act === 'continue' && S.cutout) go('wish');
+  });
+  $('#btnWish').addEventListener('click', onWish);
+  $('#wishInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('#wishInput').blur(); } });
+  $('#btnFloat').addEventListener('click', onFloat);
+  $('#btnHome').addEventListener('click', () => { S.cutout = null; S.wish = ''; refreshSentState(); go('welcome'); });
+
+  // admin
+  $('#pwForm').addEventListener('submit', submitPw);
+  $('#pwCancel').addEventListener('click', closePw);
+  $('#btnLucky').addEventListener('click', onLucky);
+  $('#btnReset').addEventListener('click', onReset);
+  $('#wClose').addEventListener('click', () => closeOv('winnersOv'));
+  window.addEventListener('resize', debounce(layoutRiver, 150));
+  window.addEventListener('offline', () => { if (store.mode !== 'demo') { toast('อุปกรณ์ออฟไลน์ — ตรวจสอบอินเทอร์เน็ต', 'err'); if (document.body.classList.contains('admin-mode')) setStatus('offline'); } });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if ($('#pwOv').classList.contains('on')) closePw();
+    else if ($('#winnersOv').classList.contains('on')) closeOv('winnersOv');
+  });
+
+  await seedDemo();
+  go('welcome');
+  refreshSentState();
+  if (location.hash === '#admin') askAdmin();
+}
+init();
+</script>
+</body>
+</html>

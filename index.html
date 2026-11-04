@@ -482,10 +482,9 @@ body.has-banner .admin-head{top:calc(var(--bh) + 8px)}
 const CONFIG = {
   // URL ของ Firebase Realtime Database (ไม่ต้องมี / ปิดท้าย)
   // ตัวอย่าง: 'https://thaiwah-krathong-default-rtdb.asia-southeast1.firebasedatabase.app'
-  // ถ้าเว้นว่าง (ค่าปัจจุบัน) = ไม่ใช้ฐานข้อมูล: ทุกคนลอยกระทงบนเครื่องเดียวกัน (เช่นแท็บเล็ต/คีออสก์)
-  //   แล้วเปิดหน้าแอดมินบนเครื่องเดียวกันหรือแท็บถัดไป ข้อมูลอยู่ในเบราว์เซอร์นั้นเท่านั้น
+  // ถ้าเว้นว่าง = ไม่ใช้ฐานข้อมูล (โหมดเดโม เล่นบนเครื่องเดียว ข้อมูลอยู่ในเบราว์เซอร์นั้นเท่านั้น)
   // หรือส่ง URL ผ่านลิงก์ได้: index.html?db=https://....firebasedatabase.app
-  DB_URL: '',
+  DB_URL: 'https://the-river-of-thai-wah-default-rtdb.asia-southeast1.firebasedatabase.app',
 
   // รหัสแอดมิน — เก็บเป็นค่าแฮช SHA-256 เท่านั้น ไม่เก็บรหัสตรง ๆ
   // ค่าปัจจุบันคือแฮชของรหัส "1234"
@@ -1692,7 +1691,7 @@ async function onReset() {
   if (!ok) return;
   const b = $('#btnReset'); b.disabled = true;
   try {
-    await store.patch('', { krathongs: null, originals: null, draw: null });
+    await store.patch('', { krathongs: null, draw: null });
     closeOv('winnersOv');
     toast('ล้างแม่น้ำเรียบร้อย พร้อมเริ่มรอบใหม่ 🌊', 'ok');
   } catch (e) {

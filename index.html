@@ -331,11 +331,11 @@ body.has-banner .admin-head{top:calc(var(--bh) + 8px)}
       <button class="link-btn back" type="button" data-go="welcome">‹ ย้อนกลับ</button>
       <div class="logo-slot" data-size="small"></div>
       <h1 class="title">YOUR KRATHONG,<br>YOUR CREATION!</h1>
-      <p class="sub">ถ่ายรูปกระทง DIY ที่คุณทำเสร็จแล้ว<br>วางบน<b>พื้นหลังสีขาว</b> ให้อยู่กลางกรอบ</p>
+      <p class="sub">ถ่ายรูปกระทง DIY ที่คุณทำเสร็จแล้ว ให้อยู่กลางกรอบ<br>(พื้นหลังเรียบ ๆ เช่นสีขาว จะตัดพื้นหลังได้สวยที่สุด)</p>
       <div class="cam loading" id="cam">
         <video id="video" playsinline muted autoplay></video>
         <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
-        <span class="cam-hint" id="camHint">วางกระทงกลางภาพบนพื้นสีขาว</span>
+        <span class="cam-hint" id="camHint">วางกระทงไว้กลางภาพ</span>
         <div class="cam-msg" id="camMsg"><div class="spinner"></div><div>กำลังเปิดกล้อง…</div></div>
       </div>
       <div class="row">
@@ -1110,9 +1110,28 @@ function processPhoto(canvas) {
   $('#readyBtns').innerHTML = '';
   setTimeout(() => {
     let r;
-    try { r = removeBackground(canvas); } catch (e) { console.error(e); r = { ok: false, msg: 'ประมวลผลภาพไม่สำเร็จ กรุณาถ่ายใหม่' }; }
+    try { r = removeBackground(canvas); } catch (e) { console.error(e); r = { ok: false }; }
+    // พื้นหลังแบบไหนก็ได้: ถ้าตัดพื้นหลังไม่สำเร็จ ใช้ภาพทั้งภาพแบบขอบวงรีนุ่ม ๆ แทน (ไม่บล็อกผู้เล่น)
+    if (!r.ok || r.partial) { try { r = ovalCutout(canvas); } catch (e) { console.error(e); r = { ok: false }; } }
     showReady(r);
   }, 60);
+}
+/** Fallback for any background: keep the whole photo with a soft oval fade so it still "floats" nicely. */
+function ovalCutout(src) {
+  const s = Math.min(1, CONFIG.IMG_MAX / Math.max(src.width, src.height));
+  const w = Math.max(1, Math.round(src.width * s)), h = Math.max(1, Math.round(src.height * s));
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d');
+  g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+  g.drawImage(src, 0, 0, w, h);
+  g.globalCompositeOperation = 'destination-in';
+  g.save(); g.translate(w / 2, h / 2); g.scale(w / 2, h / 2);
+  const gr = g.createRadialGradient(0, 0, 0.55, 0, 0, 1);
+  gr.addColorStop(0, 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = gr; g.beginPath(); g.arc(0, 0, 1, 0, Math.PI * 2); g.fill(); g.restore();
+  let dataUrl = store.mode === 'demo' ? c.toDataURL('image/webp', 0.9) : '';
+  if (!/^data:image\/webp/.test(dataUrl)) dataUrl = c.toDataURL('image/png');
+  return { ok: true, fallback: true, dataUrl, tip: { x: 0.5, y: 0.12 } };
 }
 const ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17.5 19.5 7"/></svg>';
 function showReady(r) {
@@ -1120,20 +1139,16 @@ function showReady(r) {
   const msg = $('#readyMsg'), btns = $('#readyBtns'), img = $('#readyImg');
   if (r.dataUrl) { img.src = r.dataUrl; img.hidden = false; }
   const retake = '<button class="btn btn-white" type="button" data-act="retake">↺ RETAKE</button>';
-  if (r.ok && !r.partial) {
+  if (r.ok) {
     S.cutout = r.dataUrl; S.tip = r.tip;
     $('#readyBadge').innerHTML = `<div class="badge ok">${ICON_OK}</div>`;
     $('#readyOk').hidden = false;
-    msg.className = 'msg'; msg.textContent = 'ตัดพื้นหลังเรียบร้อย พร้อมสำหรับขั้นตอนถัดไป';
+    msg.className = 'msg';
+    msg.textContent = r.fallback ? 'ใช้ภาพของคุณทั้งภาพ พร้อมลอยแล้ว ✨' : 'ตัดพื้นหลังเรียบร้อย พร้อมสำหรับขั้นตอนถัดไป';
     btns.innerHTML = retake + '<button class="btn btn-primary" type="button" data-act="continue">CONTINUE <span class="chev">›</span></button>';
-  } else if (r.ok && r.partial) {
-    S.cutout = r.dataUrl; S.tip = r.tip;
-    $('#readyBadge').innerHTML = '<div class="badge warn">!</div>';
-    msg.className = 'msg warn'; msg.textContent = '⚠ ' + r.msg + ' — แนะนำให้ถ่ายใหม่บนพื้นหลังสีขาวเรียบ ๆ';
-    btns.innerHTML = '<button class="btn btn-primary" type="button" data-act="retake">↺ RETAKE</button><button class="btn btn-white" type="button" data-act="continue">ใช้ภาพนี้ต่อ</button>';
   } else {
     $('#readyBadge').innerHTML = '<div class="badge err">✕</div>';
-    msg.className = 'msg err'; msg.textContent = '✕ ' + (r.msg || 'ตัดพื้นหลังไม่สำเร็จ');
+    msg.className = 'msg err'; msg.textContent = '✕ เปิดภาพนี้ไม่ได้ กรุณาถ่ายใหม่';
     btns.innerHTML = '<button class="btn btn-primary" type="button" data-act="retake">↺ RETAKE</button>';
   }
 }
@@ -1160,9 +1175,9 @@ function removeBackground(src) {
   const br = med(rs), bgc = med(gs), bb = med(bs);
   const bLum = .299 * br + .587 * bgc + .114 * bb;
   const bSat = Math.max(br, bgc, bb) - Math.min(br, bgc, bb);
-  if (bLum < 115 || bSat > 70) return { ok: false, msg: 'พื้นหลังไม่ใช่สีขาวหรือแสงน้อยเกินไป กรุณาวางกระทงบนพื้นหลังสีขาวในที่สว่าง' };
+  // any plain background colour works (white is best); processPhoto falls back to the oval photo when it fails
 
-  const SAT_TOL = 16, MIN_LUM = Math.max(85, bLum - 80), EDGE = 34;
+  const SAT_TOL = 16, MIN_LUM = bLum - 80, EDGE = 34;
   // 3x3 box blur copy → reduces camera noise before classifying pixels
   const sm = new Float32Array(N * 3);
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
@@ -1183,7 +1198,7 @@ function removeBackground(src) {
     const dr = r - br, dg = gg - bgc, db = b - bb; dist[i] = Math.sqrt(dr * dr + dg * dg + db * db);
   }
   // background-like = (almost) the paper colour, or the same tint & bright enough (paper in shade)
-  const like = i => dist[i] < 14 || (sat[i] <= SAT_TOL && lum[i] >= MIN_LUM);
+  const like = i => dist[i] < 24 || (sat[i] <= SAT_TOL && lum[i] >= MIN_LUM && lum[i] <= bLum + 70);
   // edge-stop: do not cross strong colour edges (protects pale petals / candles that touch the paper)
   const near = (i, j) => Math.abs(sm[i * 3] - sm[j * 3]) + Math.abs(sm[i * 3 + 1] - sm[j * 3 + 1]) + Math.abs(sm[i * 3 + 2] - sm[j * 3 + 2]) < EDGE;
 

@@ -55,23 +55,23 @@ draw/result      { locked, lockedAt, total, winners: { r1..r5: { id, name, rank,
 
 | โหนด | ใครอ่านได้ | เนื้อหา |
 |---|---|---|
-| `employees/<hash>` | อ่านทีละรหัสได้ (ดูทั้งรายการไม่ได้) | รายชื่อรหัสพนักงานที่มีสิทธิ์ เก็บเป็น SHA-256(salt + รหัส) |
 | `progress/<hash>` | ทีละรหัส | IN PROGRESS / QUIZ COMPLETED / PARTICIPATION COMPLETED |
 | `submissions/<hash>` | **Admin เท่านั้น** (ผ่าน Apps Script) | Employee ID, กระทง, คำตอบ 5 ข้อ, คะแนน, แม่น้ำ, คำอธิษฐาน, เวลา, สถานะ, Submission ID |
 | `done/<hash>` | ทีละรหัส | แม่น้ำที่ลอยแล้ว (ใช้กันส่งซ้ำ / ดูผลเดิม) |
 | `rivers/<r1..r8>/<hash>` | ทุกคน | ป้ายรหัสแบบปิดบางส่วน + แบบกระทง + เวลา (ใช้แสดงแม่น้ำแบบเรียลไทม์) |
 | `draw` | **Admin เท่านั้น** | ผล Lucky Krathong |
 
-กันส่งซ้ำที่ฝั่ง Server ด้วย Security Rules: เขียน `submissions/<hash>` ได้ครั้งเดียว และต้องเป็นรหัสที่อยู่ใน `employees` เท่านั้น (Rules อยู่ใน `database.rules.json`)
+พนักงานกรอกรหัสพนักงานเอง (ตัวเลข เช่น 20230260) ไม่ต้องตรวจกับรายชื่อ · กันส่งซ้ำที่ฝั่ง Server ด้วย Security Rules: 1 รหัสเขียน `submissions` ได้ครั้งเดียว (Rules อยู่ใน `database.rules.json`)
+
+ทุกครั้งที่กด FLOAT ระบบบันทึกแถวลง Google Sheet ชีต **Participants** อัตโนมัติ (Apps Script อ่านข้อมูลจาก Firebase เอง)
 
 ## ตั้งค่าระบบหลังบ้าน (Google Apps Script) — จำเป็นสำหรับ Admin / Export / Lucky Draw / รายชื่อพนักงาน
 
-1. เปิด Google Sheet ที่มีรายชื่อพนักงาน (ใช้บัญชี Google เดียวกับเจ้าของโปรเจกต์ Firebase) ตั้งชื่อชีตว่า **Employees** และให้หัวคอลัมน์มีคำว่า "Employee ID" หรือ "รหัส"
+1. เปิด Google Sheet (ใช้บัญชี Google เดียวกับเจ้าของโปรเจกต์ Firebase)
 2. เมนู Extensions → Apps Script → วางโค้ดจาก `v2/apps-script/Code.gs` และเปิด Project Settings → "Show appsscript.json" แล้ววางเนื้อหา `v2/apps-script/appsscript.json`
 3. เลือกฟังก์ชัน `setup` → Run → อนุญาตสิทธิ์ (ตั้งรหัส Admin เริ่มต้น 1234 — เปลี่ยนได้ที่ Project Settings → Script properties → `ADMIN_PIN`)
 4. Deploy → New deployment → Web app → Execute as: **Me**, Who has access: **Anyone** → คัดลอก URL ที่ลงท้ายด้วย `/exec`
 5. ใส่ URL ที่ `CONFIG.API_URL` ใน `v2/index.html` แล้ว push
-6. เข้า Admin → EXPORT & SETTINGS → **SYNC EMPLOYEES** เพื่อนำรายชื่อเข้าระบบตรวจสอบ (ทำซ้ำทุกครั้งที่แก้รายชื่อ)
 
 ## รูปภาพ
 

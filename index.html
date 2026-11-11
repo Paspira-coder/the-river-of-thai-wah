@@ -239,19 +239,22 @@ body.has-banner .admin-head{top:calc(var(--bh) + 8px)}
 .rv-rank{position:relative;font:italic 800 clamp(18px,2.6vw,28px) var(--ff);color:#ffe08a;letter-spacing:.14em;text-shadow:0 2px 12px rgba(120,60,0,.6)}
 .rv-img{position:relative;display:flex;align-items:flex-end;justify-content:center;height:min(46vh,380px)}
 .rv-img img{max-width:min(70vw,440px);max-height:100%;object-fit:contain;filter:drop-shadow(0 0 22px rgba(255,214,110,.95)) drop-shadow(0 0 50px rgba(255,190,80,.6));animation:bob2 3s ease-in-out infinite}
+.rv-prize{position:relative;padding:8px 26px;border-radius:999px;background:linear-gradient(180deg,#fff2b8,#f5cd5c 45%,#dc9d2e);color:#3b2a06;font:800 clamp(20px,3.6vw,38px)/1.2 var(--ff);box-shadow:0 8px 26px rgba(220,157,46,.55);animation:pop .6s .2s both}
+.w-sub{margin:4px 0 0;font:500 clamp(14px,1.6vw,18px) var(--ff);color:#6a5a9a}
+.w-prize{margin-top:6px;display:inline-block;padding:3px 10px;border-radius:999px;background:linear-gradient(180deg,#fff2b8,#f1c14f);color:#4a2f04;font:700 clamp(11px,1.15vw,13px)/1.3 var(--ff)}
 .rv-name{position:relative;max-width:90vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:10px 34px;border-radius:999px;background:#fff;color:var(--navy);font:800 clamp(26px,5vw,52px)/1.2 var(--ff);box-shadow:0 0 0 4px #f5cf62,0 10px 34px rgba(255,200,90,.65)}
 .rv-actions{position:relative;margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .winners{position:relative;width:min(1120px,96vw);max-height:calc(100vh - var(--bh) - 32px);overflow:auto;border-radius:30px;padding:30px 24px 24px;text-align:center;background:linear-gradient(180deg,rgba(255,243,248,.97),rgba(252,222,236,.97));box-shadow:0 30px 80px rgba(60,30,90,.4)}
 .w-close{position:absolute;right:14px;top:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(37,48,107,.08);color:var(--navy);font:700 20px var(--ff);cursor:pointer}
 .w-title{margin:6px 0 0;font:800 clamp(22px,3.4vw,40px)/1.2 var(--ff);color:var(--navy)}
 .w-title b{color:var(--pinkdeep)}
-.w-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin:46px 0 26px}
+.w-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;row-gap:40px;margin:40px 0 22px}
 @media (max-width:820px){.w-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:44px}}
 .w-card{position:relative;background:#fff;border-radius:20px;padding:30px 10px 14px;box-shadow:0 8px 24px rgba(120,60,120,.15);animation:pop .5s cubic-bezier(.2,1.4,.4,1) both}
 .w-medal{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:38px;height:38px;border-radius:50%;background:linear-gradient(#ff96bb,#e0457f);color:#fff;font:800 17px/38px var(--ff);box-shadow:0 0 0 3px #fff,0 4px 10px rgba(200,60,120,.4)}
 .w-card.first .w-medal{background:linear-gradient(#ffe68e,#d7961f);color:#4a2f04}
 .w-crown{position:absolute;top:-50px;left:50%;transform:translateX(-50%);font-size:28px;filter:drop-shadow(0 2px 4px rgba(150,90,10,.4))}
-.w-img{height:clamp(90px,14vh,130px);display:flex;align-items:flex-end;justify-content:center;border-radius:14px;background:radial-gradient(ellipse at 50% 92%,#c9eef3 0%,#e9e3f3 45%,#fdf1f6 75%)}
+.w-img{height:clamp(70px,11vh,110px);display:flex;align-items:flex-end;justify-content:center;border-radius:14px;background:radial-gradient(ellipse at 50% 92%,#c9eef3 0%,#e9e3f3 45%,#fdf1f6 75%)}
 .w-img img{max-width:88%;max-height:96%;object-fit:contain}
 .w-img .ph{font-size:44px;opacity:.5;align-self:center}
 .w-name{margin-top:10px;font:700 clamp(14px,1.5vw,18px) var(--ff);color:var(--navy);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -442,7 +445,8 @@ body.admin-mode .staff-status{display:none}
 <div class="overlay" id="revealOv" role="dialog" aria-modal="true">
   <div class="reveal-card">
     <div class="rv-rays"></div>
-    <div class="rv-rank" id="rvRank">LUCKY FLOATER #1</div>
+    <div class="rv-rank" id="rvRank">LUCKY KRATHONG</div>
+    <div class="rv-prize" id="rvPrize"></div>
     <div class="rv-img"><img id="rvImg" alt=""></div>
     <div class="rv-name" id="rvName"></div>
     <div class="rv-actions" id="rvActions"></div>
@@ -453,9 +457,10 @@ body.admin-mode .staff-status{display:none}
 <div class="overlay" id="winnersOv" role="dialog" aria-modal="true">
   <div class="winners">
     <button class="w-close" id="wClose" type="button" aria-label="ปิด">✕</button>
-    <h2 class="w-title">WHO WILL BE OUR <b>LUCKY FLOATERS?</b></h2>
+    <h2 class="w-title">CONGRATULATIONS <b>LUCKY FLOATERS!</b></h2>
+    <p class="w-sub">สรุปผู้โชคดีทั้ง 10 รางวัล</p>
     <div class="w-grid" id="wGrid"></div>
-    <div class="ribbon"><b>CONGRATULATIONS TO OUR 5 LUCKY FLOATERS!</b><span>ขอแสดงความยินดีกับผู้โชคดีทั้ง 5 คน</span></div>
+    <div class="ribbon"><b>CONGRATULATIONS TO OUR 10 LUCKY FLOATERS!</b><span>ขอแสดงความยินดีกับผู้โชคดีทั้ง 10 คน</span></div>
   </div>
 </div>
 
@@ -503,7 +508,10 @@ const CONFIG = {
   ADMIN_MAX_TRIES: 5,     // ใส่รหัสผิดได้กี่ครั้งก่อนล็อก
   ADMIN_LOCK_MS: 30000,   // ระยะเวลาล็อก (มิลลิวินาที) = 30 วินาที
 
-  WINNERS: 5,             // จำนวนผู้โชคดี
+  WINNERS: 10,            // จำนวนรางวัล (ต้องเท่ากับจำนวนรายการใน PRIZES)
+  // รายการรางวัล — ลำดับที่ 1 คือรางวัลใหญ่สุด ระบบจะสุ่มจากรางวัลเล็ก (ลำดับท้าย) ไปหารางวัลใหญ่ (ลำดับที่ 1)
+  PRIZES: ['Voucher Grab 300', 'Voucher Grab 200', 'Voucher Grab 100', 'Voucher Grab 100', 'Voucher Grab 100',
+           'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน'],
   IMG_MAX: 256,           // ขนาดภาพกระทง PNG สูงสุด (px)
   ORIGINAL_MAX: 1024,     // ขนาดภาพต้นฉบับสูงสุด (px)
   NAME_MAX: 40,           // ความยาวชื่อสูงสุด
@@ -1609,16 +1617,18 @@ async function saveWithRetry(fn, label) {
     }
   }
 }
-function reveal(rank, k, hasNext) {
+const prizeOf = r => CONFIG.PRIZES[r - 1] || ('รางวัลที่ ' + r);
+function reveal(rank, k, nextRank, doneCount) {
   return new Promise(res => {
-    $('#rvRank').textContent = `★ LUCKY FLOATER #${rank} ★`;
+    $('#rvRank').textContent = `★ LUCKY KRATHONG · รางวัลที่ ${doneCount}/${CONFIG.WINNERS} ★`;
+    $('#rvPrize').textContent = '🎁 ' + prizeOf(rank);
     const img = $('#rvImg'); if (k && k.img) { img.src = k.img; img.hidden = false; } else img.hidden = true;
     $('#rvName').textContent = k ? k.name : '';
     const act = $('#rvActions');
     act.innerHTML = '';
     const btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'btn btn-gold';
-    btn.textContent = hasNext ? `★ สุ่มคนถัดไป (${rank + 1}/${CONFIG.WINNERS})` : '🏆 ดูผู้โชคดีทั้งหมด';
+    btn.textContent = nextRank ? `★ สุ่มรางวัลต่อไป: ${prizeOf(nextRank)}` : '🏆 ดูสรุปรางวัลทั้งหมด';
     btn.onclick = () => { closeOv('revealOv'); res(); };
     act.appendChild(btn);
     openOv('revealOv');
@@ -1631,22 +1641,24 @@ async function onLucky() {
   if (A.result.locked) { renderWinners(); openOv('winnersOv'); return; }
   if (!A.items.size) { toast('ยังไม่มีกระทงในแม่น้ำ', 'warn'); return; }
   const won = new Set(Object.values(A.result.winners).map(w => w.id));
-  let rank = 1; while (A.result.winners[rank]) rank++;
+  // draw order: smallest prize first → grand prize (rank 1) last
+  let queue = []; for (let r = CONFIG.WINNERS; r >= 1; r--) if (!A.result.winners[r]) queue.push(r);
   const eligible = () => Array.from(A.items.keys()).filter(id => !won.has(id));
-  const need = CONFIG.WINNERS - (rank - 1);
-  let target = CONFIG.WINNERS;
+  const need = queue.length;
   if (eligible().length < need) {
-    const ok = await confirmDialog({ title: 'กระทงไม่ครบจำนวน', text: `มีกระทงที่ยังสุ่มได้ ${eligible().length} ใบ (ต้องการ ${need} ใบ) ต้องการสุ่มเท่าที่มีและล็อกผลหรือไม่?`, ok: 'สุ่มเท่าที่มี' });
+    const ok = await confirmDialog({ title: 'กระทงไม่ครบจำนวน', text: `มีกระทงที่ยังสุ่มได้ ${eligible().length} ใบ (เหลือ ${need} รางวัล) ต้องการสุ่มเท่าที่มี (เริ่มจากรางวัลเล็ก) และล็อกผลหรือไม่?`, ok: 'สุ่มเท่าที่มี' });
     if (!ok) return;
-    target = rank - 1 + eligible().length;
+    queue = queue.slice(0, eligible().length);
   }
   A.drawing = true;
   const river = $('#river'), bL = $('#btnLucky'), bR = $('#btnReset'), banner = $('#drawBanner');
   river.classList.add('fast'); bL.disabled = true; bR.disabled = true;
   try {
-    for (; rank <= target; rank++) {
+    for (let qi = 0; qi < queue.length; qi++) {
+      const rank = queue[qi];
       const pool = eligible(); if (!pool.length) break;
-      banner.hidden = false; banner.textContent = `★ กำลังสุ่มผู้โชคดีคนที่ ${rank} / ${CONFIG.WINNERS} ★`;
+      const doneCount = Object.keys(A.result.winners).length + 1;
+      banner.hidden = false; banner.textContent = `★ กำลังสุ่ม: ${prizeOf(rank)} (${doneCount}/${CONFIG.WINNERS}) ★`;
       const winId = pool[randInt(pool.length)];
       await spin(pool, winId);
       const it = A.items.get(winId), k = it ? it.k : null;
@@ -1654,12 +1666,12 @@ async function onLucky() {
       await saveWithRetry(async () => {
         await store.put('draw/result/winners/r' + rank, { id: winId, name: nm, rank, at: store.serverTime() });
         await store.patch('krathongs/' + winId, { lucky: true, luckyRank: rank, status: 'lucky' });
-      }, `บันทึกผู้โชคดีคนที่ ${rank} `);
+      }, `บันทึกผู้โชคดี ${prizeOf(rank)} `);
       won.add(winId);
       A.result.winners[rank] = { id: winId, name: nm, rank };
       if (it) applyMarks(it);
       banner.hidden = true;
-      await reveal(rank, k, rank < target);
+      await reveal(rank, k, queue[qi + 1], doneCount);
       highlight(null);
     }
     await saveWithRetry(() => store.patch('draw/result', { locked: true, lockedAt: store.serverTime(), total: won.size }), 'ล็อกผลการสุ่ม ');
@@ -1683,7 +1695,8 @@ function renderWinners() {
     card.className = 'w-card' + (r === 1 ? ' first' : '') + (w ? '' : ' pending');
     card.style.animationDelay = (r * 0.08) + 's';
     const it = w ? A.items.get(w.id) : null;
-    card.innerHTML = (r === 1 ? '<div class="w-crown">👑</div>' : '') + `<div class="w-medal">${r}</div><div class="w-img"></div><div class="w-name"></div>`;
+    card.innerHTML = (r === 1 ? '<div class="w-crown">👑</div>' : '') + `<div class="w-medal">${r}</div><div class="w-img"></div><div class="w-name"></div><div class="w-prize"></div>`;
+    card.querySelector('.w-prize').textContent = prizeOf(r);
     const box = card.querySelector('.w-img');
     if (it && it.k.img) { const im = document.createElement('img'); im.alt = ''; im.src = it.k.img; box.appendChild(im); }
     else { const ph = document.createElement('span'); ph.className = 'ph'; ph.textContent = w ? '🪷' : '?'; box.appendChild(ph); }
@@ -1798,7 +1811,7 @@ function showStaff() {
   go('welcome'); refreshSentState();
 }
 /* เวอร์ชันของแอป — ถ้าเบราว์เซอร์เปิดไฟล์เก่าจากแคช จะโหลดเวอร์ชันใหม่ให้อัตโนมัติ */
-const APP_VERSION = '2026-11-04.live4';
+const APP_VERSION = '2026-11-12.prizes10';
 async function checkFreshVersion() {
   if (!/^https?:/.test(location.protocol)) return;
   try {

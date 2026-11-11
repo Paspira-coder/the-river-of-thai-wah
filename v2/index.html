@@ -51,7 +51,10 @@ button,input,textarea,select{font-family:inherit}
 .lotus-l{left:-12px}.lotus-r{right:-12px;transform:scaleX(-1)}
 .riverbg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s}
 .riverbg.on{opacity:1}
-.riverbg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,40,.55),rgba(8,10,40,.15) 40%,rgba(8,10,40,.35))}
+body.hasriver{--hz:61%}
+body.hasriver .scene .moon,body.hasriver .scene .skyline,body.hasriver .scene .water,body.hasriver .scene .lotus{opacity:0;transition:opacity .6s}
+.scene .moon,.scene .skyline,.scene .water,.scene .lotus{transition:opacity .6s}
+.riverbg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,40,.45),rgba(8,10,40,0) 35%,rgba(8,10,40,.12))}
 
 /* ---------- top bar ---------- */
 .topbar{position:fixed;top:calc(var(--sat) + 10px);right:calc(var(--sar) + 10px);z-index:60;display:flex;gap:8px}
@@ -539,7 +542,7 @@ const CONFIG = {
   ID_SALT: 'TW-LOYKRATHONG-2026',
   WISH_MAX: 150,
 };
-const APP_VERSION = 'v2-2026-11-11.3';
+const APP_VERSION = 'v2-2026-11-11.4';
 
 const DESIGNS = [
   { id: 1, name: 'CLASSIC SINGLE LAYER', desc: 'กระทงดอกไม้ชั้นเดียว เรียบง่าย ตัวแม่' },
@@ -1065,8 +1068,10 @@ function riverPh(id) {
 function riverBgCss(id) { return RIVER_IMG[id] ? `url("${RIVER_IMG[id]}")` : riverPh(id); }
 function setSceneRiver(id) {
   const el = $('#riverBg');
+  document.body.classList.toggle('hasriver', !!(id && RIVER_IMG[id]));
   if (!id) { el.classList.remove('on'); return; }
   el.style.backgroundImage = riverBgCss(id); el.classList.add('on');
+  if (LIVE) setTimeout(() => LIVE.layout(), 650);
 }
 function refreshRiverVisuals() { renderRiverCards(); if (U.river && ['wish', 'live'].includes(STATE.page)) setSceneRiver(U.river); if (ADM.on) renderAdminRivers(); }
 

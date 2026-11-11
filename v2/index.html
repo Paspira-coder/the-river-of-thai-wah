@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1240">
+<title>DIGITAL LOY KRATHONG · THE RIVER OF THAI WAH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ff:'Prompt',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;
+  --gold:#ffd36b; --gold2:#f2a93b; --ink:#f4f1ff; --muted:#c9c3ee; --navy:#0d1240;
+  --glass:rgba(22,24,74,.62); --line:rgba(255,214,130,.35); --ok:#3ddc84; --bad:#ff6b81;
+  --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:#0b0f33;color:var(--ink);font-family:var(--ff)}
+button,input,textarea,select{font-family:inherit}
+[hidden]{display:none !important}
+
+/* ---------- night scene ---------- */
+.scene{position:fixed;inset:0;overflow:hidden;z-index:0;--hz:56%}
+.sky{position:absolute;inset:0;background:radial-gradient(120% 80% at 70% 18%,rgba(255,200,120,.18),transparent 45%),linear-gradient(180deg,#070b2e 0%,#141a55 30%,#2c1f6b 52%,#53307f 62%,#26195c 100%)}
+.moon{position:absolute;right:10%;top:calc(var(--sat) + 7%);width:clamp(90px,20vmin,200px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 42% 38%,#fff8dc 0%,#ffe9a6 45%,#ffcf63 80%,#f0b13f 100%);box-shadow:0 0 50px 18px rgba(255,210,110,.45),0 0 140px 70px rgba(255,190,90,.22);animation:moonglow 6s ease-in-out infinite}
+.moon::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 62% 60%,rgba(214,150,60,.22) 0 9%,transparent 10%),radial-gradient(circle at 35% 68%,rgba(214,150,60,.18) 0 6%,transparent 7%)}
+@keyframes moonglow{50%{box-shadow:0 0 64px 22px rgba(255,210,110,.55),0 0 170px 86px rgba(255,190,90,.28)}}
+.stars,.lanterns,.petals,.glints{position:absolute;inset:0;pointer-events:none}
+.st{position:absolute;width:var(--z);height:var(--z);animation:tw var(--t) ease-in-out infinite;animation-delay:var(--dl);filter:drop-shadow(0 0 4px #fff)}
+.st::before{content:'';position:absolute;inset:0;background:#fff;clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%)}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.5)}50%{opacity:1;transform:scale(1) rotate(20deg)}}
+.lan{position:absolute;top:calc(var(--hz) - 6%);width:var(--w);height:calc(var(--w)*1.3);border-radius:42% 42% 28% 28%;background:radial-gradient(ellipse at 50% 72%,#fff3c8 0%,#ffbe55 45%,#e9702e 100%);box-shadow:0 0 12px 4px rgba(255,180,80,.6),0 0 30px 10px rgba(255,150,60,.25);opacity:0;animation:rise var(--t) linear infinite;animation-delay:var(--dl)}
+@keyframes rise{0%{transform:translate(0,0);opacity:0}8%{opacity:.95}50%{transform:translate(var(--sx),-28vh) scale(.8)}88%{opacity:.7}100%{transform:translate(calc(var(--sx)*-.4),-58vh) scale(.5);opacity:0}}
+.skyline{position:absolute;left:0;right:0;bottom:calc(100% - var(--hz));height:clamp(110px,26vh,300px);overflow:hidden;pointer-events:none}
+.skyline svg{position:absolute;left:50%;bottom:0;height:100%;width:max(100vw,calc(clamp(110px,26vh,300px)*5.2));transform:translateX(-50%)}
+.water{position:absolute;left:0;right:0;top:var(--hz);bottom:0;overflow:hidden;background:linear-gradient(180deg,#2a2370 0%,#1b2a74 25%,#122567 55%,#0c1b4d 100%)}
+.water::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,220,150,.7),transparent)}
+.wband{position:absolute;left:0;width:calc(100% + var(--tw)*2);background-image:var(--seig);background-size:var(--tw) calc(var(--tw)/2);animation:drift var(--dur) linear infinite;-webkit-mask-image:linear-gradient(180deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(180deg,transparent,#000 25%,#000 75%,transparent)}
+@keyframes drift{to{transform:translateX(calc(var(--tw)*-1))}}
+.moonpath{position:absolute;top:0;right:calc(10% + clamp(90px,20vmin,200px)/2 - 45px);width:90px;height:80%;background:linear-gradient(180deg,rgba(255,214,120,.8),rgba(255,200,100,.25) 55%,transparent);filter:blur(8px);opacity:.6;animation:shim 3s ease-in-out infinite;transform-origin:50% 0}
+@keyframes shim{50%{transform:scaleX(1.6);opacity:.45}}
+.gl{position:absolute;width:var(--w);height:2px;border-radius:2px;background:#ffe7a8;box-shadow:0 0 6px 2px rgba(255,220,140,.7);opacity:0;animation:glint var(--t) ease-in-out infinite;animation-delay:var(--dl)}
+@keyframes glint{50%{opacity:.85}}
+.petal{position:absolute;width:var(--w);height:calc(var(--w)*.6);border-radius:50% 0 50% 0;background:linear-gradient(135deg,#ffc1d9,#ff7fae);opacity:.85;animation:petal var(--t) linear infinite;animation-delay:var(--dl)}
+@keyframes petal{from{transform:translateX(-10vw) rotate(0)}to{transform:translateX(110vw) rotate(540deg)}}
+.lotus{position:absolute;bottom:calc(var(--sab) - 8px);width:clamp(100px,20vmin,220px);pointer-events:none;filter:drop-shadow(0 0 14px rgba(255,140,190,.35))}
+.lotus-l{left:-12px}.lotus-r{right:-12px;transform:scaleX(-1)}
+.riverbg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s}
+.riverbg.on{opacity:1}
+.riverbg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,40,.55),rgba(8,10,40,.15) 40%,rgba(8,10,40,.35))}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed;top:calc(var(--sat) + 10px);right:calc(var(--sar) + 10px);z-index:60;display:flex;gap:8px}
+.tb{height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:rgba(16,18,60,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--ink);font:600 12.5px var(--ff);letter-spacing:.06em;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.tb.on{border-color:var(--gold);color:var(--gold);box-shadow:0 0 14px rgba(255,210,110,.35)}
+
+/* ---------- layout ---------- */
+.app{position:fixed;inset:0;z-index:5}
+.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:calc(var(--sat) + 60px) calc(var(--sar) + 16px) calc(var(--sab) + 24px) calc(var(--sal) + 16px);opacity:0;visibility:hidden;transform:translateY(16px) scale(.99);transition:opacity .45s,transform .45s,visibility 0s .45s}
+.page.on{opacity:1;visibility:visible;transform:none;transition:opacity .45s,transform .45s}
+.wrap{width:100%;max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.wrap.wide{max-width:1040px}
+.grow{flex:1 1 0;min-height:4px}
+.kicker{font:700 12px var(--ff);letter-spacing:.28em;color:var(--gold)}
+.h1{margin:0;font:800 clamp(24px,6.6vw,38px)/1.15 var(--ff);letter-spacing:.01em;text-shadow:0 2px 20px rgba(120,80,255,.45)}
+.h1 em{font-style:normal;color:var(--gold)}
+.sub{margin:0;max-width:440px;font:400 15px/1.6 var(--ff);color:var(--muted)}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:24px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08)}
+.logo{display:flex;flex-direction:column;align-items:center;line-height:1}
+.logo .l1{font:700 12px var(--ff);letter-spacing:.32em;color:var(--muted)}
+.logo .l2{font:italic 800 clamp(30px,8.5vw,52px) var(--ff);background:linear-gradient(180deg,#fff6d6,#ffd36b 45%,#f0a43a 80%,#c9751d);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #5a2f8a) drop-shadow(0 6px 18px rgba(255,190,90,.35));padding:0 .1em}
+.logo .l3{font:700 clamp(13px,3.6vw,18px) var(--ff);letter-spacing:.2em;color:#fff;margin-top:4px}
+.logo.sm .l2{font-size:26px}.logo.sm .l1{font-size:10px}.logo.sm .l3{font-size:11px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:0 30px;border-radius:999px;border:0;font:800 16px/1 var(--ff);letter-spacing:.06em;cursor:pointer;transition:transform .15s,box-shadow .2s,opacity .2s,filter .2s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.4)}
+.btn-gold{color:#3a2306;background:linear-gradient(180deg,#fff0b5,#ffd36b 40%,#f2a93b 80%,#d98a1e);box-shadow:0 8px 24px rgba(242,169,59,.45),inset 0 1px 0 rgba(255,255,255,.7)}
+.btn-ghost{color:var(--ink);background:rgba(255,255,255,.08);border:1px solid var(--line)}
+.btn-wide{width:100%;max-width:340px}
+.btn-sm{min-height:42px;padding:0 18px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%}
+.field{width:100%;max-width:360px;display:flex;align-items:center;gap:10px;height:58px;padding:0 20px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 0 0 3px rgba(255,211,107,.25),0 10px 30px rgba(0,0,0,.3)}
+.field input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:700 18px var(--ff);color:#1a1d4f;letter-spacing:.06em;text-transform:uppercase}
+.field input::placeholder{color:#8f8cb8;font-weight:500;letter-spacing:.04em;text-transform:none}
+.field.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.msg{min-height:22px;font:500 14px/1.5 var(--ff);color:var(--gold)}
+.msg.err{color:#ff9aa9}
+.spinner{width:28px;height:28px;border-radius:50%;border:3px solid rgba(255,255,255,.2);border-top-color:var(--gold);animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* welcome hero krathongs */
+.hero{position:relative;width:100%;max-width:420px;height:150px}
+.hero img{position:absolute;bottom:0;width:110px;filter:drop-shadow(0 0 16px rgba(255,200,100,.55));animation:bob 4s ease-in-out infinite}
+.hero img:nth-child(1){left:4%;width:96px;animation-delay:-1s}
+.hero img:nth-child(2){left:50%;transform:translateX(-50%);width:130px}
+.hero img:nth-child(3){right:4%;width:96px;animation-delay:-2s}
+@keyframes bob{0%,100%{translate:0 0;rotate:-2deg}50%{translate:0 -7px;rotate:2deg}}
+
+/* krathong gallery */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%}
+@media (min-width:760px){.grid.k{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.r{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.kcard{position:relative;padding:12px 10px 14px;border-radius:22px;cursor:pointer;background:linear-gradient(180deg,rgba(60,50,140,.55),rgba(20,22,70,.75));border:1.5px solid rgba(255,255,255,.12);transition:transform .25s,border-color .25s,box-shadow .25s;text-align:center}
+.kcard:hover{transform:translateY(-4px) rotateX(4deg)}
+.kcard .kimg{height:clamp(96px,26vw,150px);display:flex;align-items:flex-end;justify-content:center}
+.kcard .kimg img{max-width:92%;max-height:100%;object-fit:contain;filter:drop-shadow(0 10px 12px rgba(0,0,0,.35));transition:transform .3s}
+.kcard:hover .kimg img{transform:scale(1.06) translateY(-3px)}
+.kcard .kn{margin-top:8px;font:800 13.5px/1.2 var(--ff);letter-spacing:.04em}
+.kcard .kd{margin-top:3px;font:400 12.5px/1.4 var(--ff);color:var(--muted)}
+.kcard.sel{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,211,107,.35),0 0 30px rgba(255,200,90,.45);transform:translateY(-4px)}
+.check{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:50%;background:linear-gradient(#5be38f,#22a85a);display:grid;place-items:center;color:#fff;font:900 16px var(--ff);box-shadow:0 0 0 3px rgba(255,255,255,.85);opacity:0;transform:scale(.3);transition:.25s cubic-bezier(.2,1.6,.4,1)}
+.sel .check{opacity:1;transform:scale(1)}
+.stickybar{position:sticky;bottom:calc(var(--sab) + 6px);display:flex;gap:10px;justify-content:center;width:100%;padding-top:8px;z-index:3}
+
+/* quiz */
+.quiz{width:100%;padding:18px 16px 18px;text-align:left}
+.qhead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.mascot{width:74px;flex:none;animation:bob 3.4s ease-in-out infinite}
+.qnum{font:800 13px var(--ff);letter-spacing:.18em;color:var(--gold)}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ffd36b,#ff8fb8);transition:width .5s}
+.qtext{font:700 clamp(17px,4.6vw,22px)/1.45 var(--ff);margin:6px 0 14px}
+.opt{display:flex;align-items:flex-start;gap:12px;width:100%;margin:0 0 10px;padding:14px 14px;border-radius:18px;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:var(--ink);font:500 15.5px/1.5 var(--ff);text-align:left;cursor:pointer;transition:.2s}
+.opt b{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);font:800 15px var(--ff)}
+.opt:hover:not(:disabled){border-color:var(--gold);background:rgba(255,211,107,.1)}
+.opt.pick{border-color:var(--gold);box-shadow:0 0 18px rgba(255,211,107,.35)}
+.opt.right{border-color:var(--ok);background:rgba(61,220,132,.16)}
+.opt.right b{background:var(--ok);color:#073}
+.opt.wrong{border-color:var(--bad);background:rgba(255,107,129,.14)}
+.opt.wrong b{background:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+.fb{margin-top:6px;padding:14px;border-radius:18px;font:400 14.5px/1.6 var(--ff);animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+.fb.ok{background:rgba(61,220,132,.14);border:1px solid rgba(61,220,132,.5)}
+.fb.no{background:rgba(255,107,129,.12);border:1px solid rgba(255,107,129,.45)}
+.fb h4{margin:0 0 4px;font:800 17px var(--ff)}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.burst{position:fixed;pointer-events:none;z-index:90;font-size:20px;animation:burst 1s ease-out forwards}
+@keyframes burst{to{transform:translate(var(--dx),var(--dy)) scale(.4) rotate(160deg);opacity:0}}
+
+/* result */
+.score{font:800 clamp(64px,20vw,110px)/1 var(--ff);background:linear-gradient(180deg,#fff6d6,#ffd36b,#f0a43a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 20px rgba(255,190,80,.4))}
+.stars{display:flex;gap:6px;justify-content:center;font-size:30px}
+.stars span{filter:grayscale(1) opacity(.35);transition:.3s}
+.stars span.on{filter:none;animation:pop .5s both}
+.trophy{font-size:64px;animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,200,90,.6))}
+.tier{font:800 22px var(--ff);letter-spacing:.06em;color:var(--gold)}
+.qa{width:100%;text-align:left;padding:4px 14px}
+.qa details{border-bottom:1px solid rgba(255,255,255,.1);padding:10px 0}
+.qa details:last-child{border-bottom:0}
+.qa summary{cursor:pointer;font:600 14.5px/1.5 var(--ff);list-style:none;display:flex;gap:10px}
+.qa summary::-webkit-details-marker{display:none}
+.qa .mk{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:900 13px var(--ff)}
+.qa .mk.ok{background:var(--ok);color:#063}.qa .mk.no{background:var(--bad);color:#fff}
+.qa p{margin:8px 0 0 34px;font:400 13.5px/1.6 var(--ff);color:var(--muted)}
+.chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.chip{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);font:600 13px var(--ff)}
+
+/* rivers */
+.rcard{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1.5px solid rgba(255,255,255,.14);transition:.25s;background:#151a55;aspect-ratio:4/3}
+.rcard .rimg{position:absolute;inset:0;background-size:cover;background-position:center}
+.rcard .rimg.ph{background:var(--phbg)}
+.rcard::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,8,35,.85))}
+.rcard .rn{position:absolute;left:10px;right:10px;bottom:8px;z-index:2;text-align:left;font:800 14px/1.2 var(--ff);letter-spacing:.04em}
+.rcard .rc{display:block;font:500 11.5px var(--ff);color:var(--gold);letter-spacing:.06em;margin-top:2px}
+.rcard:hover{transform:translateY(-3px)}
+.rcard.sel{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,211,107,.35),0 0 30px rgba(255,200,90,.5)}
+.rcard .check{z-index:3}
+.phtag{position:absolute;left:8px;top:8px;z-index:2;padding:2px 8px;border-radius:99px;background:rgba(0,0,0,.45);font:600 10px var(--ff);letter-spacing:.08em;color:#ddd}
+.preview{width:100%;padding:10px;display:flex;gap:12px;align-items:center;text-align:left}
+.preview .pv{width:44%;aspect-ratio:16/10;border-radius:16px;background-size:cover;background-position:center;flex:none;position:relative;overflow:hidden}
+.preview .pv img{position:absolute;left:50%;bottom:6%;width:46%;transform:translateX(-50%);filter:drop-shadow(0 0 12px rgba(255,200,90,.6))}
+
+/* wish */
+.stage{position:relative;width:100%;max-width:420px;height:min(38vh,300px);display:flex;align-items:flex-end;justify-content:center}
+.stage::before{content:'';position:absolute;left:8%;right:8%;bottom:2%;height:22%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,210,120,.5),transparent 70%)}
+.stage .rip,.livek .rip{position:absolute;left:50%;bottom:6%;width:70%;height:16%;border:2px solid rgba(255,230,170,.7);border-radius:50%;transform:translateX(-50%) scale(.4);opacity:0;animation:rip 3.2s ease-out infinite}
+.stage .rip.r2{animation-delay:1.06s}.stage .rip.r3{animation-delay:2.13s}
+@keyframes rip{15%{opacity:.9}100%{transform:translateX(-50%) scale(1.2);opacity:0}}
+.kw{position:relative;margin-bottom:9%;animation:bob 4s ease-in-out infinite}
+.kw img{max-width:min(62vw,260px);max-height:min(30vh,230px);filter:drop-shadow(0 0 18px rgba(255,200,100,.6))}
+.kw .glow{position:absolute;left:50%;top:6%;width:90px;height:90px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,220,130,.75),transparent 70%);animation:flick 1.6s ease-in-out infinite;pointer-events:none;mix-blend-mode:screen}
+@keyframes flick{0%,100%{opacity:.75;transform:translateX(-50%) scale(1)}40%{opacity:1;transform:translateX(-50%) scale(1.15)}70%{opacity:.85;transform:translateX(-50%) scale(.95)}}
+.smoke{position:absolute;left:58%;top:0;width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.6);filter:blur(4px);opacity:0;animation:smoke 3.4s ease-out infinite;pointer-events:none}
+.smoke.s2{animation-delay:1.1s;--sx:-14px}.smoke.s3{animation-delay:2.2s;--sx:10px}
+@keyframes smoke{15%{opacity:.7}100%{transform:translate(var(--sx,12px),-120px) scale(3.4);opacity:0}}
+.stage.wished .kw img{animation:wishfx 1.2s ease-out}
+@keyframes wishfx{40%{filter:drop-shadow(0 0 40px #ffe08a) brightness(1.25)}}
+.wishbox{width:100%;max-width:420px;padding:4px}
+.wishbox textarea{width:100%;min-height:96px;resize:none;border:0;outline:0;border-radius:20px;padding:14px 16px;background:rgba(255,255,255,.95);color:#1a1d4f;font:500 16px/1.5 var(--ff);box-shadow:0 0 0 3px rgba(255,211,107,.25)}
+.count{font:500 12px var(--ff);color:var(--muted);text-align:right;margin-top:4px}
+
+/* live river */
+.live{position:absolute;inset:0;overflow:hidden}
+.livehead{position:absolute;left:0;right:0;top:calc(var(--sat) + 56px);z-index:20;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;padding:0 12px}
+.counter{display:flex;align-items:center;gap:10px;padding:8px 18px;border-radius:18px;background:rgba(12,14,52,.72);border:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.counter .n{font:800 28px/1 var(--ff);color:var(--gold);font-variant-numeric:tabular-nums}
+.counter .t{font:700 11px/1.3 var(--ff);letter-spacing:.14em;text-align:left}
+.counter .t small{display:block;color:var(--muted);font-weight:600}
+.livedot{display:inline-flex;align-items:center;gap:6px;font:700 11px var(--ff);letter-spacing:.14em;color:#7dffb0}
+.livedot i{width:8px;height:8px;border-radius:50%;background:#2ee67d;animation:pulse 1.5s infinite}
+.livedot.off{color:#ff9aa9}.livedot.off i{background:#ff5b6e;animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(46,230,125,.6)}70%{box-shadow:0 0 0 9px rgba(46,230,125,0)}}
+.rswitch{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding:2px 4px 6px;pointer-events:auto;scrollbar-width:none}
+.rswitch button{flex:none;height:30px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(10,12,48,.6);color:var(--ink);font:600 11px var(--ff);cursor:pointer;white-space:nowrap}
+.rswitch button.on{border-color:var(--gold);color:var(--gold)}
+.rstage{position:absolute;left:0;right:0;bottom:0;top:var(--hz);z-index:10}
+.livek{position:absolute;width:var(--s);height:calc(var(--s)*var(--ar,.9));transform:translate(-50%,-100%);transition:left .8s,top .8s,width .8s,height .8s}
+.livek .bob{position:absolute;inset:0;transform-origin:50% 92%;animation:kbob var(--d) ease-in-out infinite;animation-delay:var(--dl)}
+@keyframes kbob{0%,100%{transform:translate(0,0) rotate(calc(var(--r)*-1))}25%{transform:translate(var(--dx),-3px) rotate(0)}50%{transform:translate(0,-1px) rotate(var(--r))}75%{transform:translate(calc(var(--dx)*-1),-4px) rotate(0)}}
+.livek img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 0 6px rgba(255,200,100,.7))}
+.livek .refl{position:absolute;left:10%;right:10%;top:96%;height:40%;background:radial-gradient(ellipse at 50% 0,rgba(255,210,120,.45),transparent 70%);filter:blur(2px)}
+.livek .rip{bottom:-6%;width:120%;height:26%;animation-duration:var(--rd,3.8s);animation-delay:var(--dl)}
+.livek .tag{position:absolute;left:50%;bottom:100%;transform:translateX(-50%);margin-bottom:2px;padding:2px 8px;border-radius:999px;white-space:nowrap;background:rgba(12,14,52,.78);border:1px solid rgba(255,214,130,.5);color:#fff;font:600 var(--fs,11px)/1.3 var(--ff);box-shadow:0 0 10px rgba(255,200,100,.35)}
+.livek.me{z-index:99999 !important}
+.livek.me .tag{background:linear-gradient(180deg,#ffe48a,#f2a93b);color:#3a2306;border-color:#fff}
+.livek.me img{filter:drop-shadow(0 0 10px #ffe08a) drop-shadow(0 0 22px rgba(255,190,80,.8))}
+.livek.drop .bob{animation:dropin 1.3s cubic-bezier(.3,.7,.3,1) both}
+@keyframes dropin{0%{transform:translateY(-220%) scale(1.3);opacity:0}45%{opacity:1}62%{transform:translateY(6%) scale(.95)}80%{transform:translateY(-3%)}100%{transform:none}}
+.livek.hl{z-index:100000 !important}
+.livek.hl .bob{scale:1.35}
+.livek.hl img{filter:drop-shadow(0 0 10px #ffe27a) drop-shadow(0 0 26px #ffb320)}
+.bubble{position:absolute;z-index:100001;max-width:220px;padding:8px 12px;border-radius:14px;background:rgba(255,255,255,.95);color:#1a1d4f;font:500 13px/1.45 var(--ff);transform:translate(-50%,calc(-100% - 10px));box-shadow:0 8px 20px rgba(0,0,0,.3);animation:pop .5s both}
+.bubble::after{content:'';position:absolute;left:50%;bottom:-6px;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:inherit}
+.empty{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);z-index:12;padding:12px 20px;border-radius:16px;background:rgba(12,14,52,.6);font:500 14px var(--ff);color:var(--muted);white-space:nowrap}
+.livefoot{position:absolute;left:0;right:0;bottom:calc(var(--sab) + 16px);z-index:30;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 16px}
+.pending{position:absolute;left:50%;bottom:calc(var(--sab) + 96px);transform:translateX(-50%);z-index:25;width:min(46vw,190px);animation:bob 3s ease-in-out infinite}
+.pending img{width:100%;filter:drop-shadow(0 0 18px rgba(255,200,100,.8))}
+.pending.go{animation:descend 1.6s cubic-bezier(.5,0,.4,1) forwards}
+@keyframes descend{to{transform:translateX(-50%) translateY(10vh) scale(.35);opacity:0}}
+
+/* overlays */
+.ov{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:calc(var(--sat) + 16px) 16px calc(var(--sab) + 16px);background:rgba(6,8,30,.72);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s;overflow-y:auto}
+.ov.on{opacity:1;visibility:visible;transition:opacity .35s}
+.modal{width:min(440px,100%);padding:24px 20px;text-align:center;margin:auto}
+.ov.on .modal{animation:pop .45s cubic-bezier(.2,1.3,.4,1) both}
+.modal h3{margin:0 0 8px;font:800 20px var(--ff);letter-spacing:.06em}
+.modal p{margin:0 0 14px;color:var(--muted);font:400 14.5px/1.6 var(--ff)}
+.modal .field{margin:0 auto 10px}
+.success{width:min(480px,100%);padding:26px 20px 22px;text-align:center;margin:auto}
+.success .sk{width:min(56vw,220px);filter:drop-shadow(0 0 22px rgba(255,200,100,.7));animation:bob 3.2s ease-in-out infinite}
+.success .wishq{margin:10px auto;max-width:360px;padding:10px 14px;border-radius:16px;background:rgba(255,255,255,.08);font:italic 500 15px/1.5 var(--ff);color:#ffe7a8;word-break:break-word}
+.slogan{font:700 12px var(--ff);letter-spacing:.22em;color:var(--gold)}
+#confetti{position:fixed;inset:0;z-index:95;pointer-events:none;width:100%;height:100%}
+.toasts{position:fixed;left:50%;bottom:calc(var(--sab) + 18px);transform:translateX(-50%);z-index:120;display:flex;flex-direction:column;gap:8px;align-items:center;width:min(92vw,480px);pointer-events:none}
+.toast{padding:12px 18px;border-radius:16px;background:rgba(20,22,72,.96);border:1px solid var(--line);color:#fff;font:500 14px/1.45 var(--ff);text-align:center;opacity:0;transform:translateY(12px);transition:.3s;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:none}
+.toast.err{background:rgba(150,28,52,.96)}.toast.ok{background:rgba(18,110,62,.96)}.toast.warn{background:rgba(150,80,10,.96)}
+
+/* ---------- admin ---------- */
+#admin{position:fixed;inset:0;z-index:70;background:linear-gradient(180deg,#0a0d33,#141247 60%,#1c1450);overflow:hidden;display:flex;flex-direction:column}
+.ahead{display:flex;align-items:center;gap:12px;padding:calc(var(--sat) + 12px) 16px 10px;border-bottom:1px solid rgba(255,255,255,.08);flex-wrap:wrap}
+.ahead .tt{font:800 18px/1.1 var(--ff);letter-spacing:.06em}
+.ahead .tt small{display:block;font:700 11px var(--ff);letter-spacing:.24em;color:var(--gold)}
+.ahead .sp{flex:1}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);scrollbar-width:none}
+.tabs button{flex:none;height:36px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:var(--ink);font:700 12px var(--ff);letter-spacing:.08em;cursor:pointer}
+.tabs button.on{background:linear-gradient(180deg,#ffe48a,#f2a93b);color:#3a2306;border-color:transparent}
+.abody{flex:1;overflow-y:auto;padding:16px 16px calc(var(--sab) + 30px)}
+.asec{max-width:1200px;margin:0 auto}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{padding:16px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.kpi .v{font:800 34px/1 var(--ff);color:var(--gold);font-variant-numeric:tabular-nums}
+.kpi .l{margin-top:6px;font:700 11px var(--ff);letter-spacing:.14em;color:var(--muted)}
+.h2{margin:22px 0 10px;font:800 15px var(--ff);letter-spacing:.14em;color:#fff}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.amr{border-radius:18px;overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.amr .ph{height:110px;background-size:cover;background-position:center;position:relative}
+.amr .bd{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.amr .nm{font:800 14px var(--ff)}
+.amr .meta{display:flex;justify-content:space-between;font:500 12.5px var(--ff);color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tools input,.tools select{height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--ink);padding:0 12px;font:500 13px var(--ff)}
+.tools select option{color:#111}
+.tbl{width:100%;border-collapse:collapse;font:400 13px var(--ff)}
+.tblw{overflow-x:auto;border-radius:16px;border:1px solid rgba(255,255,255,.1)}
+.tbl th{position:sticky;top:0;background:#1d1a5a;text-align:left;padding:10px;font:700 11px var(--ff);letter-spacing:.1em;color:var(--gold);white-space:nowrap;cursor:pointer}
+.tbl td{padding:9px 10px;border-top:1px solid rgba(255,255,255,.06);vertical-align:top}
+.tbl td.w{max-width:260px;word-break:break-word;color:var(--muted)}
+.tbl tr:hover td{background:rgba(255,255,255,.03)}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font:700 10.5px var(--ff);letter-spacing:.04em;background:rgba(61,220,132,.18);color:#7dffb0;white-space:nowrap}
+.badge.p{background:rgba(255,211,107,.16);color:var(--gold)}
+.bars{display:flex;flex-direction:column;gap:8px}
+.brow{display:grid;grid-template-columns:minmax(120px,190px) 1fr 54px;gap:10px;align-items:center;font:500 13px var(--ff)}
+.brow .tr{height:14px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.brow .tr i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#ffd36b,#ff8fb8)}
+.brow .v{text-align:right;font-weight:700;color:var(--gold)}
+.panel{padding:16px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.setup{padding:14px 16px;border-radius:16px;background:rgba(255,160,60,.12);border:1px solid rgba(255,170,80,.45);font:500 13.5px/1.6 var(--ff);color:#ffd9a8}
+.draw{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.drawk{width:min(60vw,260px);filter:drop-shadow(0 0 30px rgba(255,200,100,.8));animation:bob 2.4s ease-in-out infinite}
+.drawk.spin{animation:wob .25s linear infinite}
+@keyframes wob{0%{transform:rotate(-6deg) scale(1.02)}50%{transform:rotate(6deg) scale(.98)}100%{transform:rotate(-6deg) scale(1.02)}}
+.roller{min-height:52px;font:800 clamp(24px,5vw,40px) var(--ff);letter-spacing:.06em;color:#fff;text-shadow:0 0 20px rgba(255,200,100,.6)}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;width:100%}
+.wcard{position:relative;padding:28px 12px 14px;border-radius:20px;background:linear-gradient(180deg,rgba(255,211,107,.16),rgba(255,255,255,.04));border:1px solid rgba(255,211,107,.45);text-align:center;animation:pop .5s both}
+.wcard .md{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:linear-gradient(#ffe48a,#d7961f);color:#3a2306;font:800 15px/34px var(--ff);box-shadow:0 0 0 3px #1c1450}
+.wcard img{height:80px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(255,200,100,.6))}
+.wcard .id{font:800 17px var(--ff);margin-top:6px}
+.wcard .mt{font:500 12px/1.5 var(--ff);color:var(--muted)}
+.riverview{position:fixed;inset:0;z-index:75;display:none}
+.riverview.on{display:block}
+@media (prefers-reduced-motion:reduce){*{animation-duration:0s !important;animation-iteration-count:1 !important}}
+</style>
+</head>
+<body>
+<div class="scene" id="scene" aria-hidden="true">
+  <div class="sky"></div>
+  <div class="riverbg" id="riverBg"></div>
+  <div class="moon" id="moon"></div>
+  <div class="stars" id="stars"></div>
+  <div class="lanterns" id="lanterns"></div>
+  <div class="skyline" id="skyline"></div>
+  <div class="water" id="water"><div id="wbands"></div><div class="moonpath"></div><div class="glints" id="glints"></div><div class="petals" id="petals"></div></div>
+  <div class="lotus lotus-l" id="lotusL"></div><div class="lotus lotus-r" id="lotusR"></div>
+</div>
+
+<div class="topbar">
+  <button class="tb" id="bMusic" type="button" aria-label="เปิด/ปิดเพลง">🎵 MUSIC OFF</button>
+  <button class="tb" id="bAdmin" type="button">ADMIN LOGIN</button>
+</div>
+
+<main class="app" id="app">
+  <!-- 1 WELCOME -->
+  <section class="page" id="p-welcome"><div class="wrap">
+    <div class="logo"><div class="l1">DIGITAL LOY KRATHONG</div><div class="l2">THE RIVER OF THAI WAH</div></div>
+    <div class="hero" id="hero"></div>
+    <div class="kicker">WELCOME TO THE RIVER OF THAI WAH!</div>
+    <h1 class="h1">LET'S FLOAT <em>YOUR WISHES!</em></h1>
+    <p class="sub">มาร่วมลอยกระทงออนไลน์ไปด้วยกัน เลือกกระทงที่ชอบ เลือกแม่น้ำที่ใช่ แล้วส่งคำอธิษฐานของคุณไปลอยกันเลย!</p>
+    <label class="field" id="idField"><span aria-hidden="true">🪪</span><input id="empId" maxlength="32" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ENTER YOUR EMPLOYEE ID" aria-label="รหัสพนักงาน" enterkeyhint="go"></label>
+    <div class="msg" id="idMsg"></div>
+    <button class="btn btn-gold btn-wide" id="bNext1" type="button">NEXT ›</button>
+    <div class="grow"></div>
+    <div class="slogan">ONE RIVER. COUNTLESS KRATHONGS. COUNTLESS WISHES.</div>
+  </div></section>
+
+  <!-- 2 CHOOSE KRATHONG -->
+  <section class="page" id="p-krathong"><div class="wrap wide">
+    <div class="kicker">STEP 1 · CHOOSE YOUR KRATHONG</div>
+    <h1 class="h1">PICK YOUR <em>FAVORITE</em> KRATHONG!</h1>
+    <p class="sub">เลือกกระทงที่คุณชอบ แล้วเตรียมส่งไปลอยในแม่น้ำกันเลย!</p>
+    <div class="grid k" id="kgrid"></div>
+    <div class="stickybar"><button class="btn btn-gold btn-wide" id="bNext2" type="button" disabled>NEXT ›</button></div>
+  </div></section>
+
+  <!-- 3 QUIZ -->
+  <section class="page" id="p-quiz"><div class="wrap">
+    <div class="kicker">LET'S PLAY!</div>
+    <h1 class="h1">LOY KRATHONG <em>QUIZ</em></h1>
+    <p class="sub" id="quizIntro">สนุกกับคำถาม 5 ข้อ ทดสอบความรู้เกี่ยวกับวันลอยกระทงและสิ่งแวดล้อม ก่อนพากระทงของคุณไปลอยในแม่น้ำ Thai Wah!</p>
+    <div class="card quiz">
+      <div class="qhead"><div class="mascot" id="mascot"></div><div style="flex:1"><div class="qnum" id="qNum">QUESTION 1/5</div><div class="bar"><i id="qBar"></i></div></div></div>
+      <div class="qtext" id="qText"></div>
+      <div id="qOpts"></div>
+      <div id="qFb"></div>
+    </div>
+    <button class="btn btn-gold btn-wide" id="bQNext" type="button" disabled>NEXT ›</button>
+    <div class="grow"></div>
+  </div></section>
+
+  <!-- 4 RESULT -->
+  <section class="page" id="p-result"><div class="wrap">
+    <div class="kicker">YOUR QUIZ RESULT!</div>
+    <div class="trophy">🏆</div>
+    <div class="score" id="rScore">0/5</div>
+    <div class="stars" id="rStars"></div>
+    <div class="tier" id="rTier"></div>
+    <p class="sub" id="rMsg"></p>
+    <div class="chips"><span class="chip" id="rOk">✓ ถูก 0 ข้อ</span><span class="chip" id="rNo">✗ ผิด 0 ข้อ</span></div>
+    <div class="card qa" id="rList"></div>
+    <p class="sub" style="font-size:12.5px">Quiz เป็นกิจกรรมเพื่อความสนุกและความรู้ คะแนนไม่มีผลต่อสิทธิ์ลอยกระทงหรือสิทธิ์ลุ้นรางวัล</p>
+    <button class="btn btn-gold btn-wide" id="bToRiver" type="button">LET'S FLOAT MY KRATHONG! ›</button>
+    <div class="grow"></div>
+  </div></section>
+
+  <!-- 5 CHOOSE RIVER -->
+  <section class="page" id="p-river"><div class="wrap wide">
+    <div class="kicker">STEP 2 · CHOOSE YOUR RIVER</div>
+    <h1 class="h1">WHERE WOULD YOU LIKE TO <em>FLOAT</em> YOUR KRATHONG?</h1>
+    <p class="sub">เลือกแม่น้ำที่คุณต้องการส่งกระทงไปลอยกันเลย!</p>
+    <div class="grid r" id="rgrid"></div>
+    <div class="card preview" id="rPreview" hidden><div class="pv" id="pvImg"><img id="pvK" alt=""></div><div><div class="kicker" style="letter-spacing:.18em">YOUR RIVER</div><div style="font:800 20px var(--ff)" id="pvName"></div><div class="sub" style="font-size:13px" id="pvCount"></div></div></div>
+    <div class="stickybar"><button class="btn btn-ghost" id="bBack5" type="button">‹ BACK</button><button class="btn btn-gold" id="bNext5" type="button" disabled>NEXT ›</button></div>
+  </div></section>
+
+  <!-- 6 MAKE A WISH -->
+  <section class="page" id="p-wish"><div class="wrap">
+    <div class="kicker" id="wRiverName"></div>
+    <h1 class="h1">CLOSE YOUR EYES. <em>MAKE A WISH.</em></h1>
+    <div class="stage" id="wStage"><span class="rip"></span><span class="rip r2"></span><span class="rip r3"></span><div class="kw"><img id="wK" alt="กระทงของคุณ"><div class="glow"></div><div class="smoke"></div><div class="smoke s2"></div><div class="smoke s3"></div></div></div>
+    <div style="font:800 17px var(--ff);letter-spacing:.06em">WHAT'S YOUR WISH THIS YEAR?</div>
+    <p class="sub">อยากให้ปีนี้มีเรื่องดี ๆ อะไรเกิดขึ้นบ้าง? ไม่ว่าจะเป็นความสุข ความสำเร็จ สุขภาพที่ดี หรือสิ่งที่ตั้งใจไว้ ลองเขียนคำอธิษฐานของคุณได้เลย</p>
+    <div class="wishbox"><textarea id="wish" maxlength="150" placeholder="WRITE YOUR WISH..." aria-label="คำอธิษฐาน (ไม่บังคับ)"></textarea><div class="count" id="wCount">0/150</div></div>
+    <div class="row"><button class="btn btn-ghost btn-sm" id="bBack6" type="button">‹ BACK</button><button class="btn btn-gold" id="bWish" type="button">MAKE A WISH ✨</button></div>
+    <div class="grow"></div>
+  </div></section>
+
+  <!-- 7 LIVE RIVER / FLOAT -->
+  <section class="page" id="p-live" style="padding:0">
+    <div class="live">
+      <div class="livehead">
+        <div class="logo sm"><div class="l1">THE RIVER OF THAI WAH</div><div class="l2" style="font-size:22px">LET YOUR WISH FLOAT!</div></div>
+        <div class="counter"><div class="n" id="lCount">0</div><div class="t"><span id="lRiver">BL RIVER</span><small>FLOATING KRATHONGS</small></div></div>
+        <div class="livedot" id="lDot"><i></i><span>LIVE</span></div>
+        <div class="rswitch" id="rSwitch"></div>
+      </div>
+      <div class="rstage" id="rStage"></div>
+      <div class="empty" id="lEmpty">🪷 ยังไม่มีกระทงในแม่น้ำนี้ มาเป็นคนแรกกันเลย!</div>
+      <div class="pending" id="pending" hidden><img id="pendingImg" alt=""></div>
+      <div class="livefoot" id="lFoot">
+        <button class="btn btn-gold btn-wide" id="bFloat" type="button">FLOAT MY KRATHONG! 🪷</button>
+        <button class="btn btn-ghost btn-sm" id="bBack7" type="button">‹ แก้คำอธิษฐาน</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- SUCCESS -->
+<div class="ov" id="ovSuccess" role="dialog" aria-modal="true"><div class="card success">
+  <div class="kicker">PARTICIPATION COMPLETED</div>
+  <h2 class="h1" style="font-size:clamp(22px,6vw,32px)">YOUR WISH IS NOW <em>AFLOAT!</em></h2>
+  <img class="sk" id="sK" alt="">
+  <p class="sub">ขอให้คำอธิษฐานของคุณเป็นจริง ✨<br>คุณได้ร่วมเป็นส่วนหนึ่งของ The River of Thai Wah เรียบร้อยแล้ว!</p>
+  <div class="wishq" id="sWish" hidden></div>
+  <div class="chips" style="margin:8px 0 14px"><span class="chip" id="sRiver"></span><span class="chip" id="sScore"></span></div>
+  <div class="slogan" style="margin-bottom:14px">ONE KRATHONG. ONE WISH. COUNTLESS POSSIBILITIES.</div>
+  <div class="row"><button class="btn btn-gold" id="bSave" type="button">⬇ SAVE MY KRATHONG</button></div>
+  <div class="row" style="margin-top:10px"><button class="btn btn-ghost btn-sm" id="bViewRiver" type="button">VIEW MY RIVER</button><button class="btn btn-ghost btn-sm" id="bAgain" type="button">PLAY AGAIN</button></div>
+</div></div>
+
+<!-- SAVED IMAGE PREVIEW -->
+<div class="ov" id="ovImg" role="dialog" aria-modal="true"><div class="card modal" style="width:min(420px,100%)">
+  <h3>MY KRATHONG</h3><p>ถ้าไฟล์ไม่ดาวน์โหลดอัตโนมัติ ให้กดค้างที่รูปแล้วเลือกบันทึกรูปภาพ</p>
+  <img id="savedImg" alt="ภาพกระทงของฉัน" style="width:100%;border-radius:16px">
+  <div class="row" style="margin-top:12px"><button class="btn btn-ghost btn-sm" data-close="ovImg" type="button">ปิด</button></div>
+</div></div>
+
+<!-- ADMIN LOGIN -->
+<div class="ov" id="ovLogin" role="dialog" aria-modal="true"><form class="card modal" id="loginForm" autocomplete="off">
+  <h3>🔐 ADMIN LOGIN</h3>
+  <p>ใส่รหัสผ่านผู้ดูแลระบบ (ตรวจสอบที่ฝั่ง Server)</p>
+  <label class="field"><input id="pin" type="password" inputmode="numeric" maxlength="32" placeholder="PASSWORD" style="text-align:center;letter-spacing:.4em"></label>
+  <div class="msg err" id="loginMsg"></div>
+  <div class="row"><button class="btn btn-ghost btn-sm" type="button" data-close="ovLogin">CANCEL</button><button class="btn btn-gold btn-sm" type="submit" id="bLogin">LOGIN</button></div>
+</form></div>
+
+<!-- CONFIRM -->
+<div class="ov" id="ovConfirm" role="dialog" aria-modal="true"><div class="card modal">
+  <h3 id="cfT"></h3><p id="cfX"></p>
+  <div class="row"><button class="btn btn-ghost btn-sm" id="cfNo" type="button">CANCEL</button><button class="btn btn-gold btn-sm" id="cfYes" type="button">CONFIRM</button></div>
+</div></div>
+
+<!-- DETAIL -->
+<div class="ov" id="ovDetail" role="dialog" aria-modal="true"><div class="card modal" style="text-align:left;width:min(520px,100%)">
+  <h3 id="dT"></h3><div id="dB" style="font:400 14px/1.7 var(--ff)"></div>
+  <div class="row" style="margin-top:12px"><button class="btn btn-ghost btn-sm" data-close="ovDetail" type="button">CLOSE</button></div>
+</div></div>
+
+<!-- ADMIN -->
+<section id="admin" hidden>
+  <div class="ahead">
+    <div class="tt"><small>THE RIVER OF THAI WAH</small>ADMIN CONTROL CENTER</div>
+    <div class="livedot" id="aDot"><i></i><span>LIVE</span></div>
+    <div class="sp"></div>
+    <button class="btn btn-ghost btn-sm" id="aRefresh" type="button">↻ REFRESH</button>
+    <button class="btn btn-ghost btn-sm" id="aLogout" type="button">LOGOUT</button>
+  </div>
+  <nav class="tabs" id="aTabs">
+    <button data-tab="overview" class="on">OVERVIEW</button><button data-tab="rivers">LIVE RIVERS</button><button data-tab="list">PARTICIPANTS</button><button data-tab="quiz">QUIZ ANALYTICS</button><button data-tab="design">KRATHONG DESIGN</button><button data-tab="draw">LUCKY KRATHONG</button><button data-tab="export">EXPORT & SETTINGS</button>
+  </nav>
+  <div class="abody" id="aBody">
+    <div class="asec" data-sec="overview">
+      <div class="kpis" id="kpis"></div>
+      <div class="h2">FLOATING KRATHONGS BY RIVER</div>
+      <div class="panel"><div class="bars" id="ovBars"></div></div>
+      <div class="h2" style="font-size:12px;color:var(--muted)" id="aUpdated"></div>
+    </div>
+    <div class="asec" data-sec="rivers" hidden><div class="rgrid" id="aRivers"></div></div>
+    <div class="asec" data-sec="list" hidden>
+      <div class="tools">
+        <input id="fSearch" placeholder="ค้นหา Employee ID" style="flex:1;min-width:160px">
+        <select id="fRiver"><option value="">ทุกแม่น้ำ</option></select>
+        <select id="fDesign"><option value="">ทุกแบบกระทง</option></select>
+        <select id="fScore"><option value="">ทุกคะแนน</option><option value="5">5/5</option><option value="4">4/5</option><option value="3">3/5</option><option value="low">0–2/5</option></select>
+        <select id="fSort"><option value="new">ใหม่ → เก่า</option><option value="old">เก่า → ใหม่</option></select>
+      </div>
+      <div class="tblw"><table class="tbl"><thead><tr><th>EMPLOYEE ID</th><th>KRATHONG</th><th>QUIZ</th><th>RIVER</th><th>WISH</th><th>DATE & TIME</th><th>STATUS</th></tr></thead><tbody id="tBody"></tbody></table></div>
+      <div class="h2" style="font-size:12px;color:var(--muted)" id="tCount"></div>
+    </div>
+    <div class="asec" data-sec="quiz" hidden>
+      <div class="kpis" id="qKpis"></div>
+      <div class="two" style="margin-top:12px"><div class="panel"><div class="h2" style="margin-top:0">SCORE DISTRIBUTION</div><div class="bars" id="qDist"></div></div><div class="panel"><div class="h2" style="margin-top:0">CORRECT RATE BY QUESTION</div><div class="bars" id="qRate"></div></div></div>
+    </div>
+    <div class="asec" data-sec="design" hidden><div class="panel"><div class="h2" style="margin-top:0">KRATHONG POPULARITY</div><div class="bars" id="dBars"></div></div></div>
+    <div class="asec" data-sec="draw" hidden>
+      <div class="panel draw">
+        <div class="kicker">LUCKY KRATHONG!</div>
+        <h2 class="h1" style="font-size:clamp(22px,5vw,34px)">LET'S FIND OUR <em>LUCKY KRATHONG!</em></h2>
+        <img class="drawk" id="drawK" src="assets/krathong-3.png" alt="">
+        <div class="roller" id="roller">—</div>
+        <div class="sub" id="drawInfo"></div>
+        <div class="row"><button class="btn btn-gold" id="bDraw" type="button">START LUCKY DRAW ★</button><button class="btn btn-ghost btn-sm" id="bResetDraw" type="button">RESET DRAW</button></div>
+        <div class="wgrid" id="wGrid"></div>
+      </div>
+    </div>
+    <div class="asec" data-sec="export" hidden>
+      <div class="two">
+        <div class="panel"><div class="h2" style="margin-top:0">EXPORT TO GOOGLE SHEETS</div><p class="sub" style="text-align:left;max-width:none">ส่งข้อมูลผู้เข้าร่วมทั้งหมดไปที่ชีต "Participants" (เขียนทับทั้งชุดทุกครั้ง จึงไม่เกิดข้อมูลซ้ำและอัปเดตข้อมูลใหม่เสมอ)</p><div class="row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" id="bExport" type="button">EXPORT TO GOOGLE SHEETS</button></div><div class="msg" id="exMsg" style="text-align:left"></div></div>
+        <div class="panel"><div class="h2" style="margin-top:0">EMPLOYEE LIST</div><p class="sub" style="text-align:left;max-width:none">ซิงก์รายชื่อรหัสพนักงานจากชีต "Employees" เข้าระบบตรวจสอบ (เก็บเป็นค่าแฮช ไม่เก็บรหัสตรง ๆ)</p><div class="row" style="justify-content:flex-start"><button class="btn btn-ghost btn-sm" id="bSync" type="button">SYNC EMPLOYEES</button></div><div class="msg" id="syMsg" style="text-align:left"></div></div>
+        <div class="panel"><div class="h2" style="margin-top:0">RESET ALL (สำหรับทดสอบ)</div><p class="sub" style="text-align:left;max-width:none">ลบข้อมูลการเข้าร่วม กระทงในแม่น้ำ และผลสุ่มทั้งหมด (รายชื่อพนักงานยังอยู่)</p><div class="row" style="justify-content:flex-start"><button class="btn btn-ghost btn-sm" id="bResetAll" type="button" style="border-color:#ff6b81;color:#ff9aa9">RESET ALL DATA</button></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN RIVER VIEWER -->
+<div class="riverview" id="riverView"></div>
+
+<canvas id="confetti"></canvas>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script>
+'use strict';
+/* =====================================================================
+   CONFIG — จุดตั้งค่าหลัก (DIGITAL LOY KRATHONG v2)
+   ===================================================================== */
+const CONFIG = {
+  // Firebase Realtime Database (ฐานข้อมูลกลาง) — ข้อมูล v2 เก็บใต้โหนด "v2" แยกจากเวอร์ชันแรก
+  DB_URL: 'https://the-river-of-thai-wah-default-rtdb.asia-southeast1.firebasedatabase.app',
+  ROOT: 'v2',
+  // URL ของ Google Apps Script Web App (ลงท้ายด้วย /exec) — ใช้สำหรับ Admin, Export Google Sheets, Lucky Draw, Sync รายชื่อพนักงาน
+  // ดูวิธีติดตั้งใน README (ส่วน v2) — ถ้าเว้นว่าง หน้า Admin จะเข้าไม่ได้ (ระบบจะไม่สร้างข้อมูลจำลอง)
+  API_URL: '',
+  // ค่า salt สำหรับแฮชรหัสพนักงาน — ต้องตรงกับค่า ID_SALT ใน Apps Script
+  ID_SALT: 'TW-LOYKRATHONG-2026',
+  WISH_MAX: 150,
+};
+const APP_VERSION = 'v2-2026-11-11.1';
+
+const DESIGNS = [
+  { id: 1, name: 'CLASSIC SINGLE LAYER', desc: 'กระทงดอกไม้ชั้นเดียว เรียบง่าย ตัวแม่' },
+  { id: 2, name: 'DOUBLE LAYER', desc: 'กระทงดอกไม้สองชั้นแบบจัดเต็ม' },
+  { id: 3, name: 'LOTUS BLOOM', desc: 'กระทงดอกบัว บานสะพรั่ง' },
+  { id: 4, name: 'ICE KRATHONG', desc: 'กระทงน้ำแข็ง เจน Z' },
+  { id: 5, name: 'BREAD KRATHONG', desc: 'กระทงขนมปังสุดคิ้วท์' },
+  { id: 6, name: 'FLOWER FESTIVAL', desc: 'กระทงดอกไม้บานไม่รู้โรย' },
+];
+const RIVERS = [
+  { id: 'r1', name: 'BL RIVER' }, { id: 'r2', name: 'TDC RIVER' }, { id: 'r3', name: 'TKT RIVER' }, { id: 'r4', name: 'TWFN RIVER' },
+  { id: 'r5', name: 'TN RIVER' }, { id: 'r6', name: 'MS RIVER' }, { id: 'r7', name: 'BANGKOK RIVER' }, { id: 'r8', name: 'THAI WAH RIVER' },
+];
+const QUIZ = [
+  { q: 'วันลอยกระทงตรงกับวันขึ้นกี่ค่ำ เดือนอะไร?', a: 'วันขึ้น 15 ค่ำ เดือน 12', b: 'วันขึ้น 15 ค่ำ เดือน 11', ans: 'A',
+    ex: 'ประเพณีลอยกระทงของไทยโดยทั่วไปจัดขึ้นในวันขึ้น 15 ค่ำ เดือน 12 ตามปฏิทินจันทรคติไทย' },
+  { q: 'ทำไมถึงต้องลอยกระทงในแม่น้ำ?', a: 'เพื่อขอขมาพระแม่คงคาและแสดงความขอบคุณต่อแหล่งน้ำ', b: 'เพราะเชื่อว่าการลอยกระทงจะช่วยให้โชคดีตลอดทั้งปี', ans: 'A',
+    ex: 'การลอยกระทงเกี่ยวข้องกับความเชื่อในการขอขมาพระแม่คงคาและแสดงความสำนึกในคุณค่าของแหล่งน้ำ' },
+  { q: 'Bioplastic ทุกชนิดย่อยสลายได้เองในแม่น้ำ จริงหรือไม่?', a: 'จริง เพราะผลิตจากวัสดุชีวภาพจึงย่อยสลายได้ทุกสภาพแวดล้อม', b: 'ไม่จริง เพราะ Bioplastic แต่ละชนิดต้องการสภาพแวดล้อมในการย่อยสลายที่แตกต่างกัน', ans: 'B',
+    ex: 'Bioplastic ไม่ได้หมายความว่าจะย่อยสลายได้ทุกสภาพแวดล้อม บางชนิดต้องการสภาวะเฉพาะในการย่อยสลาย' },
+  { q: 'กระทงที่ทำจากวัสดุธรรมชาติ แปลว่าไม่มีผลกระทบต่อสิ่งแวดล้อมเลย จริงหรือไม่?', a: 'จริง เพราะวัสดุธรรมชาติย่อยสลายได้ จึงไม่ส่งผลกระทบต่อสิ่งแวดล้อม', b: 'ไม่จริง เพราะแม้เป็นวัสดุธรรมชาติ แต่หากใช้จำนวนมากหรือจัดการไม่เหมาะสม ก็ส่งผลกระทบต่อแหล่งน้ำได้', ans: 'B',
+    ex: 'แม้วัสดุธรรมชาติจะย่อยสลายได้ แต่การใช้ในปริมาณมากหรือการจัดการไม่เหมาะสมก็อาจส่งผลกระทบต่อคุณภาพน้ำได้' },
+  { q: 'ถุงผ้า 1 ใบ ต้องใช้ซ้ำกี่ครั้งถึงจะรู้สึกว่าคุ้มค่ากับการพกติดตัว?', a: 'ใช้ซ้ำอย่างสม่ำเสมอ โดยจำนวนครั้งที่คุ้มค่าขึ้นอยู่กับวัสดุและกระบวนการผลิต', b: 'ใช้เพียง 1–2 ครั้ง ก็ช่วยลดผลกระทบต่อสิ่งแวดล้อมได้ทันที', ans: 'A',
+    ex: 'การใช้ถุงผ้าซ้ำอย่างต่อเนื่องช่วยกระจายผลกระทบจากการผลิต แต่จำนวนครั้งที่คุ้มค่าขึ้นอยู่กับวัสดุและกระบวนการผลิตของถุงแต่ละประเภท' },
+];
+const TIERS = [
+  { min: 5, t: 'LOY KRATHONG MASTER!', m: 'สุดยอด! คุณคือผู้เชี่ยวชาญเรื่องลอยกระทงตัวจริง!' },
+  { min: 4, t: 'GREAT JOB!', m: 'เก่งมาก! คุณรู้เรื่องลอยกระทงและสิ่งแวดล้อมได้ดีเลย!' },
+  { min: 3, t: 'NICE TRY!', m: 'ทำได้ดี! ยังมีเรื่องสนุก ๆ ให้เรียนรู้อีกนะ' },
+  { min: 0, t: 'KEEP LEARNING!', m: 'ไม่เป็นไร! เพราะทุกคำตอบคือโอกาสในการเรียนรู้' },
+];
+const kImg = d => `assets/krathong-${d}.png`;
+const riverById = id => RIVERS.find(r => r.id === id) || RIVERS[0];
+const designName = d => (DESIGNS.find(x => x.id === +d) || { name: '-' }).name;
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const frac = x => x - Math.floor(x);
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"'`]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' }[c]));
+}
+function cleanText(s, max) {
+  return String(s || '').replace(/[\u0000-\u001F\u007F​-‏‪-‮⁦-⁩]/g, '').replace(/\s+/g, ' ').trim().slice(0, max);
+}
+const LS = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } }
+};
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+/** Uniform random integer in [0, n) using crypto.getRandomValues (rejection sampling, no modulo bias). */
+function randInt(n) {
+  if (n <= 1) return 0;
+  const lim = Math.floor(0x100000000 / n) * n, a = new Uint32Array(1);
+  let x;
+  do { crypto.getRandomValues(a); x = a[0]; } while (x >= lim);
+  return x % n;
+}
+const IMG_RE = /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/]+=*$/;
+function validImg(s, maxLen = 700000) { return typeof s === 'string' && s.length < maxLen && IMG_RE.test(s); }
+const ID_RE = /^[A-Za-z0-9_-]{6,64}$/;
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+function errMsg(e) { return (e && e.message) ? e.message : String(e || 'unknown'); }
+
+function toast(msg, type = 'info', ms = 4200) {
+  const box = $('#toasts'); if (!box) return;
+  const el = document.createElement('div');
+  el.className = 'toast ' + type; el.textContent = msg;
+  box.appendChild(el);
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, ms);
+}
+
+
+function sha256Fallback(msg) {
+  const primes = []; for (let n = 2; primes.length < 64; n++) if (primes.every(p => n % p)) primes.push(n);
+  const fr = x => ((x - Math.floor(x)) * 4294967296) >>> 0;
+  const K = primes.map(p => fr(Math.cbrt(p)));
+  const H = primes.slice(0, 8).map(p => fr(Math.sqrt(p)));
+  const l = msg.length, total = Math.ceil((l + 9) / 64) * 64;
+  const buf = new Uint8Array(total); buf.set(msg); buf[l] = 0x80;
+  const dv = new DataView(buf.buffer), bits = l * 8;
+  dv.setUint32(total - 4, bits >>> 0); dv.setUint32(total - 8, Math.floor(bits / 4294967296));
+  const W = new Uint32Array(64);
+  const rotr = (x, n) => (x >>> n) | (x << (32 - n));
+  for (let off = 0; off < total; off += 64) {
+    for (let i = 0; i < 16; i++) W[i] = dv.getUint32(off + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const s0 = rotr(W[i - 15], 7) ^ rotr(W[i - 15], 18) ^ (W[i - 15] >>> 3);
+      const s1 = rotr(W[i - 2], 17) ^ rotr(W[i - 2], 19) ^ (W[i - 2] >>> 10);
+      W[i] = (W[i - 16] + s0 + W[i - 7] + s1) >>> 0;
+    }
+    let [a, b, c, d, e, f, g, h] = H;
+    for (let i = 0; i < 64; i++) {
+      const S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K[i] + W[i]) >>> 0;
+      const S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+      const mj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    H[0] = (H[0] + a) >>> 0; H[1] = (H[1] + b) >>> 0; H[2] = (H[2] + c) >>> 0; H[3] = (H[3] + d) >>> 0;
+    H[4] = (H[4] + e) >>> 0; H[5] = (H[5] + f) >>> 0; H[6] = (H[6] + g) >>> 0; H[7] = (H[7] + h) >>> 0;
+  }
+  return H.map(x => x.toString(16).padStart(8, '0')).join('');
+}
+async function sha256Hex(str) {
+  const data = new TextEncoder().encode(String(str));
+  try {
+    if (window.crypto && crypto.subtle && crypto.subtle.digest) {
+      const buf = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+  } catch (e) { /* fall through to JS implementation */ }
+  return sha256Fallback(data);
+}
+window.sha256Hex = sha256Hex;
+function segs(p) { return String(p || '').split('/').filter(Boolean); }
+function joinPath(a, b) { return segs(a).concat(segs(b)).join('/'); }
+function getAt(obj, p) {
+  let o = obj;
+  for (const s of segs(p)) { if (o == null || typeof o !== 'object') return null; o = o[s]; }
+  return o === undefined ? null : o;
+}
+function setAt(obj, p, val) {
+  const ss = segs(p);
+  if (!ss.length) return (val === undefined ? null : val);
+  const root = (obj && typeof obj === 'object') ? obj : {};
+  let o = root;
+  for (let i = 0; i < ss.length - 1; i++) {
+    if (o[ss[i]] == null || typeof o[ss[i]] !== 'object') o[ss[i]] = {};
+    o = o[ss[i]];
+  }
+  const last = ss[ss.length - 1];
+  if (val === null || val === undefined) delete o[last]; else o[last] = val;
+  return root;
+}
+function resolveSv(v) {
+  if (v && typeof v === 'object') {
+    if (v['.sv'] === 'timestamp') return Date.now();
+    const o = Array.isArray(v) ? [] : {};
+    for (const k in v) o[k] = resolveSv(v[k]);
+    return o;
+  }
+  return v;
+}
+
+class RemoteStore {
+  constructor(base) { this.base = base; this.mode = 'live'; }
+  url(path, q = '') { const p = segs(path).map(encodeURIComponent).join('/'); return `${this.base}/${p}.json${q}`; }
+  async req(method, path, body, q = '') {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 25000);
+    const opt = { method, signal: ctrl.signal, headers: {} };
+    if (body !== undefined) { opt.body = JSON.stringify(body); opt.headers['Content-Type'] = 'application/json'; }
+    try {
+      const r = await fetch(this.url(path, q), opt);
+      if (!r.ok) {
+        if (r.status === 401 || r.status === 403) throw new Error('ฐานข้อมูลปฏิเสธการเข้าถึง (ตรวจสอบ Security Rules)');
+        throw new Error('ฐานข้อมูลตอบกลับผิดพลาด (HTTP ' + r.status + ')');
+      }
+      if (r.status === 204) return null;
+      const txt = await r.text();
+      return txt ? JSON.parse(txt) : null;
+    } catch (e) {
+      if (e.name === 'AbortError') throw new Error('เชื่อมต่อฐานข้อมูลนานเกินไป กรุณาลองใหม่');
+      if (e instanceof TypeError) throw new Error('เชื่อมต่อฐานข้อมูลไม่ได้ กรุณาตรวจสอบอินเทอร์เน็ต');
+      throw e;
+    } finally { clearTimeout(timer); }
+  }
+  get(path) { return this.req('GET', path); }
+  async exists(path) { return (await this.req('GET', path, undefined, '?shallow=true')) != null; }
+  put(path, v) { return this.req('PUT', path, v, '?print=silent'); }
+  patch(path, v) { return this.req('PATCH', path, v, '?print=silent'); }
+  remove(path) { return this.req('DELETE', path, undefined, '?print=silent'); }
+  serverTime() { return { '.sv': 'timestamp' }; }
+  /** Subscribe to a path via Server-Sent Events. cb(fullValue) is called on every change. */
+  listen(path, cb, onStatus) {
+    let cache = null, es = null, closed = false;
+    const emit = () => { try { cb(cache); } catch (e) { console.error(e); } };
+    const handle = (type, ev) => {
+      let m; try { m = JSON.parse(ev.data); } catch (e) { return; }
+      if (!m || typeof m !== 'object') return;
+      if (type === 'put') cache = setAt(cache, m.path, m.data);
+      else if (m.data && typeof m.data === 'object') for (const k in m.data) cache = setAt(cache, joinPath(m.path, k), m.data[k]);
+      emit();
+    };
+    try {
+      es = new EventSource(this.url(path));
+      es.addEventListener('put', ev => handle('put', ev));
+      es.addEventListener('patch', ev => handle('patch', ev));
+      es.addEventListener('cancel', () => { onStatus('offline'); toast('ฐานข้อมูลยกเลิกการเชื่อมต่อ (ตรวจสอบ Security Rules)', 'err'); });
+      es.addEventListener('auth_revoked', () => onStatus('offline'));
+      es.onopen = () => { if (!closed) onStatus('live'); };
+      es.onerror = () => { if (!closed) onStatus('offline'); };
+    } catch (e) {
+      onStatus('offline');
+      toast('เปิดการเชื่อมต่อแบบเรียลไทม์ไม่ได้: ' + errMsg(e), 'err');
+    }
+    return () => { closed = true; try { es && es.close(); } catch (e) { /* ignore */ } };
+  }
+}
+
+
+const store = new RemoteStore(CONFIG.DB_URL);
+const P = p => CONFIG.ROOT + '/' + p;
+const Sound = (() => {
+  let ctx = null, master, comp, musicGain, sfxGain, noiseBuf;
+  let muted = LS.get('rotw2_music') !== 'on';
+  let playing = false, timer = null, nextTime = 0, step = 0;
+  const BPM = 130, STEP = 60 / BPM / 2; // eighth notes
+  const SC = [60, 62, 64, 67, 69, 72, 74, 76, 79, 81, 84, 86, 88]; // Thai-flavoured pentatonic C D E G A
+  const _ = null;
+  // 4 ท่อน × 4 ห้อง × 8 ตัวเขบ็ต (ทำนองแต่งใหม่ สไตล์รำวง)
+  const MEL = [
+    [7, 8, 9, 8, 7, 6, 5, 6, 7, _, 8, 7, 6, 5, 6, _, 5, 6, 7, 8, 9, 10, 9, 8, 7, 8, 7, 6, 5, _, 5, _],
+    [9, 9, 10, 9, 8, 7, 8, 9, 10, 11, 10, 9, 8, _, 8, _, 7, 8, 9, 8, 7, 6, 5, 6, 7, 6, 5, 4, 5, _, 5, _],
+    [5, 7, 8, 7, 5, 7, 8, 9, 8, 7, 6, 7, 8, _, 8, _, 10, 9, 8, 9, 10, 11, 12, 11, 10, 9, 8, 7, 8, _, 8, _],
+    [12, 11, 10, 9, 10, 9, 8, 7, 8, 7, 6, 5, 6, 7, 8, _, 7, 8, 9, 10, 9, 8, 7, 6, 5, 6, 7, 6, 5, _, 5, _]
+  ];
+  const ROOTS = [[48, 55], [43, 50], [45, 52], [48, 55]];
+  const mtof = m => 440 * Math.pow(2, (m - 69) / 12);
+
+  function init() {
+    if (ctx) return true;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return false;
+    try {
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = muted ? 0 : 1; master.connect(ctx.destination);
+      comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4; comp.connect(master);
+      musicGain = ctx.createGain(); musicGain.gain.value = 0.3; musicGain.connect(comp);
+      sfxGain = ctx.createGain(); sfxGain.gain.value = 0.85; sfxGain.connect(comp);
+      noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+      const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      return true;
+    } catch (e) { ctx = null; return false; }
+  }
+  function env(g, t, a, peak, dec) {
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), t + a);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + a + dec);
+  }
+  function osc(type, f, t, dur, out, vol, a = 0.004) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(f, t);
+    env(g, t, a, vol, dur); o.connect(g); g.connect(out);
+    o.start(t); o.stop(t + a + dur + 0.05); return o;
+  }
+  function noise(t, dur, type, freq, q, vol, out) {
+    const s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    s.buffer = noiseBuf; f.type = type; f.frequency.setValueAtTime(freq, t); f.Q.value = q;
+    env(g, t, 0.002, vol, dur); s.connect(f); f.connect(g); g.connect(out);
+    s.start(t, Math.random() * 0.5); s.stop(t + dur + 0.05); return f;
+  }
+  // ระนาด (wooden bar): triangle + inharmonic overtone + click
+  function ranat(m, t, vol = 0.3, out = musicGain, dec = 0.3) {
+    const f = mtof(m);
+    osc('triangle', f, t, dec, out, vol, 0.003);
+    osc('sine', f * 3.93, t, dec * 0.28, out, vol * 0.22, 0.002);
+    noise(t, 0.015, 'bandpass', Math.min(f * 4, 9000), 2, vol * 0.25, out);
+  }
+  // ฉิ่ง (open) / ฉับ (closed)
+  function ching(t, open, out = musicGain) {
+    const fs = open ? [2637, 3523, 4186, 5274] : [2950, 4380];
+    const dec = open ? 0.55 : 0.06;
+    fs.forEach((f, i) => osc('sine', f, t, dec, out, (open ? 0.06 : 0.05) / (i * 0.6 + 1), 0.001));
+    noise(t, open ? 0.1 : 0.05, 'highpass', 6500, 0.7, open ? 0.06 : 0.09, out);
+  }
+  // ฉาบ
+  function chap(t, out = musicGain, vol = 0.12) { noise(t, 0.22, 'highpass', 4200, 0.8, vol, out); noise(t, 0.08, 'bandpass', 2800, 2, vol * 0.6, out); }
+  // โทน
+  function thon(t, high, out = musicGain) {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(high ? 330 : 150, t);
+    o.frequency.exponentialRampToValueAtTime(high ? 240 : 78, t + 0.12);
+    env(g, t, 0.003, high ? 0.26 : 0.5, high ? 0.13 : 0.3);
+    o.connect(g); g.connect(out); o.start(t); o.stop(t + 0.42);
+    noise(t, 0.03, 'bandpass', high ? 2600 : 1100, 1, 0.1, out);
+  }
+  // ฆ้อง
+  function gong(t, vol = 0.35, out = sfxGain, base = 98) {
+    [[1, 1], [1.004, 0.6], [2.01, 0.42], [2.76, 0.24], [4.12, 0.1]].forEach(([m, a]) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(base * m * 1.012, t);
+      o.frequency.exponentialRampToValueAtTime(base * m, t + 0.45);
+      env(g, t, 0.01, vol * a, 2.6); o.connect(g); g.connect(out); o.start(t); o.stop(t + 2.8);
+    });
+    noise(t, 0.08, 'lowpass', 900, 1, vol * 0.35, out);
+  }
+  function bass(m, t) { osc('triangle', mtof(m), t, 0.38, musicGain, 0.16, 0.006); }
+  function splash(t, v = 1) {
+    const f = noise(t, 0.6, 'bandpass', 2600, 0.9, 0.35 * v, sfxGain);
+    f.frequency.exponentialRampToValueAtTime(380, t + 0.55);
+    noise(t, 0.25, 'highpass', 3000, 0.7, 0.12 * v, sfxGain);
+    for (let i = 0; i < 5; i++) {
+      const tt = t + 0.05 + Math.random() * 0.35, o = ctx.createOscillator(), g = ctx.createGain();
+      const f0 = 500 + Math.random() * 500;
+      o.type = 'sine'; o.frequency.setValueAtTime(f0, tt); o.frequency.exponentialRampToValueAtTime(f0 * 2.4, tt + 0.07);
+      env(g, tt, 0.004, 0.08 * v, 0.07); o.connect(g); g.connect(sfxGain); o.start(tt); o.stop(tt + 0.12);
+    }
+  }
+
+  function scheduleStep(s, t) {
+    const sec = Math.floor(s / 32) % 4, i = s % 32, b = i % 8;
+    const n = MEL[sec][i];
+    if (n != null) { ranat(SC[n], t, 0.2); ranat(SC[n] - 12, t, 0.08, musicGain, 0.22); }
+    if (b === 0 || b === 4) ching(t, true); else if (b === 2 || b === 6) ching(t, false);
+    if (b === 0 || b === 4) thon(t, false);
+    if (b === 3 || b === 6 || b === 7) thon(t, true);
+    if (b === 0) bass(ROOTS[sec][0], t); else if (b === 4) bass(ROOTS[sec][1], t);
+    if (i === 0) gong(t, 0.1, musicGain, 82);
+    if (i === 30 && sec % 2 === 1) chap(t);
+  }
+  function tick() {
+    if (!ctx) return;
+    if (nextTime < ctx.currentTime - 0.25) nextTime = ctx.currentTime + 0.05;
+    while (nextTime < ctx.currentTime + 0.15) { try { scheduleStep(step, nextTime); } catch (e) { /* ignore */ } step++; nextTime += STEP; }
+  }
+  let waterSrc = null;
+  function startWater() {
+    if (!ctx || waterSrc) return;
+    const s = ctx.createBufferSource(); s.buffer = noiseBuf; s.loop = true;
+    const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 520; f.Q.value = .3;
+    const g = ctx.createGain(); g.gain.value = .05; s.connect(f); f.connect(g); g.connect(musicGain); s.start(); waterSrc = s;
+  }
+  function stopWater() { if (waterSrc) { try { waterSrc.stop(); } catch (e) { /* ignore */ } waterSrc = null; } }
+  function startMusic() {
+    startWater();
+    if (!ctx || playing || muted) return;
+    playing = true; step = 0; nextTime = ctx.currentTime + 0.12;
+    timer = setInterval(tick, 30);
+  }
+  function stopMusic() { stopWater(); playing = false; clearInterval(timer); timer = null; }
+  function unlock() {
+    if (!init()) return;
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+    if (!muted && !document.hidden) startMusic();
+  }
+  function setMuted(m) {
+    muted = !!m; LS.set('rotw2_music', muted ? 'off' : 'on');
+    if (ctx) {
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setTargetAtTime(muted ? 0 : 1, ctx.currentTime, 0.05);
+      if (muted) stopMusic(); else { if (ctx.state === 'suspended') ctx.resume().catch(() => {}); startMusic(); }
+    } else if (!muted) unlock();
+    return muted;
+  }
+  function sfx(name) {
+    if (!ctx || muted) return;
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+    const t = ctx.currentTime + 0.02;
+    try {
+      switch (name) {
+        case 'sparkle': [96, 100, 103, 108].forEach((m, i) => ranat(m, t + i * .05, .12, sfxGain, .25)); break;
+        case 'correct': [84, 88, 91, 96].forEach((m, i) => ranat(m, t + i * .07, .22, sfxGain, .35)); break;
+        case 'wrong': ranat(67, t, .22, sfxGain, .4); ranat(64, t + .14, .22, sfxGain, .5); break;
+        case 'click': ranat(96, t, 0.16, sfxGain, 0.07); break;
+        case 'tick': ranat(SC[8 + randInt(5)] + 12, t, 0.13, sfxGain, 0.06); noise(t, 0.02, 'highpass', 5000, 1, 0.05, sfxGain); break;
+        case 'wish': gong(t, 0.34); [72, 74, 76, 79, 81, 84, 86, 88].forEach((m, i) => ranat(m, t + 0.06 + i * 0.07, 0.28, sfxGain, 0.35)); break;
+        case 'float': splash(t); gong(t + 0.05, 0.3); [88, 86, 84, 81, 79, 76, 74, 72].forEach((m, i) => ranat(m, t + 0.3 + i * 0.085, 0.24, sfxGain, 0.4)); break;
+        case 'drop': splash(t, 0.55); ranat(79, t + 0.08, 0.18, sfxGain); ranat(84, t + 0.18, 0.18, sfxGain); break;
+        case 'celebrate':
+          gong(t, 0.42, sfxGain, 87);
+          [72, 76, 79, 81, 84, 88, 91, 93, 96].forEach((m, i) => ranat(m, t + 0.05 + i * 0.06, 0.26, sfxGain, 0.4));
+          for (let i = 0; i < 6; i++) ching(t + 0.1 + i * 0.12, i % 2 === 0, sfxGain);
+          chap(t + 0.6, sfxGain, 0.22); chap(t + 0.84, sfxGain, 0.22);
+          break;
+      }
+    } catch (e) { /* audio failures must never break the app */ }
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) { stopMusic(); ctx.suspend().catch(() => {}); }
+    else if (!muted) { ctx.resume().catch(() => {}); startMusic(); }
+  });
+  return { unlock, sfx, setMuted, isMuted: () => muted };
+})();
+const Confetti = (() => {
+  let cv, g, parts = [], raf = 0, W = 0, H = 0, dpr = 1, rainUntil = 0;
+  const COLORS = ['#ff8fb6', '#ffd45e', '#f5b041', '#b9a3ff', '#7fd8e0', '#ffffff', '#ff6f9f', '#9be3c4'];
+  function size() { dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; g.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  function add(x, y, vx, vy) {
+    parts.push({ x, y, vx, vy, w: 6 + Math.random() * 7, h: 8 + Math.random() * 9, r: Math.random() * 6.28, vr: (Math.random() - .5) * .3, c: COLORS[(Math.random() * COLORS.length) | 0], f: Math.random() * 6.28, round: Math.random() < .25 });
+  }
+  function loop() {
+    g.clearRect(0, 0, W, H);
+    if (Date.now() < rainUntil) for (let i = 0; i < 4; i++) add(Math.random() * W, -20, (Math.random() - .5) * 2, Math.random() * 2 + 1);
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      p.vy += 0.22; p.vx *= 0.99; p.vy = Math.min(p.vy, 6.5); p.f += 0.12;
+      p.x += p.vx + Math.sin(p.f) * 0.6; p.y += p.vy; p.r += p.vr;
+      if (p.y > H + 30) { parts.splice(i, 1); continue; }
+      g.save(); g.translate(p.x, p.y); g.rotate(p.r); g.scale(1, Math.cos(p.f)); g.fillStyle = p.c;
+      if (p.round) { g.beginPath(); g.arc(0, 0, p.w / 2, 0, 6.28); g.fill(); } else g.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      g.restore();
+    }
+    raf = (parts.length || Date.now() < rainUntil) ? requestAnimationFrame(loop) : 0;
+    if (!raf) g.clearRect(0, 0, W, H);
+  }
+  function burst(n = 160) {
+    if (!cv) { cv = $('#confetti'); g = cv.getContext('2d'); window.addEventListener('resize', size); }
+    size();
+    for (let i = 0; i < n; i++) {
+      const side = i % 3;
+      if (side === 0) add(W / 2 + (Math.random() - .5) * 120, H * .42, (Math.random() - .5) * 18, -Math.random() * 15 - 4);
+      else if (side === 1) add(-10, H * .8, Math.random() * 12 + 4, -Math.random() * 16 - 6);
+      else add(W + 10, H * .8, -Math.random() * 12 - 4, -Math.random() * 16 - 6);
+    }
+    rainUntil = Date.now() + 2600;
+    if (!raf) raf = requestAnimationFrame(loop);
+  }
+  return { burst };
+})();
+function profilePath(cx, base, pts, sc) {
+  const R = pts.map(([dy, w]) => [cx + w * sc, base - dy * sc]);
+  const L = pts.map(([dy, w]) => [cx - w * sc, base - dy * sc]).reverse();
+  return 'M' + R.concat(L).map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('L') + 'Z';
+}
+const PRANG = [[0, 70], [16, 70], [16, 61], [30, 61], [30, 52], [42, 52], [42, 46], [52, 44], [66, 43], [84, 41], [102, 38], [120, 34], [138, 28], [154, 22], [168, 16], [180, 11], [190, 7.5], [196, 6], [200, 4.5], [204, 3], [224, 2], [246, 0.8]];
+const CHEDI = [[0, 58], [12, 58], [12, 50], [22, 50], [22, 43], [30, 43], [33, 39], [44, 41], [58, 40], [72, 36], [84, 29], [92, 21], [96, 14], [98, 12], [103, 12], [103, 9], [108, 9], [110, 7], [122, 6], [136, 4.4], [150, 3], [166, 1.8], [182, 0.6]];
+function hallPaths(cx, sc) {
+  const b = 320, w = 118 * sc, bodyH = 34 * sc;
+  const y1 = b - bodyH + 2 * sc, y2 = y1 - 24 * sc, y3 = y2 - 21 * sc, y4 = y3 - 26 * sc;
+  const P = [];
+  P.push(`M${cx - w * .74} ${b}V${b - bodyH}H${cx + w * .74}V${b}Z`);
+  P.push(`M${cx - w * .84} ${b}V${b - 6 * sc}H${cx + w * .84}V${b}Z`);
+  const tier = (yb, yt, wb, wt) => `M${cx - wb} ${yb}L${cx - wt} ${yt}L${cx + wt} ${yt}L${cx + wb} ${yb}Z`;
+  P.push(tier(y1, y2, w, w * .84));
+  P.push(tier(y2 + 6 * sc, y3, w * .86, w * .66));
+  P.push(tier(y3 + 6 * sc, y4, w * .68, w * .46));
+  const cho = (x, dir) => `M${x} ${y4 + 2 * sc}C${x + dir * 2 * sc} ${y4 - 8 * sc} ${x + dir * 6 * sc} ${y4 - 14 * sc} ${x + dir * 11 * sc} ${y4 - 17 * sc}L${x + dir * 8 * sc} ${y4 - 10 * sc}C${x + dir * 5 * sc} ${y4 - 6 * sc} ${x + dir * 4 * sc} ${y4 - 2 * sc} ${x + dir * 4 * sc} ${y4 + 2 * sc}Z`;
+  P.push(cho(cx - w * .46, -1), cho(cx + w * .46, 1));
+  [[y1, w], [y2 + 6 * sc, w * .86], [y3 + 6 * sc, w * .68]].forEach(([y, ww]) => {
+    P.push(`M${cx - ww} ${y}l${-7 * sc} ${-8 * sc}l${2 * sc} ${-1 * sc}l${6 * sc} ${7 * sc}Z`);
+    P.push(`M${cx + ww} ${y}l${7 * sc} ${-8 * sc}l${-2 * sc} ${-1 * sc}l${-6 * sc} ${7 * sc}Z`);
+  });
+  return P;
+}
+function lotusSVG(id) {
+  const petal = (x, y, ang, len, wid, fill) => `<path d="M0 0C${-wid} ${-len * .3} ${-wid * .8} ${-len * .75} 0 ${-len}C${wid * .8} ${-len * .75} ${wid} ${-len * .3} 0 0Z" transform="translate(${x} ${y}) rotate(${ang})" fill="${fill}" stroke="#e98ab0" stroke-width="1" stroke-opacity=".45"/>`;
+  const fx = 118, fy = 152;
+  let back = '', front = '';
+  [-66, -40, -15, 15, 40, 66].forEach(a => { back += petal(fx, fy, a, 68, 22, `url(#${id}b)`); });
+  [-46, -22, 0, 22, 46].forEach(a => { front += petal(fx, fy + 4, a, a === 0 ? 80 : 66, 21, `url(#${id}f)`); });
+  const bud = `<path d="M204 196C206 180 204 168 200 160" stroke="#5f9e8f" stroke-width="3" fill="none"/>` + petal(200, 162, -12, 46, 15, `url(#${id}f)`) + petal(200, 162, 14, 44, 14, `url(#${id}b)`);
+  return `<svg viewBox="0 0 260 210" aria-hidden="true"><defs>` +
+    `<linearGradient id="${id}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ee79a6"/><stop offset=".6" stop-color="#f7b2cd"/><stop offset="1" stop-color="#fde4ee"/></linearGradient>` +
+    `<linearGradient id="${id}f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f287b2"/><stop offset=".5" stop-color="#fbc6da"/><stop offset="1" stop-color="#fff6fa"/></linearGradient>` +
+    `<linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fcbb8"/><stop offset="1" stop-color="#4f9a8c"/></linearGradient></defs>` +
+    `<ellipse cx="78" cy="186" rx="96" ry="22" fill="url(#${id}l)"/><path d="M78 186L20 178M78 186L60 166M78 186l60-10M78 186l30 16" stroke="#cfeee4" stroke-opacity=".6" stroke-width="1.4"/>` +
+    `<ellipse cx="214" cy="198" rx="58" ry="12" fill="url(#${id}l)" opacity=".9"/>` +
+    bud + back + front + `<circle cx="${fx}" cy="${fy - 8}" r="7" fill="#ffe08a" opacity=".9"/></svg>`;
+}
+
+
+/* =====================================================================
+   SCENE (night festival)
+   ===================================================================== */
+function skylineSVG() {
+  const pth = d => `<path d="${d}"/>`;
+  const far = [profilePath(150, 320, CHEDI, .6), ...hallPaths(390, .58), profilePath(1020, 320, CHEDI, .5), profilePath(1300, 320, PRANG, .5), profilePath(1480, 320, CHEDI, .6)];
+  const near = [...hallPaths(255, .8), profilePath(500, 320, CHEDI, .95), profilePath(690, 320, PRANG, .56), profilePath(910, 320, PRANG, .56), profilePath(800, 320, PRANG, 1), ...hallPaths(1140, .9), profilePath(1400, 320, CHEDI, .78)];
+  // bridge + trees
+  let bridge = '<path d="M560 320 Q 640 268 720 320 Z M880 320 Q 960 268 1040 320 Z" fill="#0e0b33"/><rect x="540" y="292" width="520" height="7" rx="3" fill="#120e3c"/>';
+  for (let x = 560; x <= 1040; x += 40) bridge += `<rect x="${x}" y="280" width="3" height="14" fill="#120e3c"/>`;
+  const trees = [[40, 296, 34], [85, 300, 28], [1540, 296, 36], [1585, 302, 26], [600, 304, 18], [1000, 306, 16]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join('');
+  return `<svg viewBox="0 0 1600 320" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b3a96"/><stop offset="1" stop-color="#1a1450"/></linearGradient></defs>` +
+    `<g fill="#3a2d7a" opacity=".55">${trees}${far.map(pth).join('')}</g>` +
+    `<g fill="url(#rim)" opacity=".92">${near.map(pth).join('')}</g>${bridge}` +
+    `<g fill="#ffcf6a">${[[800, 120], [690, 210], [910, 210], [500, 240], [1140, 262], [255, 270]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.4"/>`).join('')}</g></svg>`;
+}
+function mascotSVG() {
+  return `<svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9cc4"/><stop offset="1" stop-color="#ffd6e6"/></linearGradient></defs>
+  <ellipse cx="60" cy="106" rx="46" ry="9" fill="#2fbf71" opacity=".9"/>
+  ${[-60, -30, 0, 30, 60].map(a => `<path d="M60 92C48 78 48 52 60 36C72 52 72 78 60 92Z" fill="url(#mp)" stroke="#ff7fae" stroke-width="1.5" transform="rotate(${a} 60 92)"/>`).join('')}
+  <circle cx="60" cy="74" r="22" fill="#fff4d6" stroke="#ffcf6a" stroke-width="2"/>
+  <circle cx="52" cy="72" r="3.4" fill="#2b2357"/><circle cx="68" cy="72" r="3.4" fill="#2b2357"/>
+  <circle cx="53" cy="70.8" r="1.1" fill="#fff"/><circle cx="69" cy="70.8" r="1.1" fill="#fff"/>
+  <path d="M54 80 Q60 85 66 80" stroke="#2b2357" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <circle cx="47" cy="79" r="3.2" fill="#ff9cc4" opacity=".7"/><circle cx="73" cy="79" r="3.2" fill="#ff9cc4" opacity=".7"/>
+  <rect x="57" y="34" width="6" height="18" rx="2" fill="#fff8e8"/><path d="M60 22C56 28 57 33 60 34C63 33 64 28 60 22Z" fill="#ffb53d"><animate attributeName="d" dur=".6s" repeatCount="indefinite" values="M60 22C56 28 57 33 60 34C63 33 64 28 60 22Z;M60 20C55 28 57 33 60 34C63 33 65 27 60 20Z;M60 22C56 28 57 33 60 34C63 33 64 28 60 22Z"/></path></svg>`;
+}
+function buildScene() {
+  const fan = (cx, cy) => `M${cx - 17.42} ${cy - 9.83}A20 20 0 0 1 ${cx + 17.42} ${cy - 9.83}M${cx - 12.37} ${cy - 8.49}A15 15 0 0 1 ${cx + 12.37} ${cy - 8.49}M${cx - 8} ${cy - 6}A10 10 0 0 1 ${cx + 8} ${cy - 6}M${cx - 4.35} ${cy - 2.46}A5 5 0 0 1 ${cx + 4.35} ${cy - 2.46}`;
+  const seig = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="20" viewBox="0 0 40 20"><path fill="none" stroke="#9fb4ff" stroke-opacity=".55" stroke-width="1" d="${fan(20, 10) + fan(0, 20) + fan(40, 20) + fan(20, 30)}"/></svg>`;
+  document.documentElement.style.setProperty('--seig', `url("data:image/svg+xml,${encodeURIComponent(seig)}")`);
+  $('#wbands').innerHTML = [[0, 26, 22, 60, .35], [16, 30, 34, 50, .4], [36, 36, 50, 42, .45], [62, 42, 74, 34, .5]]
+    .map(([t, h, tw, d, o]) => `<div class="wband" style="top:${t}%;height:${h}%;--tw:${tw}px;--dur:${d}s;opacity:${o}"></div>`).join('');
+  $('#skyline').innerHTML = skylineSVG();
+  $('#lotusL').innerHTML = lotusSVG('la'); $('#lotusR').innerHTML = lotusSVG('lb');
+  const R = Math.random; let h = '';
+  for (let i = 0; i < 40; i++) h += `<span class="st" style="left:${(R() * 98).toFixed(1)}%;top:${(R() * 48).toFixed(1)}%;--z:${(4 + R() * 12).toFixed(1)}px;--t:${(2 + R() * 3).toFixed(2)}s;--dl:${(-R() * 5).toFixed(2)}s"></span>`;
+  $('#stars').innerHTML = h; h = '';
+  for (let i = 0; i < 14; i++) h += `<span class="lan" style="left:${(R() * 94 + 3).toFixed(1)}%;--w:${(7 + R() * 9).toFixed(1)}px;--t:${(18 + R() * 18).toFixed(1)}s;--dl:${(-R() * 36).toFixed(1)}s;--sx:${((R() - .5) * 90).toFixed(0)}px"></span>`;
+  $('#lanterns').innerHTML = h; h = '';
+  for (let i = 0; i < 22; i++) h += `<span class="gl" style="left:${(R() * 96 + 2).toFixed(1)}%;top:${(R() * 92 + 4).toFixed(1)}%;--w:${(8 + R() * 22).toFixed(0)}px;--t:${(2 + R() * 3).toFixed(2)}s;--dl:${(-R() * 4).toFixed(2)}s"></span>`;
+  $('#glints').innerHTML = h; h = '';
+  for (let i = 0; i < 7; i++) h += `<span class="petal" style="top:${(10 + R() * 80).toFixed(1)}%;--w:${(8 + R() * 8).toFixed(0)}px;--t:${(26 + R() * 30).toFixed(1)}s;--dl:${(-R() * 50).toFixed(1)}s"></span>`;
+  $('#petals').innerHTML = h;
+  $('#mascot').innerHTML = mascotSVG();
+  $('#hero').innerHTML = [1, 3, 6].map(d => `<img src="${kImg(d)}" alt="">`).join('');
+}
+/* river photos (assets/river-1.jpg … river-8.jpg). Until the originals are added, a placeholder is shown (clearly tagged). */
+const RIVER_IMG = {};
+function loadRiverImages() {
+  RIVERS.forEach((r, i) => {
+    const im = new Image();
+    im.onload = () => { RIVER_IMG[r.id] = im.src; refreshRiverVisuals(); };
+    im.src = `assets/river-${i + 1}.jpg?${APP_VERSION}`;
+  });
+}
+function riverPh(id) {
+  const i = RIVERS.findIndex(r => r.id === id), h = (230 + i * 41) % 360;
+  return `radial-gradient(circle at 76% 24%,#ffe08a 0 7%,rgba(255,210,110,.35) 8%,transparent 20%),linear-gradient(180deg,hsl(${h},55%,14%) 0%,hsl(${(h + 30) % 360},50%,30%) 54%,hsl(${h},60%,20%) 55%,hsl(${h},65%,9%) 100%)`;
+}
+function riverBgCss(id) { return RIVER_IMG[id] ? `url("${RIVER_IMG[id]}")` : riverPh(id); }
+function setSceneRiver(id) {
+  const el = $('#riverBg');
+  if (!id) { el.classList.remove('on'); return; }
+  el.style.backgroundImage = riverBgCss(id); el.classList.add('on');
+}
+function refreshRiverVisuals() { renderRiverCards(); if (U.river && ['wish', 'live'].includes(STATE.page)) setSceneRiver(U.river); if (ADM.on) renderAdminRivers(); }
+
+/* =====================================================================
+   STATE & NAV
+   ===================================================================== */
+const U = { id: '', hash: '', label: '', design: 0, answers: [], score: 0, river: '', wish: '', submitted: false, viewOnly: false };
+const STATE = { page: 'welcome', q: 0, picked: null, busy: false };
+function go(page) {
+  STATE.page = page;
+  $$('#app .page').forEach(s => s.classList.toggle('on', s.id === 'p-' + page));
+  const pg = $('#p-' + page); if (pg) pg.scrollTop = 0;
+  $('#bAdmin').hidden = page !== 'welcome';
+  setSceneRiver(['wish', 'live'].includes(page) ? U.river : '');
+  if (page === 'live') enterLive();
+}
+function normId(s) { return String(s || '').toUpperCase().replace(/\s+/g, '').replace(/[^A-Z0-9_-]/g, '').slice(0, 32); }
+function maskId(id) {
+  id = String(id || '');
+  if (id.length <= 3) return id[0] + '••';
+  if (id.length <= 6) return id[0] + '•••' + id.slice(-2);
+  return id.slice(0, 2) + '•••' + id.slice(-3);
+}
+async function idHash(id) { return sha256Hex(CONFIG.ID_SALT + '|' + id); }
+function saveMine() { try { localStorage.setItem('rotw2_mine_' + U.hash, JSON.stringify({ design: U.design, wish: U.wish, score: U.score, river: U.river, label: U.label })); } catch (e) { /* ignore */ } }
+function loadMine(h) { try { return JSON.parse(localStorage.getItem('rotw2_mine_' + h) || 'null'); } catch (e) { return null; } }
+
+/* ---------- 1. WELCOME ---------- */
+async function onWelcomeNext() {
+  if (STATE.busy) return;
+  const raw = $('#empId').value, id = normId(raw), msg = $('#idMsg');
+  $('#empId').value = id;
+  if (id.length < 3) { shakeField('#idField'); msg.className = 'msg err'; msg.textContent = 'กรุณากรอกรหัสพนักงานให้ถูกต้อง'; return; }
+  STATE.busy = true; msg.className = 'msg'; msg.innerHTML = '<span class="spinner"></span>';
+  try {
+    const h = await idHash(id);
+    const ok = await store.get(P('employees/' + h));
+    if (ok !== true) { shakeField('#idField'); msg.className = 'msg err'; msg.textContent = 'ไม่พบรหัสพนักงานนี้ในระบบ กรุณาตรวจสอบอีกครั้ง'; return; }
+    Object.assign(U, { id, hash: h, label: maskId(id), design: 0, answers: [], score: 0, river: '', wish: '', submitted: false, viewOnly: false });
+    const done = await store.get(P('done/' + h));
+    if (done) {
+      U.river = String(done); U.submitted = true; U.viewOnly = true;
+      const mine = loadMine(h); if (mine) Object.assign(U, { design: mine.design, wish: mine.wish, score: mine.score });
+      msg.className = 'msg'; msg.innerHTML = 'รหัสนี้ใช้สิทธิ์ลอยกระทงเรียบร้อยแล้ว 🪷 <br><button class="btn btn-ghost btn-sm" id="bSeeMine" style="margin-top:8px">VIEW MY KRATHONG</button>';
+      $('#bSeeMine').onclick = () => { Sound.sfx('click'); go('live'); };
+      return;
+    }
+    msg.textContent = '';
+    store.put(P('progress/' + h), 'IN PROGRESS').catch(() => {});
+    renderKrathongs(); go('krathong');
+  } catch (e) {
+    msg.className = 'msg err'; msg.textContent = 'เชื่อมต่อระบบไม่ได้: ' + errMsg(e);
+  } finally { STATE.busy = false; }
+}
+function shakeField(sel) { const f = $(sel); f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake'); }
+
+/* ---------- 2. KRATHONG ---------- */
+function renderKrathongs() {
+  $('#kgrid').innerHTML = DESIGNS.map(d => `<button type="button" class="kcard${U.design === d.id ? ' sel' : ''}" data-d="${d.id}"><span class="check">✓</span><div class="kimg"><img src="${kImg(d.id)}" alt="${esc(d.name)}"></div><div class="kn">${d.id}. ${esc(d.name)}</div><div class="kd">${esc(d.desc)}</div></button>`).join('');
+  $('#bNext2').disabled = !U.design;
+}
+
+/* ---------- 3. QUIZ ---------- */
+function startQuiz() { U.answers = []; STATE.q = 0; renderQuestion(); go('quiz'); }
+function renderQuestion() {
+  const i = STATE.q, Q = QUIZ[i];
+  STATE.picked = null;
+  $('#qNum').textContent = `QUESTION ${i + 1}/${QUIZ.length}`;
+  $('#qBar').style.width = ((i) / QUIZ.length * 100) + '%';
+  $('#qText').textContent = Q.q;
+  $('#qOpts').innerHTML = ['A', 'B'].map(k => `<button type="button" class="opt" data-k="${k}"><b>${k}</b><span>${esc(k === 'A' ? Q.a : Q.b)}</span></button>`).join('');
+  $('#qFb').innerHTML = '';
+  const b = $('#bQNext'); b.disabled = true; b.textContent = i === QUIZ.length - 1 ? 'SEE MY RESULT ›' : 'NEXT ›';
+}
+function answer(k, btn) {
+  if (STATE.picked) return;
+  STATE.picked = k;
+  const Q = QUIZ[STATE.q], ok = k === Q.ans;
+  U.answers[STATE.q] = k;
+  $$('#qOpts .opt').forEach(o => { o.disabled = true; if (o.dataset.k === Q.ans) o.classList.add('right'); else if (o.dataset.k === k) o.classList.add('wrong'); });
+  $('#qFb').innerHTML = ok
+    ? `<div class="fb ok"><h4>✅ ถูกต้อง! เก่งมาก!</h4>เฉลย: ${Q.ans}. ${esc(Q.ans === 'A' ? Q.a : Q.b)}<br><span style="color:var(--muted)">${esc(Q.ex)}</span></div>`
+    : `<div class="fb no"><h4>❌ ยังไม่ถูกนะ! มาดูเฉลยกัน</h4>คำตอบที่ถูกต้อง: ${Q.ans}. ${esc(Q.ans === 'A' ? Q.a : Q.b)}<br><span style="color:var(--muted)">${esc(Q.ex)}</span></div>`;
+  $('#qBar').style.width = ((STATE.q + 1) / QUIZ.length * 100) + '%';
+  if (ok) { Sound.sfx('correct'); sparkleAt(btn); } else Sound.sfx('wrong');
+  $('#bQNext').disabled = false;
+}
+function sparkleAt(el) {
+  const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  for (let i = 0; i < 12; i++) {
+    const s = document.createElement('span'); s.className = 'burst'; s.textContent = ['✨', '⭐', '💫'][i % 3];
+    const a = (i / 12) * Math.PI * 2, d = 60 + Math.random() * 50;
+    s.style.left = cx + 'px'; s.style.top = cy + 'px'; s.style.setProperty('--dx', Math.cos(a) * d + 'px'); s.style.setProperty('--dy', Math.sin(a) * d + 'px');
+    document.body.appendChild(s); setTimeout(() => s.remove(), 1100);
+  }
+}
+function quizNext() {
+  if (!STATE.picked) return;
+  if (STATE.q < QUIZ.length - 1) { STATE.q++; renderQuestion(); $('#p-quiz').scrollTop = 0; return; }
+  U.score = U.answers.reduce((s, a, i) => s + (a === QUIZ[i].ans ? 1 : 0), 0);
+  store.put(P('progress/' + U.hash), 'QUIZ COMPLETED').catch(() => {});
+  renderResult(); go('result');
+}
+function renderResult() {
+  const s = U.score, t = TIERS.find(x => s >= x.min);
+  $('#rScore').textContent = `${s}/5`;
+  $('#rStars').innerHTML = [0, 1, 2, 3, 4].map(i => `<span class="${i < s ? 'on' : ''}" style="animation-delay:${i * .12}s">⭐</span>`).join('');
+  $('#rTier').textContent = t.t; $('#rMsg').textContent = t.m;
+  $('#rOk').textContent = `✓ ถูก ${s} ข้อ`; $('#rNo').textContent = `✗ ผิด ${5 - s} ข้อ`;
+  $('#rList').innerHTML = QUIZ.map((Q, i) => {
+    const ok = U.answers[i] === Q.ans;
+    return `<details><summary><span class="mk ${ok ? 'ok' : 'no'}">${ok ? '✓' : '✗'}</span><span>ข้อ ${i + 1}. ${esc(Q.q)}</span></summary><p>คุณตอบ: ${U.answers[i]} · เฉลย: ${Q.ans}. ${esc(Q.ans === 'A' ? Q.a : Q.b)}<br>${esc(Q.ex)}</p></details>`;
+  }).join('');
+  Sound.sfx('celebrate'); if (s >= 3) Confetti.burst(s === 5 ? 200 : 110);
+}
+
+/* ---------- 5. RIVER ---------- */
+function riverCount(id) { const o = PUB.rivers[id]; return o && typeof o === 'object' ? Object.keys(o).length : 0; }
+function renderRiverCards() {
+  const g = $('#rgrid'); if (!g) return;
+  g.innerHTML = RIVERS.map((r, i) => `<button type="button" class="rcard${U.river === r.id ? ' sel' : ''}" data-r="${r.id}"><div class="rimg${RIVER_IMG[r.id] ? '' : ' ph'}" style="${RIVER_IMG[r.id] ? `background-image:url('${RIVER_IMG[r.id]}')` : `--phbg:${riverPh(r.id)}`}"></div>${RIVER_IMG[r.id] ? '' : '<span class="phtag">รอรูปต้นฉบับ</span>'}<span class="check">✓</span><div class="rn">${i + 1}. ${r.name}<span class="rc">🪷 ${riverCount(r.id).toLocaleString('en-US')} FLOATING</span></div></button>`).join('');
+  $('#bNext5').disabled = !U.river;
+  if (U.river) {
+    $('#rPreview').hidden = false;
+    $('#pvImg').style.backgroundImage = riverBgCss(U.river);
+    $('#pvK').src = kImg(U.design || 1);
+    $('#pvName').textContent = riverById(U.river).name;
+    $('#pvCount').textContent = `ตอนนี้มีกระทงลอยอยู่ ${riverCount(U.river).toLocaleString('en-US')} ใบ`;
+  } else $('#rPreview').hidden = true;
+}
+
+/* ---------- 6. WISH ---------- */
+function enterWish() {
+  $('#wK').src = kImg(U.design); $('#wRiverName').textContent = riverById(U.river).name;
+  $('#wish').value = U.wish; $('#wCount').textContent = `${U.wish.length}/${CONFIG.WISH_MAX}`;
+  go('wish');
+}
+async function onMakeWish() {
+  U.wish = cleanText($('#wish').value, CONFIG.WISH_MAX);
+  Sound.sfx('wish');
+  const st = $('#wStage'); st.classList.remove('wished'); void st.offsetWidth; st.classList.add('wished');
+  $('#bWish').disabled = true; await sleep(1300); $('#bWish').disabled = false;
+  U.viewOnly = false; go('live');
+}
+
+/* =====================================================================
+   LIVE RIVER (realtime per river)
+   ===================================================================== */
+const PUB = { rivers: {}, status: 'offline', unsub: null };
+function startPublic() {
+  if (PUB.unsub) return;
+  PUB.unsub = store.listen(P('rivers'), v => {
+    PUB.rivers = v && typeof v === 'object' ? v : {};
+    renderRiverCards(); updateLiveRiver(); if (ADM.on) adminRealtime();
+  }, s => { PUB.status = s; $$('#lDot,#aDot').forEach(el => { el.classList.toggle('off', s !== 'live'); el.querySelector('span').textContent = s === 'live' ? 'LIVE' : 'OFFLINE'; }); });
+}
+class RiverRenderer {
+  constructor(stage, opts = {}) { this.stage = stage; this.items = new Map(); this.initial = true; this.opts = opts; this.meKey = null; this.riverId = null; this.lastDrop = 0; }
+  reset(riverId) { this.items.forEach(it => it.el.remove()); this.items.clear(); this.initial = true; this.riverId = riverId; }
+  set(data) {
+    data = data && typeof data === 'object' ? data : {};
+    for (const [k, it] of this.items) if (!data[k]) { it.el.remove(); this.items.delete(k); }
+    let added = 0;
+    Object.keys(data).forEach(k => {
+      const e = data[k]; if (!e || typeof e !== 'object') return;
+      const d = clamp(parseInt(e.design, 10) || 1, 1, 6);
+      let it = this.items.get(k);
+      if (!it) {
+        it = { k, e, el: this.make(k, d) }; this.items.set(k, it); this.stage.appendChild(it.el);
+        if (!this.initial) { added++; it.el.classList.add('drop'); setTimeout(() => it.el.classList.remove('drop'), 1500); }
+      }
+      it.e = e;
+      it.el.querySelector('.tag').textContent = this.opts.labelOf ? this.opts.labelOf(k, e) : cleanText(e.label, 24);
+      it.el.classList.toggle('me', k === this.meKey);
+    });
+    if (added && Date.now() - this.lastDrop > 700) { this.lastDrop = Date.now(); Sound.sfx('drop'); }
+    this.initial = false; this.layout();
+    return added;
+  }
+  make(k, d) {
+    const el = document.createElement('div'); el.className = 'livek'; el.dataset.k = k;
+    const rnd = mulberry32(hashStr(k));
+    el.style.setProperty('--d', (4.6 + rnd() * 3.4).toFixed(2) + 's'); el.style.setProperty('--dl', (-rnd() * 8).toFixed(2) + 's');
+    el.style.setProperty('--r', (1.5 + rnd() * 2.5).toFixed(2) + 'deg'); el.style.setProperty('--dx', (1.5 + rnd() * 3).toFixed(2) + 'px');
+    el.style.setProperty('--rd', (3.2 + rnd() * 1.6).toFixed(2) + 's');
+    el.innerHTML = `<div class="bob"><span class="refl"></span><span class="rip"></span><img alt="" draggable="false" src="${kImg(d)}"><span class="tag"></span></div>`;
+    const img = el.querySelector('img'); img.onload = () => el.style.setProperty('--ar', clamp(img.naturalHeight / img.naturalWidth, .5, 1.4).toFixed(3));
+    return el;
+  }
+  layout() {
+    const W = this.stage.clientWidth, H = this.stage.clientHeight; if (!W || !H) return;
+    const list = Array.from(this.items.values()).sort((p, q) => ((+p.e.at || 0) - (+q.e.at || 0)) || (p.k < q.k ? -1 : 1));
+    const n = list.length;
+    if (this.opts.onCount) this.opts.onCount(n);
+    if (!n) return;
+    const top = this.opts.top || 0, bottom = this.opts.bottom || 0, useH = Math.max(60, H - top - bottom);
+    const a = .5, b = .5, kk = 1 / a - 1 / (a + b);
+    const cap = n <= 150 ? 1 : n <= 400 ? .72 : .52;
+    let S = Math.sqrt((W * useH * .5) / (n * 1.45 * .55));
+    S = clamp(Math.min(S, Math.min(W, H) * .26 * cap, 170 * cap), 22, 400);
+    const yMin = top + S * a * .9 + 22, yMax = Math.max(yMin + 10, top + useH);
+    list.forEach((it, i) => {
+      const u = frac(.5 + i * .7548776662466927), v = frac(.5 + i * .5698402909980532);
+      const t = clamp(.5 * v + .5 * (1 / (1 / a - v * kk) - a) / b, 0, 1);
+      const s = S * (a + b * t), y = yMin + t * (yMax - yMin), m = s * .62 + 10, x = m + u * Math.max(1, W - 2 * m);
+      const st = it.el.style; st.left = x.toFixed(1) + 'px'; st.top = y.toFixed(1) + 'px';
+      st.setProperty('--s', s.toFixed(1) + 'px'); st.setProperty('--fs', clamp(s * .13, 9.5, 14).toFixed(1) + 'px');
+      st.zIndex = String(10 + Math.round(y));
+    });
+  }
+  pos(k) { const it = this.items.get(k); if (!it) return null; const r = it.el.getBoundingClientRect(), sr = this.stage.getBoundingClientRect(); return { x: r.left - sr.left + r.width / 2, y: r.top - sr.top }; }
+}
+let LIVE = null;
+function ensureLive() {
+  if (LIVE) return LIVE;
+  LIVE = new RiverRenderer($('#rStage'), { top: 6, bottom: 150, onCount: n => { $('#lCount').textContent = n.toLocaleString('en-US'); $('#lEmpty').hidden = n > 0; } });
+  return LIVE;
+}
+function enterLive() {
+  startPublic(); ensureLive();
+  const showRiver = U.river || 'r1';
+  LIVE.meKey = U.submitted ? U.hash : null;
+  if (LIVE.riverId !== showRiver) LIVE.reset(showRiver);
+  $('#lRiver').textContent = riverById(showRiver).name;
+  const floating = !U.submitted && !U.viewOnly;
+  $('#pending').hidden = !floating; $('#pending').classList.remove('go'); $('#pendingImg').src = kImg(U.design || 1);
+  $('#bFloat').hidden = !floating; $('#bBack7').hidden = !floating;
+  $('#lFoot').querySelector('.btn-again')?.remove();
+  if (!floating) {
+    const b = document.createElement('button'); b.className = 'btn btn-gold btn-sm btn-again'; b.type = 'button'; b.textContent = U.submitted ? 'MY RESULT' : 'BACK';
+    b.onclick = () => { Sound.sfx('click'); if (U.submitted && U.hash) showSuccess(); else go('welcome'); };
+    $('#lFoot').appendChild(b);
+  }
+  renderSwitch(); updateLiveRiver();
+}
+function renderSwitch() {
+  const floating = STATE.page === 'live' && !U.submitted && !U.viewOnly;
+  $('#rSwitch').hidden = floating;
+  $('#rSwitch').innerHTML = RIVERS.map(r => `<button type="button" data-r="${r.id}" class="${LIVE && LIVE.riverId === r.id ? 'on' : ''}">${r.name} · ${riverCount(r.id)}</button>`).join('');
+}
+function updateLiveRiver() {
+  if (!LIVE || STATE.page !== 'live') return;
+  LIVE.set(PUB.rivers[LIVE.riverId]);
+  if (!$('#rSwitch').hidden) $$('#rSwitch button').forEach(b => { b.textContent = `${riverById(b.dataset.r).name} · ${riverCount(b.dataset.r)}`; b.classList.toggle('on', b.dataset.r === LIVE.riverId); });
+  showMyBubble();
+}
+function showMyBubble() {
+  $$('#rStage .bubble').forEach(b => b.remove());
+  if (!U.submitted || !U.wish || !LIVE || LIVE.riverId !== U.river) return;
+  const p = LIVE.pos(U.hash); if (!p) return;
+  const b = document.createElement('div'); b.className = 'bubble'; b.textContent = '“' + U.wish + '”';
+  b.style.left = clamp(p.x, 120, LIVE.stage.clientWidth - 120) + 'px'; b.style.top = Math.max(40, p.y - 18) + 'px';
+  LIVE.stage.appendChild(b);
+}
+async function onFloat() {
+  if (STATE.busy || U.submitted) return;
+  if (!U.hash || !U.design || !U.river || U.answers.length !== 5) { toast('ข้อมูลไม่ครบ กรุณาเริ่มใหม่', 'err'); go('welcome'); return; }
+  STATE.busy = true;
+  const btn = $('#bFloat'); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> กำลังลอยกระทง…';
+  const sid = 'S' + Date.now().toString(36).toUpperCase() + '-' + Array.from(crypto.getRandomValues(new Uint8Array(5)), b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+  const sv = store.serverTime(), h = U.hash, r = U.river;
+  const body = {};
+  body['submissions/' + h] = { employeeId: U.id, design: U.design, answers: U.answers.join(''), score: U.score, quizCompleted: true, river: r, wish: U.wish, at: sv, status: 'PARTICIPATION COMPLETED', submissionId: sid };
+  body['done/' + h] = r;
+  body['rivers/' + r + '/' + h] = { label: U.label, design: U.design, at: sv };
+  body['progress/' + h] = 'PARTICIPATION COMPLETED';
+  try {
+    await store.patch(CONFIG.ROOT, body);
+  } catch (e) {
+    let done = null; try { done = await store.get(P('done/' + h)); } catch (x) { /* ignore */ }
+    if (!done) { btn.disabled = false; btn.textContent = 'FLOAT MY KRATHONG! 🪷'; toast('ส่งกระทงไม่สำเร็จ: ' + errMsg(e) + ' — กดอีกครั้ง', 'err', 6000); STATE.busy = false; return; }
+    U.river = String(done); toast('รหัสนี้ส่งกระทงเรียบร้อยแล้ว (ส่งได้ครั้งเดียว)', 'warn');
+  }
+  U.submitted = true; saveMine();
+  Sound.sfx('float');
+  $('#pending').classList.add('go');
+  LIVE.meKey = h; if (LIVE.riverId !== U.river) LIVE.reset(U.river);
+  $('#bFloat').hidden = true; $('#bBack7').hidden = true; btn.disabled = false; btn.textContent = 'FLOAT MY KRATHONG! 🪷';
+  await sleep(1700); updateLiveRiver(); $('#pending').hidden = true;
+  await sleep(2200); STATE.busy = false;
+  enterLive(); showSuccess();
+}
+function showSuccess() {
+  $('#sK').src = kImg(U.design || 1);
+  const w = $('#sWish'); if (U.wish) { w.textContent = '“' + U.wish + '”'; w.hidden = false; } else w.hidden = true;
+  $('#sRiver').textContent = '🪷 ' + riverById(U.river).name;
+  $('#sScore').textContent = U.answers.length === 5 || U.score ? `⭐ QUIZ ${U.score}/5` : '⭐ QUIZ COMPLETED';
+  $('#ovSuccess').classList.add('on'); Sound.sfx('celebrate'); Confetti.burst(160);
+}
+
+/* ---------- SAVE MY KRATHONG (PNG) ---------- */
+function loadImage(src) { return new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = src; }); }
+function wrapText(g, text, maxW) {
+  const seg = (typeof Intl !== 'undefined' && Intl.Segmenter) ? Array.from(new Intl.Segmenter('th', { granularity: 'word' }).segment(text), s => s.segment) : text.split('');
+  const lines = []; let line = '';
+  seg.forEach(w => { if (g.measureText(line + w).width > maxW && line) { lines.push(line); line = w.trimStart(); } else line += w; });
+  if (line) lines.push(line); return lines;
+}
+async function saveImage() {
+  try {
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const W = 1080, H = 1350, c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+    if (RIVER_IMG[U.river]) {
+      const bg = await loadImage(RIVER_IMG[U.river]); const s = Math.max(W / bg.width, H / bg.height);
+      g.drawImage(bg, (W - bg.width * s) / 2, (H - bg.height * s) / 2, bg.width * s, bg.height * s);
+      g.fillStyle = 'rgba(8,10,40,.35)'; g.fillRect(0, 0, W, H);
+    } else {
+      const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#070b2e'); gr.addColorStop(.5, '#3a2378'); gr.addColorStop(.56, '#1b2a74'); gr.addColorStop(1, '#0c1b4d');
+      g.fillStyle = gr; g.fillRect(0, 0, W, H);
+      g.fillStyle = 'rgba(255,214,110,.25)'; g.beginPath(); g.arc(820, 230, 170, 0, 6.29); g.fill();
+      g.fillStyle = '#ffd36b'; g.beginPath(); g.arc(820, 230, 110, 0, 6.29); g.fill();
+      for (let i = 0; i < 70; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * .8})`; g.fillRect(Math.random() * W, Math.random() * H * .5, 2, 2); }
+    }
+    const glow = g.createRadialGradient(W / 2, 900, 20, W / 2, 900, 420); glow.addColorStop(0, 'rgba(255,210,120,.55)'); glow.addColorStop(1, 'rgba(255,210,120,0)');
+    g.fillStyle = glow; g.fillRect(0, 480, W, 840);
+    const k = await loadImage(kImg(U.design || 1)); const kw = 620, kh = kw * k.height / k.width;
+    g.drawImage(k, (W - kw) / 2, 1010 - kh, kw, kh);
+    g.textAlign = 'center';
+    g.fillStyle = '#c9c3ee'; g.font = '700 30px Prompt, sans-serif'; g.fillText('DIGITAL LOY KRATHONG', W / 2, 110);
+    const tg = g.createLinearGradient(0, 120, 0, 200); tg.addColorStop(0, '#fff6d6'); tg.addColorStop(1, '#f0a43a');
+    g.fillStyle = tg; g.font = 'italic 800 76px Prompt, sans-serif'; g.fillText('THE RIVER OF THAI WAH', W / 2, 195);
+    g.fillStyle = '#ffffff'; g.font = '700 34px Prompt, sans-serif'; g.fillText(riverById(U.river).name + ' · ' + designName(U.design), W / 2, 258);
+    if (U.wish) {
+      g.font = 'italic 500 40px Prompt, sans-serif'; const lines = wrapText(g, '“' + U.wish + '”', 880).slice(0, 4);
+      const bh = 70 + lines.length * 54; g.fillStyle = 'rgba(12,14,52,.65)';
+      const y0 = 1060; if (g.roundRect) { g.beginPath(); g.roundRect(80, y0, W - 160, bh, 36); g.fill(); } else g.fillRect(80, y0, W - 160, bh);
+      g.fillStyle = '#ffe7a8'; lines.forEach((l, i) => g.fillText(l, W / 2, y0 + 70 + i * 54));
+    }
+    g.fillStyle = '#ffd36b'; g.font = '700 28px Prompt, sans-serif'; g.fillText('ONE KRATHONG. ONE WISH. COUNTLESS POSSIBILITIES.', W / 2, H - 60);
+    const url = c.toDataURL('image/png');
+    const a = document.createElement('a'); a.href = url; a.download = 'my-krathong-the-river-of-thai-wah.png'; document.body.appendChild(a); a.click(); a.remove();
+    $('#savedImg').src = url; $('#ovImg').classList.add('on');
+    Sound.sfx('sparkle');
+  } catch (e) { toast('สร้างภาพไม่สำเร็จ: ' + errMsg(e), 'err'); }
+}
+
+/* =====================================================================
+   ADMIN (all privileged actions are verified server-side by Google Apps Script)
+   ===================================================================== */
+const ADM = { on: false, pin: '', data: null, tab: 'overview', poll: null, viewer: null, drawing: false };
+async function api(action, extra = {}) {
+  if (!CONFIG.API_URL) throw new Error('ยังไม่ได้ตั้งค่า Google Apps Script (CONFIG.API_URL) — ดูขั้นตอนใน README');
+  const r = await fetch(CONFIG.API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action, pin: ADM.pin }, extra)) });
+  let j; try { j = await r.json(); } catch (e) { throw new Error('ระบบหลังบ้านตอบกลับไม่ถูกต้อง (HTTP ' + r.status + ')'); }
+  if (!j || !j.ok) throw new Error((j && j.error) || 'เกิดข้อผิดพลาด');
+  return j;
+}
+async function onLogin(e) {
+  e.preventDefault();
+  const pin = $('#pin').value.trim(), m = $('#loginMsg'); if (!pin) { m.textContent = 'กรุณาใส่รหัสผ่าน'; return; }
+  m.innerHTML = '<span class="spinner"></span>'; $('#bLogin').disabled = true;
+  try { ADM.pin = pin; await api('login'); m.textContent = ''; $('#pin').value = ''; closeOv('ovLogin'); openAdmin(); }
+  catch (err) { ADM.pin = ''; m.textContent = errMsg(err); }
+  finally { $('#bLogin').disabled = false; }
+}
+function openAdmin() {
+  ADM.on = true; $('#admin').hidden = false; startPublic();
+  ['fRiver', 'fDesign'].forEach(id => { const s = $('#' + id); if (s.options.length < 2) (id === 'fRiver' ? RIVERS.map(r => [r.id, r.name]) : DESIGNS.map(d => [d.id, d.name])).forEach(([v, t]) => s.add(new Option(t, v))); });
+  setTab('overview'); loadAdmin();
+  clearInterval(ADM.poll); ADM.poll = setInterval(loadAdmin, 20000);
+}
+function closeAdmin() { ADM.on = false; ADM.pin = ''; ADM.data = null; clearInterval(ADM.poll); $('#admin').hidden = true; closeViewer(); }
+function setTab(t) {
+  ADM.tab = t; $$('#aTabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  $$('#aBody .asec').forEach(s => s.hidden = s.dataset.sec !== t);
+  renderAdmin();
+}
+async function loadAdmin() {
+  if (!ADM.on) return;
+  try { ADM.data = await api('adminData'); $('#aUpdated').textContent = 'อัปเดตข้อมูลล่าสุด ' + new Date().toLocaleTimeString('th-TH'); renderAdmin(); }
+  catch (e) { toast('โหลดข้อมูล Admin ไม่สำเร็จ: ' + errMsg(e), 'err', 6000); }
+}
+const adminRealtime = debounce(() => { renderAdmin(); loadAdmin(); }, 1200);
+function rows() { return (ADM.data && ADM.data.rows) || []; }
+function renderAdmin() {
+  if (!ADM.on) return;
+  const R = rows(), floating = RIVERS.reduce((s, r) => s + riverCount(r.id), 0), st = (ADM.data && ADM.data.stats) || {};
+  if (ADM.tab === 'overview') {
+    $('#kpis').innerHTML = [
+      ['TOTAL PARTICIPANTS', st.participants ?? R.length], ['TOTAL FLOATING KRATHONGS', floating], ['QUIZ COMPLETED', st.quizCompleted ?? R.length],
+      ['TOTAL QUIZ PLAYERS', st.quizPlayers ?? R.length], ['TOTAL LUCKY DRAW ENTRIES', st.drawEntries ?? R.length], ['EMPLOYEES IN LIST', st.employees ?? '—'],
+    ].map(([l, v]) => `<div class="kpi"><div class="v">${typeof v === 'number' ? v.toLocaleString('en-US') : esc(v)}</div><div class="l">${l}</div></div>`).join('');
+    const max = Math.max(1, ...RIVERS.map(r => riverCount(r.id)));
+    $('#ovBars').innerHTML = RIVERS.map(r => bar(r.name, riverCount(r.id), max)).join('');
+  }
+  if (ADM.tab === 'rivers') renderAdminRivers();
+  if (ADM.tab === 'list') renderTable();
+  if (ADM.tab === 'quiz') {
+    const n = R.length, avg = n ? (R.reduce((s, x) => s + x.score, 0) / n) : 0, cnt = v => R.filter(x => x.score === v).length;
+    $('#qKpis').innerHTML = [['TOTAL QUIZ PLAYERS', n], ['AVERAGE SCORE', avg.toFixed(2) + '/5'], ['5/5', cnt(5)], ['4/5', cnt(4)], ['3/5', cnt(3)], ['0–2/5', R.filter(x => x.score <= 2).length]]
+      .map(([l, v]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+    const dist = [['5/5', cnt(5)], ['4/5', cnt(4)], ['3/5', cnt(3)], ['0–2/5', R.filter(x => x.score <= 2).length]], dm = Math.max(1, ...dist.map(d => d[1]));
+    $('#qDist').innerHTML = dist.map(([l, v]) => bar(l, v, dm)).join('');
+    $('#qRate').innerHTML = QUIZ.map((Q, i) => { const c = R.filter(x => (x.answers || '')[i] === Q.ans).length; return bar(`ข้อ ${i + 1}`, n ? Math.round(c / n * 100) : 0, 100, '%'); }).join('');
+  }
+  if (ADM.tab === 'design') {
+    const cs = DESIGNS.map(d => [d.name, R.filter(x => +x.design === d.id).length]), m = Math.max(1, ...cs.map(c => c[1]));
+    $('#dBars').innerHTML = cs.map(([l, v]) => bar(l, v, m)).join('');
+  }
+  if (ADM.tab === 'draw') renderDraw();
+}
+function bar(label, v, max, unit = '') { return `<div class="brow"><span>${esc(label)}</span><span class="tr"><i style="width:${(v / max * 100).toFixed(1)}%"></i></span><span class="v">${v}${unit}</span></div>`; }
+function renderAdminRivers() {
+  const el = $('#aRivers'); if (!el) return;
+  el.innerHTML = RIVERS.map((r, i) => `<div class="amr"><div class="ph" style="background-image:${riverBgCss(r.id)}">${RIVER_IMG[r.id] ? '' : '<span class="phtag">รอรูปต้นฉบับ</span>'}</div><div class="bd"><div class="nm">${i + 1}. ${r.name}</div><div class="meta"><span>🪷 ${riverCount(r.id)} krathongs</span><span>👥 ${rows().filter(x => x.river === r.id).length || riverCount(r.id)} people</span></div><div class="meta"><span class="livedot ${PUB.status === 'live' ? '' : 'off'}"><i></i>${PUB.status === 'live' ? 'LIVE' : 'OFFLINE'}</span><button class="btn btn-ghost btn-sm" data-view="${r.id}" type="button" style="min-height:34px">VIEW RIVER</button></div></div></div>`).join('');
+}
+function fmtTime(t) { return t ? new Date(t).toLocaleString('th-TH', { dateStyle: 'short', timeStyle: 'medium' }) : '-'; }
+function renderTable() {
+  const q = normId($('#fSearch').value), fr = $('#fRiver').value, fd = $('#fDesign').value, fs = $('#fScore').value, so = $('#fSort').value;
+  let R = rows().filter(x => (!q || String(x.employeeId).includes(q)) && (!fr || x.river === fr) && (!fd || +x.design === +fd) && (!fs || (fs === 'low' ? x.score <= 2 : x.score === +fs)));
+  R = R.slice().sort((a, b) => so === 'old' ? a.at - b.at : b.at - a.at);
+  $('#tBody').innerHTML = R.map(x => `<tr data-key="${esc(x.key)}" style="cursor:pointer"><td><b>${esc(x.employeeId)}</b>${x.idValid === false ? ' ⚠' : ''}</td><td>${esc(designName(x.design))}</td><td>${x.score}/5</td><td>${esc(riverById(x.river).name)}</td><td class="w">${esc(x.wish || '-')}</td><td>${fmtTime(x.at)}</td><td><span class="badge${x.status === 'PARTICIPATION COMPLETED' ? '' : ' p'}">${esc(x.status)}</span></td></tr>`).join('') || `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">${ADM.data ? 'ยังไม่มีผู้เข้าร่วม' : 'กำลังโหลด…'}</td></tr>`;
+  $('#tCount').textContent = `แสดง ${R.length} จาก ${rows().length} รายการ`;
+}
+function showDetail(key) {
+  const x = rows().find(r => r.key === key); if (!x) return;
+  $('#dT').textContent = 'EMPLOYEE ' + x.employeeId;
+  $('#dB').innerHTML = `<b>Krathong:</b> ${esc(designName(x.design))}<br><b>River:</b> ${esc(riverById(x.river).name)}<br><b>Quiz:</b> ${x.score}/5 (${esc(x.answers)})<br>` +
+    QUIZ.map((Q, i) => `&nbsp;&nbsp;ข้อ ${i + 1}: ${esc((x.answers || '')[i] || '-')} ${(x.answers || '')[i] === Q.ans ? '✓' : '✗'}`).join('<br>') +
+    `<br><b>Wish:</b> ${esc(x.wish || '-')}<br><b>Submitted:</b> ${fmtTime(x.at)}<br><b>Status:</b> ${esc(x.status)}<br><b>Submission ID:</b> ${esc(x.submissionId)}`;
+  $('#ovDetail').classList.add('on');
+}
+function openViewer(rid) {
+  const v = $('#riverView');
+  v.innerHTML = `<div style="position:absolute;inset:0;background-size:cover;background-position:center;background-image:${riverBgCss(rid)}"></div><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,10,40,.5),rgba(8,10,40,.1) 45%,rgba(8,10,40,.3))"></div>
+  <div class="livehead" style="top:calc(var(--sat) + 12px)"><div class="counter"><div class="n" id="vCount">0</div><div class="t">${riverById(rid).name}<small>FLOATING KRATHONGS</small></div></div><div class="livedot"><i></i><span>LIVE · ADMIN VIEW</span></div></div>
+  <div class="rstage" id="vStage" style="top:30%"></div>
+  <button class="btn btn-gold btn-sm" id="vClose" type="button" style="position:absolute;right:16px;bottom:calc(var(--sab) + 16px);z-index:40">CLOSE</button>`;
+  v.classList.add('on');
+  const map = {}; rows().forEach(x => { map[x.key] = x.employeeId; });
+  ADM.viewer = new RiverRenderer($('#vStage'), { top: 6, bottom: 70, labelOf: (k, e) => map[k] || cleanText(e.label, 24), onCount: n => { const c = $('#vCount'); if (c) c.textContent = n; } });
+  ADM.viewer.riverId = rid; ADM.viewer.set(PUB.rivers[rid]);
+  $('#vClose').onclick = closeViewer;
+}
+function closeViewer() { $('#riverView').classList.remove('on'); $('#riverView').innerHTML = ''; ADM.viewer = null; }
+
+/* ---------- lucky draw (server-side random in Apps Script) ---------- */
+function renderDraw() {
+  const d = (ADM.data && ADM.data.draw) || { winners: [] }, W = d.winners || [], entries = (ADM.data && ADM.data.stats && ADM.data.stats.drawEntries) ?? rows().length;
+  $('#drawInfo').textContent = `ผู้มีสิทธิ์ลุ้นรางวัล ${entries} คน · สุ่มแล้ว ${W.length}/5`;
+  const b = $('#bDraw');
+  if (!ADM.drawing) { b.disabled = W.length >= 5 || !entries; b.textContent = W.length >= 5 ? 'COMPLETED ✓' : W.length ? `DRAW NEXT (${W.length + 1}/5) ★` : 'START LUCKY DRAW ★'; }
+  $('#wGrid').innerHTML = W.slice().sort((a, b) => a.rank - b.rank).map(w => `<div class="wcard"><div class="md">${w.rank}</div>${w.rank === 1 ? '<div style="position:absolute;top:-40px;left:50%;transform:translateX(-50%);font-size:24px">👑</div>' : ''}<img src="${kImg(w.design)}" alt=""><div class="id">${esc(w.employeeId)}</div><div class="mt">${esc(designName(w.design))}<br>${esc(riverById(w.river).name)}<br>รางวัลที่ ${w.rank}</div></div>`).join('');
+}
+async function onDraw() {
+  if (ADM.drawing) return;
+  ADM.drawing = true; const b = $('#bDraw'); b.disabled = true; $('#bResetDraw').disabled = true;
+  const pool = rows().map(r => r.employeeId); const roller = $('#roller'); $('#drawK').classList.add('spin');
+  let stop = false, delay = 50;
+  const spin = (async () => { let t = 0; while (!stop || t < 2600) { roller.textContent = pool.length ? pool[randInt(pool.length)] : '???'; Sound.sfx('tick'); await sleep(delay); t += delay; if (stop) delay = Math.min(360, delay * 1.18); } })();
+  try {
+    const res = await api('drawNext'); stop = true; await spin;
+    const w = res.winner; roller.textContent = w.employeeId; $('#drawK').src = kImg(w.design);
+    ADM.data = ADM.data || {}; ADM.data.draw = res.draw;
+    Sound.sfx('celebrate'); Confetti.burst(220);
+    toast(`🎉 รางวัลที่ ${w.rank}: ${w.employeeId} · ${designName(w.design)} · ${riverById(w.river).name}`, 'ok', 7000);
+  } catch (e) { stop = true; await spin; roller.textContent = '—'; toast('สุ่มไม่สำเร็จ: ' + errMsg(e), 'err', 6000); }
+  finally { $('#drawK').classList.remove('spin'); ADM.drawing = false; $('#bResetDraw').disabled = false; renderDraw(); }
+}
+function confirmBox(title, text, okText = 'CONFIRM') {
+  return new Promise(res => {
+    $('#cfT').textContent = title; $('#cfX').textContent = text; $('#cfYes').textContent = okText;
+    const done = v => { $('#cfYes').onclick = $('#cfNo').onclick = null; closeOv('ovConfirm'); res(v); };
+    $('#cfYes').onclick = () => done(true); $('#cfNo').onclick = () => done(false); $('#ovConfirm').classList.add('on');
+  });
+}
+async function onResetDraw() {
+  if (!(await confirmBox('RESET DRAW', 'ล้างผลการสุ่ม Lucky Krathong ทั้งหมด (ข้อมูลผู้เข้าร่วมยังอยู่ครบ) ต้องการดำเนินการต่อหรือไม่?', 'RESET DRAW'))) return;
+  try { const r = await api('resetDraw'); ADM.data.draw = r.draw; $('#roller').textContent = '—'; renderDraw(); toast('ล้างผลการสุ่มแล้ว', 'ok'); } catch (e) { toast('ล้างผลไม่สำเร็จ: ' + errMsg(e), 'err'); }
+}
+async function onExport() {
+  const m = $('#exMsg'); m.className = 'msg'; m.innerHTML = '<span class="spinner"></span> กำลังส่งออก…'; $('#bExport').disabled = true;
+  try { const r = await api('export'); m.innerHTML = `✅ ส่งออกสำเร็จ ${r.count} รายการ` + (r.url ? ` · <a href="${esc(r.url)}" target="_blank" rel="noopener" style="color:var(--gold)">เปิด Google Sheet</a>` : ''); toast('Export to Google Sheets สำเร็จ', 'ok'); }
+  catch (e) { m.className = 'msg err'; m.textContent = '❌ ' + errMsg(e); toast('Export ไม่สำเร็จ', 'err'); }
+  finally { $('#bExport').disabled = false; }
+}
+async function onSync() {
+  const m = $('#syMsg'); m.className = 'msg'; m.innerHTML = '<span class="spinner"></span> กำลังซิงก์…'; $('#bSync').disabled = true;
+  try { const r = await api('syncEmployees'); m.textContent = `✅ ซิงก์รายชื่อพนักงาน ${r.count} รหัสเรียบร้อย`; loadAdmin(); }
+  catch (e) { m.className = 'msg err'; m.textContent = '❌ ' + errMsg(e); }
+  finally { $('#bSync').disabled = false; }
+}
+async function onResetAll() {
+  if (!(await confirmBox('RESET ALL DATA', 'ลบข้อมูลผู้เข้าร่วม กระทงในแม่น้ำทั้ง 8 แห่ง และผลสุ่มทั้งหมด (ย้อนกลับไม่ได้) — ใช้สำหรับล้างข้อมูลทดสอบก่อนเริ่มงานจริง', 'ลบทั้งหมด'))) return;
+  if (!(await confirmBox('ยืนยันอีกครั้ง', 'แน่ใจหรือไม่ว่าต้องการลบข้อมูลการเข้าร่วมทั้งหมด?', 'ยืนยันลบ'))) return;
+  try { await api('resetAll'); toast('ล้างข้อมูลทั้งหมดแล้ว', 'ok'); loadAdmin(); } catch (e) { toast('ล้างข้อมูลไม่สำเร็จ: ' + errMsg(e), 'err'); }
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+function closeOv(id) { $('#' + id).classList.remove('on'); }
+function updateMusicBtn() { const on = !Sound.isMuted(); const b = $('#bMusic'); b.textContent = on ? '🎵 MUSIC ON' : '🔇 MUSIC OFF'; b.classList.toggle('on', on); }
+async function checkFreshVersion() {
+  try {
+    const t = await (await fetch(location.pathname + '?nocache=' + Date.now(), { cache: 'no-store' })).text();
+    const m = t.match(/const APP_VERSION = '([^']+)'/);
+    if (m && m[1] !== APP_VERSION) { const k = 'rotw2_reload_' + m[1]; if (!sessionStorage.getItem(k)) { sessionStorage.setItem(k, '1'); location.reload(); } }
+  } catch (e) { /* ignore */ }
+}
+function init() {
+  checkFreshVersion(); buildScene(); loadRiverImages(); go('welcome');
+  ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, () => { if (!Sound.isMuted()) Sound.unlock(); }, { capture: true, passive: true }));
+  updateMusicBtn();
+  $('#bMusic').onclick = () => { Sound.setMuted(!Sound.isMuted()); if (!Sound.isMuted()) Sound.unlock(); updateMusicBtn(); };
+  $('#bAdmin').onclick = () => { $('#loginMsg').textContent = CONFIG.API_URL ? '' : 'ยังไม่ได้ตั้งค่าระบบหลังบ้าน (Google Apps Script) — ดู README'; $('#ovLogin').classList.add('on'); setTimeout(() => $('#pin').focus(), 80); };
+  $$('[data-close]').forEach(b => b.onclick = () => closeOv(b.dataset.close));
+  $('#bNext1').onclick = () => { Sound.sfx('click'); onWelcomeNext(); };
+  $('#empId').addEventListener('keydown', e => { if (e.key === 'Enter') onWelcomeNext(); });
+  $('#kgrid').addEventListener('click', e => { const c = e.target.closest('.kcard'); if (!c) return; U.design = +c.dataset.d; Sound.sfx('sparkle'); renderKrathongs(); });
+  $('#bNext2').onclick = () => { if (!U.design) return; Sound.sfx('click'); startQuiz(); };
+  $('#qOpts').addEventListener('click', e => { const o = e.target.closest('.opt'); if (o && !o.disabled) answer(o.dataset.k, o); });
+  $('#bQNext').onclick = () => { Sound.sfx('click'); quizNext(); };
+  $('#bToRiver').onclick = () => { Sound.sfx('click'); startPublic(); renderRiverCards(); go('river'); };
+  $('#rgrid').addEventListener('click', e => { const c = e.target.closest('.rcard'); if (!c) return; U.river = c.dataset.r; Sound.sfx('sparkle'); renderRiverCards(); });
+  $('#bBack5').onclick = () => go('result');
+  $('#bNext5').onclick = () => { if (!U.river) return; Sound.sfx('click'); enterWish(); };
+  $('#wish').addEventListener('input', () => { $('#wCount').textContent = `${$('#wish').value.length}/${CONFIG.WISH_MAX}`; });
+  $('#bBack6').onclick = () => go('river');
+  $('#bWish').onclick = onMakeWish;
+  $('#bFloat').onclick = onFloat;
+  $('#bBack7').onclick = () => go('wish');
+  $('#rSwitch').addEventListener('click', e => { const b = e.target.closest('button'); if (!b || !LIVE) return; LIVE.reset(b.dataset.r); $('#lRiver').textContent = riverById(b.dataset.r).name; setSceneRiver(b.dataset.r); updateLiveRiver(); });
+  $('#bSave').onclick = saveImage;
+  $('#bViewRiver').onclick = () => { closeOv('ovSuccess'); if (STATE.page !== 'live') go('live'); else { LIVE.reset(U.river); enterLive(); } };
+  $('#bAgain').onclick = () => { closeOv('ovSuccess'); $('#empId').value = ''; $('#idMsg').textContent = ''; Object.assign(U, { id: '', hash: '', submitted: false, viewOnly: false, river: '' }); go('welcome'); };
+  $('#loginForm').addEventListener('submit', onLogin);
+  $('#aLogout').onclick = closeAdmin; $('#aRefresh').onclick = loadAdmin;
+  $('#aTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setTab(b.dataset.tab); });
+  $('#aRivers').addEventListener('click', e => { const b = e.target.closest('[data-view]'); if (b) openViewer(b.dataset.view); });
+  ['fSearch', 'fRiver', 'fDesign', 'fScore', 'fSort'].forEach(id => $('#' + id).addEventListener('input', renderTable));
+  $('#tBody').addEventListener('click', e => { const tr = e.target.closest('tr[data-key]'); if (tr) showDetail(tr.dataset.key); });
+  $('#bDraw').onclick = onDraw; $('#bResetDraw').onclick = onResetDraw;
+  $('#bExport').onclick = onExport; $('#bSync').onclick = onSync; $('#bResetAll').onclick = onResetAll;
+  window.addEventListener('resize', debounce(() => { if (LIVE) { LIVE.layout(); showMyBubble(); } if (ADM.viewer) ADM.viewer.layout(); }, 150));
+  // keep admin viewer realtime
+  setInterval(() => { if (ADM.viewer) ADM.viewer.set(PUB.rivers[ADM.viewer.riverId]); }, 1500);
+}
+init();
+
+</script>
+</body>
+</html>

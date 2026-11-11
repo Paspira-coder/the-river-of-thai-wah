@@ -7,3 +7,5 @@
 *.key
 .firebase/
 node_modules/
+v2/_tpl.html
+v2/_app.js

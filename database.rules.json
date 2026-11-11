@@ -33,6 +33,87 @@
     "draw": {
       ".read": true,
       ".write": true
+    },
+    "v2": {
+      "employees": {
+        "$h": {
+          ".read": true
+        }
+      },
+      "progress": {
+        "$h": {
+          ".read": true,
+          ".write": "root.child('v2/employees').child($h).exists() && !root.child('v2/done').child($h).exists()",
+          ".validate": "newData.isString() && (newData.val() == 'IN PROGRESS' || newData.val() == 'QUIZ COMPLETED' || newData.val() == 'PARTICIPATION COMPLETED')"
+        }
+      },
+      "submissions": {
+        "$h": {
+          ".write": "!data.exists() && root.child('v2/employees').child($h).exists()",
+          ".validate": "newData.hasChildren(['employeeId','design','answers','score','river','at','status','submissionId']) && newData.parent().parent().child('done').child($h).val() == newData.child('river').val()",
+          "employeeId": {
+            ".validate": "newData.isString() && newData.val().length >= 3 && newData.val().length <= 32"
+          },
+          "design": {
+            ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 6"
+          },
+          "answers": {
+            ".validate": "newData.isString() && newData.val().matches(/^[AB][AB][AB][AB][AB]$/)"
+          },
+          "score": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5"
+          },
+          "quizCompleted": {
+            ".validate": "newData.isBoolean()"
+          },
+          "river": {
+            ".validate": "newData.isString() && newData.val().matches(/^r[1-8]$/)"
+          },
+          "wish": {
+            ".validate": "newData.isString() && newData.val().length <= 150"
+          },
+          "at": {
+            ".validate": "newData.isNumber() && newData.val() <= now"
+          },
+          "status": {
+            ".validate": "newData.val() == 'PARTICIPATION COMPLETED'"
+          },
+          "submissionId": {
+            ".validate": "newData.isString() && newData.val().length <= 64"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "done": {
+        "$h": {
+          ".read": true,
+          ".write": "!data.exists() && root.child('v2/employees').child($h).exists()",
+          ".validate": "newData.isString() && newData.val().matches(/^r[1-8]$/) && newData.parent().parent().child('submissions').child($h).exists()"
+        }
+      },
+      "rivers": {
+        ".read": true,
+        "$r": {
+          "$h": {
+            ".write": "!data.exists() && root.child('v2/employees').child($h).exists()",
+            ".validate": "$r.matches(/^r[1-8]$/) && newData.hasChildren(['label','design','at']) && newData.parent().parent().parent().child('done').child($h).val() == $r",
+            "label": {
+              ".validate": "newData.isString() && newData.val().length <= 24"
+            },
+            "design": {
+              ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 6"
+            },
+            "at": {
+              ".validate": "newData.isNumber() && newData.val() <= now"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      }
     }
   }
 }

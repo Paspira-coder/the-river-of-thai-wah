@@ -45,6 +45,8 @@ function doPost(e) {
   let req = {};
   try { req = JSON.parse((e && e.postData && e.postData.contents) || '{}'); } catch (x) { return json({ ok: false, error: 'bad request' }); }
   try {
+    // public: record one submission into the Participants sheet (data is read from Firebase, not from the request)
+    if (req.action === 'record') return json(recordOne(req.key));
     const pinErr = checkPin(req.pin);
     if (pinErr) return json({ ok: false, error: pinErr });
     switch (req.action) {
@@ -85,7 +87,7 @@ function rtdb(method, path, body, query) {
   return txt ? JSON.parse(txt) : null;
 }
 
-function normId(s) { return String(s == null ? '' : s).toUpperCase().replace(/\s+/g, '').replace(/[^A-Z0-9_-]/g, '').slice(0, 32); }
+function normId(s) { return String(s == null ? '' : s).replace(/[^0-9]/g, '').slice(0, 12); } // ต้องตรงกับหน้าเว็บ (รหัสพนักงานเป็นตัวเลข)
 function hashId(id) {
   const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, cfg('ID_SALT') + '|' + id, Utilities.Charset.UTF_8);
   return bytes.map(function (b) { return ((b + 256) % 256).toString(16).padStart(2, '0'); }).join('');
@@ -122,6 +124,37 @@ function adminData() {
   };
 }
 
+const EXPORT_HEAD = ['Employee ID', 'Krathong Design', 'Quiz Answer 1', 'Quiz Answer 2', 'Quiz Answer 3', 'Quiz Answer 4', 'Quiz Answer 5', 'Quiz Score', 'Quiz Completion Status', 'Selected Location', 'Wish Message', 'Submission Date & Time', 'Participation Status', 'Submission ID'];
+function rowOf(r) {
+  const a = r.answers.split('');
+  return [r.employeeId, DESIGN_NAMES[r.design] || r.design, a[0] || '', a[1] || '', a[2] || '', a[3] || '', a[4] || '', r.score + '/5',
+    r.quizCompleted ? 'COMPLETED' : 'NOT COMPLETED', RIVER_NAMES[r.river] || r.river, r.wish,
+    r.at ? Utilities.formatDate(new Date(r.at), 'Asia/Bangkok', 'yyyy-MM-dd HH:mm:ss') : '', r.status, r.submissionId];
+}
+function exportSheetObj() {
+  const ss = SpreadsheetApp.getActive();
+  const sh = ss.getSheetByName(cfg('EXPORT_SHEET')) || ss.insertSheet(cfg('EXPORT_SHEET'));
+  if (sh.getLastRow() === 0) { sh.getRange(1, 1, 1, EXPORT_HEAD.length).setValues([EXPORT_HEAD]).setFontWeight('bold'); sh.setFrozenRows(1); sh.getRange('A:A').setNumberFormat('@'); }
+  return sh;
+}
+/** Upsert one participant row (by Employee ID) — called automatically after each FLOAT */
+function recordOne(key) {
+  if (!/^[a-f0-9]{64}$/.test(String(key || ''))) return { ok: false, error: 'bad key' };
+  const s = rtdb('get', cfg('ROOT') + '/submissions/' + key);
+  if (!s) return { ok: false, error: 'not found' };
+  const answers = String(s.answers || '');
+  const r = { employeeId: String(s.employeeId || ''), design: Number(s.design) || 0, answers: answers, score: scoreOf(answers), quizCompleted: answers.length === 5,
+    river: String(s.river || ''), wish: String(s.wish || ''), at: Number(s.at) || 0, status: String(s.status || ''), submissionId: String(s.submissionId || '') };
+  const lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    const sh = exportSheetObj();
+    const found = sh.getRange('A:A').createTextFinder(r.employeeId).matchEntireCell(true).findNext();
+    const row = found && found.getRow() > 1 ? found.getRow() : sh.getLastRow() + 1;
+    sh.getRange(row, 1).setNumberFormat('@');
+    sh.getRange(row, 1, 1, EXPORT_HEAD.length).setValues([rowOf(r)]);
+    return { ok: true, row: row };
+  } finally { lock.releaseLock(); }
+}
 function exportSheet() {
   const ss = SpreadsheetApp.getActive();
   const sh = ss.getSheetByName(cfg('EXPORT_SHEET')) || ss.insertSheet(cfg('EXPORT_SHEET'));

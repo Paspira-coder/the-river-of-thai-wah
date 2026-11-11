@@ -335,7 +335,7 @@ body.hasriver .scene .moon,body.hasriver .scene .skyline,body.hasriver .scene .w
     <div class="kicker">WELCOME TO THE RIVER OF THAI WAH!</div>
     <h1 class="h1">LET'S FLOAT <em>YOUR WISHES!</em></h1>
     <p class="sub">มาร่วมลอยกระทงออนไลน์ไปด้วยกัน เลือกกระทงที่ชอบ เลือกแม่น้ำที่ใช่ แล้วส่งคำอธิษฐานของคุณไปลอยกันเลย!</p>
-    <label class="field" id="idField"><span aria-hidden="true">🪪</span><input id="empId" maxlength="32" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ENTER YOUR EMPLOYEE ID" aria-label="รหัสพนักงาน" enterkeyhint="go"></label>
+    <label class="field" id="idField"><span aria-hidden="true">🪪</span><input id="empId" maxlength="12" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="ENTER YOUR EMPLOYEE ID (เช่น 20230260)" aria-label="รหัสพนักงาน" enterkeyhint="go"></label>
     <div class="msg" id="idMsg"></div>
     <button class="btn btn-gold btn-wide" id="bNext1" type="button">NEXT ›</button>
     <div class="grow"></div>
@@ -513,8 +513,8 @@ body.hasriver .scene .moon,body.hasriver .scene .skyline,body.hasriver .scene .w
     </div>
     <div class="asec" data-sec="export" hidden>
       <div class="two">
-        <div class="panel"><div class="h2" style="margin-top:0">EXPORT TO GOOGLE SHEETS</div><p class="sub" style="text-align:left;max-width:none">ส่งข้อมูลผู้เข้าร่วมทั้งหมดไปที่ชีต "Participants" (เขียนทับทั้งชุดทุกครั้ง จึงไม่เกิดข้อมูลซ้ำและอัปเดตข้อมูลใหม่เสมอ)</p><div class="row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" id="bExport" type="button">EXPORT TO GOOGLE SHEETS</button></div><div class="msg" id="exMsg" style="text-align:left"></div></div>
-        <div class="panel"><div class="h2" style="margin-top:0">EMPLOYEE LIST</div><p class="sub" style="text-align:left;max-width:none">ซิงก์รายชื่อรหัสพนักงานจากชีต "Employees" เข้าระบบตรวจสอบ (เก็บเป็นค่าแฮช ไม่เก็บรหัสตรง ๆ)</p><div class="row" style="justify-content:flex-start"><button class="btn btn-ghost btn-sm" id="bSync" type="button">SYNC EMPLOYEES</button></div><div class="msg" id="syMsg" style="text-align:left"></div></div>
+        <div class="panel"><div class="h2" style="margin-top:0">EXPORT TO GOOGLE SHEETS</div><p class="sub" style="text-align:left;max-width:none">ทุกครั้งที่พนักงานกด FLOAT ระบบบันทึกลงชีต "Participants" อัตโนมัติ — ปุ่มนี้ใช้ส่งออกข้อมูลทั้งหมดซ้ำอีกครั้ง (เขียนทับทั้งชุด ไม่เกิดข้อมูลซ้ำ)</p><div class="row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" id="bExport" type="button">EXPORT TO GOOGLE SHEETS</button></div><div class="msg" id="exMsg" style="text-align:left"></div></div>
+        <div class="panel" hidden><button id="bSync" type="button"></button><div id="syMsg"></div></div>
         <div class="panel"><div class="h2" style="margin-top:0">RESET ALL (สำหรับทดสอบ)</div><p class="sub" style="text-align:left;max-width:none">ลบข้อมูลการเข้าร่วม กระทงในแม่น้ำ และผลสุ่มทั้งหมด (รายชื่อพนักงานยังอยู่)</p><div class="row" style="justify-content:flex-start"><button class="btn btn-ghost btn-sm" id="bResetAll" type="button" style="border-color:#ff6b81;color:#ff9aa9">RESET ALL DATA</button></div></div>
       </div>
     </div>
@@ -542,7 +542,7 @@ const CONFIG = {
   ID_SALT: 'TW-LOYKRATHONG-2026',
   WISH_MAX: 150,
 };
-const APP_VERSION = 'v2-2026-11-12.1';
+const APP_VERSION = 'v2-2026-11-12.2';
 
 const DESIGNS = [
   { id: 1, name: 'CLASSIC SINGLE LAYER', desc: 'กระทงดอกไม้ชั้นเดียว เรียบง่าย ตัวแม่' },
@@ -1088,7 +1088,7 @@ function go(page) {
   setSceneRiver(['wish', 'live'].includes(page) ? U.river : '');
   if (page === 'live') enterLive();
 }
-function normId(s) { return String(s || '').toUpperCase().replace(/\s+/g, '').replace(/[^A-Z0-9_-]/g, '').slice(0, 32); }
+function normId(s) { return String(s || '').replace(/[^0-9]/g, '').slice(0, 12); } // รหัสพนักงานเป็นตัวเลข เช่น 20230260
 function maskId(id) {
   id = String(id || '');
   if (id.length <= 3) return id[0] + '••';
@@ -1104,12 +1104,10 @@ async function onWelcomeNext() {
   if (STATE.busy) return;
   const raw = $('#empId').value, id = normId(raw), msg = $('#idMsg');
   $('#empId').value = id;
-  if (id.length < 3) { shakeField('#idField'); msg.className = 'msg err'; msg.textContent = 'กรุณากรอกรหัสพนักงานให้ถูกต้อง'; return; }
+  if (id.length < 5) { shakeField('#idField'); msg.className = 'msg err'; msg.textContent = 'กรุณากรอกรหัสพนักงานเป็นตัวเลข เช่น 20230260'; return; }
   STATE.busy = true; msg.className = 'msg'; msg.innerHTML = '<span class="spinner"></span>';
   try {
     const h = await idHash(id);
-    const ok = await store.get(P('employees/' + h));
-    if (ok !== true) { shakeField('#idField'); msg.className = 'msg err'; msg.textContent = 'ไม่พบรหัสพนักงานนี้ในระบบ กรุณาตรวจสอบอีกครั้ง'; return; }
     Object.assign(U, { id, hash: h, label: maskId(id), design: 0, answers: [], score: 0, river: '', wish: '', submitted: false, viewOnly: false });
     const done = await store.get(P('done/' + h));
     if (done) {
@@ -1346,6 +1344,7 @@ async function onFloat() {
     U.river = String(done); toast('รหัสนี้ส่งกระทงเรียบร้อยแล้ว (ส่งได้ครั้งเดียว)', 'warn');
   }
   U.submitted = true; saveMine();
+  recordToSheet(h);
   Sound.sfx('float');
   $('#pending').classList.add('go');
   LIVE.meKey = h; if (LIVE.riverId !== U.river) LIVE.reset(U.river);
@@ -1360,6 +1359,19 @@ function showSuccess() {
   $('#sRiver').textContent = '🪷 ' + riverById(U.river).name;
   $('#sScore').textContent = U.answers.length === 5 || U.score ? `⭐ QUIZ ${U.score}/5` : '⭐ QUIZ COMPLETED';
   $('#ovSuccess').classList.add('on'); Sound.sfx('celebrate'); Confetti.burst(160);
+}
+
+/** บันทึกลง Google Sheet (ชีต Participants) — Apps Script อ่านข้อมูลจาก Firebase เอง ไม่เชื่อข้อมูลจากหน้าเว็บ */
+async function recordToSheet(h, tries = 3) {
+  if (!CONFIG.API_URL) return;
+  for (let i = 0; i < tries; i++) {
+    try {
+      const r = await fetch(CONFIG.API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'record', key: h }) });
+      const j = await r.json(); if (j && j.ok) return true;
+    } catch (e) { /* retry */ }
+    await sleep(1500 * (i + 1));
+  }
+  return false; // data is still safe in Firebase; Admin can EXPORT to resync the sheet
 }
 
 /* ---------- SAVE MY KRATHONG (PNG) ---------- */
@@ -1452,7 +1464,7 @@ function renderAdmin() {
   if (ADM.tab === 'overview') {
     $('#kpis').innerHTML = [
       ['TOTAL PARTICIPANTS', st.participants ?? R.length], ['TOTAL FLOATING KRATHONGS', floating], ['QUIZ COMPLETED', st.quizCompleted ?? R.length],
-      ['TOTAL QUIZ PLAYERS', st.quizPlayers ?? R.length], ['TOTAL LUCKY DRAW ENTRIES', st.drawEntries ?? R.length], ['EMPLOYEES IN LIST', st.employees ?? '—'],
+      ['TOTAL QUIZ PLAYERS', st.quizPlayers ?? R.length], ['TOTAL LUCKY DRAW ENTRIES', st.drawEntries ?? R.length],
     ].map(([l, v]) => `<div class="kpi"><div class="v">${typeof v === 'number' ? v.toLocaleString('en-US') : esc(v)}</div><div class="l">${l}</div></div>`).join('');
     const max = Math.max(1, ...RIVERS.map(r => riverCount(r.id)));
     $('#ovBars').innerHTML = RIVERS.map(r => bar(r.name, riverCount(r.id), max)).join('');

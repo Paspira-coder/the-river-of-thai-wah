@@ -26,7 +26,13 @@ function setup() {
   const p = PropertiesService.getScriptProperties();
   if (!p.getProperty('ADMIN_PIN')) p.setProperty('ADMIN_PIN', '1234');
   const ss = SpreadsheetApp.getActive();
-  if (!ss.getSheetByName(cfg('EMPLOYEE_SHEET'))) ss.insertSheet(cfg('EMPLOYEE_SHEET')).getRange('A1').setValue('Employee ID');
+  if (!ss.getSheetByName(cfg('EMPLOYEE_SHEET'))) {
+    const first = ss.getSheets()[0];
+    const sh = (first && first.getLastRow() === 0) ? first.setName(cfg('EMPLOYEE_SHEET')) : ss.insertSheet(cfg('EMPLOYEE_SHEET'));
+    sh.getRange('A1').setValue('Employee ID').setFontWeight('bold');
+    sh.getRange('A:A').setNumberFormat('@'); // keep leading zeros
+    sh.setFrozenRows(1);
+  }
   rtdb('get', cfg('ROOT') + '/employees', undefined, 'shallow=true'); // ทดสอบการเชื่อมต่อ Firebase
   return 'setup ok';
 }

@@ -14,6 +14,7 @@
   --ff:'Prompt',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;
   --gold:#ffd36b; --gold2:#f2a93b; --ink:#f4f1ff; --muted:#c9c3ee; --navy:#0d1240;
   --glass:rgba(22,24,74,.62); --line:rgba(255,214,130,.35); --ok:#3ddc84; --bad:#ff6b81;
+  --hz:56%;
   --sat:env(safe-area-inset-top,0px); --sab:env(safe-area-inset-bottom,0px);
   --sal:env(safe-area-inset-left,0px); --sar:env(safe-area-inset-right,0px);
 }
@@ -72,7 +73,7 @@ button,input,textarea,select{font-family:inherit}
 .logo{display:flex;flex-direction:column;align-items:center;line-height:1}
 .logo .l1{font:700 12px var(--ff);letter-spacing:.32em;color:var(--muted)}
 .logo .l2{font:italic 800 clamp(30px,8.5vw,52px) var(--ff);background:linear-gradient(180deg,#fff6d6,#ffd36b 45%,#f0a43a 80%,#c9751d);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #5a2f8a) drop-shadow(0 6px 18px rgba(255,190,90,.35));padding:0 .1em}
-.logo .l3{font:700 clamp(13px,3.6vw,18px) var(--ff);letter-spacing:.2em;color:#fff;margin-top:4px}
+.logo .l3{font:700 clamp(15px,4.2vw,22px) var(--ff);letter-spacing:.24em;color:#fff;margin-top:6px;text-shadow:0 0 18px rgba(160,130,255,.6)}
 .logo.sm .l2{font-size:26px}.logo.sm .l1{font-size:10px}.logo.sm .l3{font-size:11px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:0 30px;border-radius:999px;border:0;font:800 16px/1 var(--ff);letter-spacing:.06em;cursor:pointer;transition:transform .15s,box-shadow .2s,opacity .2s,filter .2s;white-space:nowrap}
 .btn:active{transform:scale(.97)}
@@ -103,7 +104,7 @@ button,input,textarea,select{font-family:inherit}
 /* krathong gallery */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%}
 @media (min-width:760px){.grid.k{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.r{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.kcard{position:relative;padding:12px 10px 14px;border-radius:22px;cursor:pointer;background:linear-gradient(180deg,rgba(60,50,140,.55),rgba(20,22,70,.75));border:1.5px solid rgba(255,255,255,.12);transition:transform .25s,border-color .25s,box-shadow .25s;text-align:center}
+.kcard{position:relative;color:var(--ink);font-family:var(--ff);padding:12px 10px 14px;border-radius:22px;cursor:pointer;background:linear-gradient(180deg,rgba(60,50,140,.55),rgba(20,22,70,.75));border:1.5px solid rgba(255,255,255,.12);transition:transform .25s,border-color .25s,box-shadow .25s;text-align:center}
 .kcard:hover{transform:translateY(-4px) rotateX(4deg)}
 .kcard .kimg{height:clamp(96px,26vw,150px);display:flex;align-items:flex-end;justify-content:center}
 .kcard .kimg img{max-width:92%;max-height:100%;object-fit:contain;filter:drop-shadow(0 10px 12px rgba(0,0,0,.35));transition:transform .3s}
@@ -159,7 +160,7 @@ button,input,textarea,select{font-family:inherit}
 .chip{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);font:600 13px var(--ff)}
 
 /* rivers */
-.rcard{position:relative;border-radius:20px;overflow:hidden;cursor:pointer;border:1.5px solid rgba(255,255,255,.14);transition:.25s;background:#151a55;aspect-ratio:4/3}
+.rcard{position:relative;color:var(--ink);font-family:var(--ff);padding:0;border-radius:20px;overflow:hidden;cursor:pointer;border:1.5px solid rgba(255,255,255,.14);transition:.25s;background:#151a55;aspect-ratio:4/3}
 .rcard .rimg{position:absolute;inset:0;background-size:cover;background-position:center}
 .rcard .rimg.ph{background:var(--phbg)}
 .rcard::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,8,35,.85))}
@@ -326,7 +327,7 @@ button,input,textarea,select{font-family:inherit}
 <main class="app" id="app">
   <!-- 1 WELCOME -->
   <section class="page" id="p-welcome"><div class="wrap">
-    <div class="logo"><div class="l1">DIGITAL LOY KRATHONG</div><div class="l2">THE RIVER OF THAI WAH</div></div>
+    <div class="logo"><div class="l1">DIGITAL LOY KRATHONG</div><div class="l3">THE RIVER OF</div><div class="l2">THAI WAH</div></div>
     <div class="hero" id="hero"></div>
     <div class="kicker">WELCOME TO THE RIVER OF THAI WAH!</div>
     <h1 class="h1">LET'S FLOAT <em>YOUR WISHES!</em></h1>
@@ -538,7 +539,7 @@ const CONFIG = {
   ID_SALT: 'TW-LOYKRATHONG-2026',
   WISH_MAX: 150,
 };
-const APP_VERSION = 'v2-2026-11-11.1';
+const APP_VERSION = 'v2-2026-11-11.2';
 
 const DESIGNS = [
   { id: 1, name: 'CLASSIC SINGLE LAYER', desc: 'กระทงดอกไม้ชั้นเดียว เรียบง่าย ตัวแม่' },
@@ -1012,8 +1013,8 @@ function skylineSVG() {
   let bridge = '<path d="M560 320 Q 640 268 720 320 Z M880 320 Q 960 268 1040 320 Z" fill="#0e0b33"/><rect x="540" y="292" width="520" height="7" rx="3" fill="#120e3c"/>';
   for (let x = 560; x <= 1040; x += 40) bridge += `<rect x="${x}" y="280" width="3" height="14" fill="#120e3c"/>`;
   const trees = [[40, 296, 34], [85, 300, 28], [1540, 296, 36], [1585, 302, 26], [600, 304, 18], [1000, 306, 16]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join('');
-  return `<svg viewBox="0 0 1600 320" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b3a96"/><stop offset="1" stop-color="#1a1450"/></linearGradient></defs>` +
-    `<g fill="#3a2d7a" opacity=".55">${trees}${far.map(pth).join('')}</g>` +
+  return `<svg viewBox="0 0 1600 320" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><defs><linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a64cf"/><stop offset=".55" stop-color="#3b2d8a"/><stop offset="1" stop-color="#1d165a"/></linearGradient></defs>` +
+    `<g fill="#5a4aa6" opacity=".55">${trees}${far.map(pth).join('')}</g>` +
     `<g fill="url(#rim)" opacity=".92">${near.map(pth).join('')}</g>${bridge}` +
     `<g fill="#ffcf6a">${[[800, 120], [690, 210], [910, 210], [500, 240], [1140, 262], [255, 270]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.4"/>`).join('')}</g></svg>`;
 }
@@ -1256,10 +1257,10 @@ class RiverRenderer {
     return el;
   }
   layout() {
+    if (this.opts.onCount) this.opts.onCount(this.items.size);
     const W = this.stage.clientWidth, H = this.stage.clientHeight; if (!W || !H) return;
     const list = Array.from(this.items.values()).sort((p, q) => ((+p.e.at || 0) - (+q.e.at || 0)) || (p.k < q.k ? -1 : 1));
     const n = list.length;
-    if (this.opts.onCount) this.opts.onCount(n);
     if (!n) return;
     const top = this.opts.top || 0, bottom = this.opts.bottom || 0, useH = Math.max(60, H - top - bottom);
     const a = .5, b = .5, kk = 1 / a - 1 / (a + b);
@@ -1375,8 +1376,8 @@ async function saveImage() {
     } else {
       const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#070b2e'); gr.addColorStop(.5, '#3a2378'); gr.addColorStop(.56, '#1b2a74'); gr.addColorStop(1, '#0c1b4d');
       g.fillStyle = gr; g.fillRect(0, 0, W, H);
-      g.fillStyle = 'rgba(255,214,110,.25)'; g.beginPath(); g.arc(820, 230, 170, 0, 6.29); g.fill();
-      g.fillStyle = '#ffd36b'; g.beginPath(); g.arc(820, 230, 110, 0, 6.29); g.fill();
+      g.fillStyle = 'rgba(255,214,110,.22)'; g.beginPath(); g.arc(860, 430, 140, 0, 6.29); g.fill();
+      g.fillStyle = '#ffd36b'; g.beginPath(); g.arc(860, 430, 88, 0, 6.29); g.fill();
       for (let i = 0; i < 70; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * .8})`; g.fillRect(Math.random() * W, Math.random() * H * .5, 2, 2); }
     }
     const glow = g.createRadialGradient(W / 2, 900, 20, W / 2, 900, 420); glow.addColorStop(0, 'rgba(255,210,120,.55)'); glow.addColorStop(1, 'rgba(255,210,120,0)');

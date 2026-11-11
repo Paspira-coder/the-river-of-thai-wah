@@ -539,7 +539,7 @@ const CONFIG = {
   ID_SALT: 'TW-LOYKRATHONG-2026',
   WISH_MAX: 150,
 };
-const APP_VERSION = 'v2-2026-11-11.2';
+const APP_VERSION = 'v2-2026-11-11.3';
 
 const DESIGNS = [
   { id: 1, name: 'CLASSIC SINGLE LAYER', desc: 'กระทงดอกไม้ชั้นเดียว เรียบง่าย ตัวแม่' },
@@ -1266,7 +1266,7 @@ class RiverRenderer {
     const a = .5, b = .5, kk = 1 / a - 1 / (a + b);
     const cap = n <= 150 ? 1 : n <= 400 ? .72 : .52;
     let S = Math.sqrt((W * useH * .5) / (n * 1.45 * .55));
-    S = clamp(Math.min(S, Math.min(W, H) * .26 * cap, 170 * cap), 22, 400);
+    S = clamp(Math.min(S, Math.min(W, window.innerHeight) * .22 * cap, 170 * cap), 22, 400);
     const yMin = top + S * a * .9 + 22, yMax = Math.max(yMin + 10, top + useH);
     list.forEach((it, i) => {
       const u = frac(.5 + i * .7548776662466927), v = frac(.5 + i * .5698402909980532);
@@ -1282,7 +1282,7 @@ class RiverRenderer {
 let LIVE = null;
 function ensureLive() {
   if (LIVE) return LIVE;
-  LIVE = new RiverRenderer($('#rStage'), { top: 6, bottom: 150, onCount: n => { $('#lCount').textContent = n.toLocaleString('en-US'); $('#lEmpty').hidden = n > 0; } });
+  LIVE = new RiverRenderer($('#rStage'), { top: 4, bottom: 118, onCount: n => { $('#lCount').textContent = n.toLocaleString('en-US'); $('#lEmpty').hidden = n > 0; } });
   return LIVE;
 }
 function enterLive() {

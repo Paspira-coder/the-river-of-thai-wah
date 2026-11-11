@@ -437,6 +437,7 @@ body.admin-mode .staff-status{display:none}
   <div class="draw-banner" id="drawBanner" hidden></div>
   <div class="admin-actions">
     <button class="btn btn-gold" id="btnLucky" type="button">★ LUCKY KRATHONG</button>
+    <button class="btn btn-white btn-sm" id="btnResetDraw" type="button">↺ RESET DRAW</button>
     <button class="btn btn-white btn-sm" id="btnReset" type="button">↻ RESET RIVER</button>
   </div>
 </section>
@@ -1706,6 +1707,19 @@ function renderWinners() {
 }
 
 /* ---------- reset ---------- */
+/** Clear only the lucky-draw results (krathongs stay on the river) */
+async function onResetDraw() {
+  if (A.drawing) return;
+  const ok = await confirmDialog({ title: '↺ RESET DRAW', text: 'ล้างผลการสุ่ม Lucky Krathong ทั้งหมด เพื่อเริ่มสุ่มใหม่\nกระทงในแม่น้ำยังอยู่ครบ', ok: 'ล้างผลการสุ่ม', danger: true });
+  if (!ok) return;
+  try {
+    const patch = { draw: null };
+    A.items.forEach((it, id) => { if (it.k.lucky || it.k.luckyRank) { patch['krathongs/' + id + '/lucky'] = false; patch['krathongs/' + id + '/luckyRank'] = 0; patch['krathongs/' + id + '/status'] = 'floating'; } });
+    await store.patch('', patch);
+    closeOv('winnersOv');
+    toast('ล้างผลการสุ่มแล้ว พร้อมสุ่มใหม่', 'ok');
+  } catch (e) { toast('ล้างผลการสุ่มไม่สำเร็จ: ' + errMsg(e), 'err', 6000); }
+}
 async function onReset() {
   if (A.drawing) return;
   const ok = await confirmDialog({
@@ -1811,7 +1825,7 @@ function showStaff() {
   go('welcome'); refreshSentState();
 }
 /* เวอร์ชันของแอป — ถ้าเบราว์เซอร์เปิดไฟล์เก่าจากแคช จะโหลดเวอร์ชันใหม่ให้อัตโนมัติ */
-const APP_VERSION = '2026-11-12.prizes10';
+const APP_VERSION = '2026-11-12.prizes10b';
 async function checkFreshVersion() {
   if (!/^https?:/.test(location.protocol)) return;
   try {
@@ -1877,6 +1891,7 @@ async function init() {
   $('#pwCancel').addEventListener('click', closePw);
   $('#btnLucky').addEventListener('click', onLucky);
   $('#btnReset').addEventListener('click', onReset);
+  $('#btnResetDraw').addEventListener('click', onResetDraw);
   $('#wClose').addEventListener('click', () => closeOv('winnersOv'));
   window.addEventListener('resize', debounce(layoutRiver, 150));
   window.addEventListener('offline', () => { if (store.mode !== 'demo') { toast('อุปกรณ์ออฟไลน์ — ตรวจสอบอินเทอร์เน็ต', 'err'); if (document.body.classList.contains('admin-mode')) setStatus('offline'); } });

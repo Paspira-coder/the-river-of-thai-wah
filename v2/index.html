@@ -271,7 +271,7 @@ body.hasriver .scene .moon,body.hasriver .scene .skyline,body.hasriver .scene .w
 .h2{margin:22px 0 10px;font:800 15px var(--ff);letter-spacing:.14em;color:#fff}
 .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
 .amr{border-radius:18px;overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
-.amr .ph{height:110px;background-size:cover;background-position:center;position:relative}
+.amr .ph{height:120px;background-color:#1b2160;background-size:cover;background-position:center;position:relative}
 .amr .bd{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
 .amr .nm{font:800 14px var(--ff)}
 .amr .meta{display:flex;justify-content:space-between;font:500 12.5px var(--ff);color:var(--muted)}
@@ -305,7 +305,7 @@ body.hasriver .scene .moon,body.hasriver .scene .skyline,body.hasriver .scene .w
 .wcard img{height:80px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(255,200,100,.6))}
 .wcard .id{font:800 17px var(--ff);margin-top:6px}
 .wcard .mt{font:500 12px/1.5 var(--ff);color:var(--muted)}
-.riverview{position:fixed;inset:0;z-index:75;display:none}
+.riverview{position:fixed;inset:0;z-index:75;display:none;background:#0b0f33}
 .riverview.on{display:block}
 @media (prefers-reduced-motion:reduce){*{animation-duration:0s !important;animation-iteration-count:1 !important}}
 </style>
@@ -542,7 +542,7 @@ const CONFIG = {
   ID_SALT: 'TW-LOYKRATHONG-2026',
   WISH_MAX: 150,
 };
-const APP_VERSION = 'v2-2026-11-11.5';
+const APP_VERSION = 'v2-2026-11-12.1';
 
 const DESIGNS = [
   { id: 1, name: 'CLASSIC SINGLE LAYER', desc: 'กระทงดอกไม้ชั้นเดียว เรียบง่าย ตัวแม่' },
@@ -1065,7 +1065,7 @@ function riverPh(id) {
   const i = RIVERS.findIndex(r => r.id === id), h = (230 + i * 41) % 360;
   return `radial-gradient(circle at 76% 24%,#ffe08a 0 7%,rgba(255,210,110,.35) 8%,transparent 20%),linear-gradient(180deg,hsl(${h},55%,14%) 0%,hsl(${(h + 30) % 360},50%,30%) 54%,hsl(${h},60%,20%) 55%,hsl(${h},65%,9%) 100%)`;
 }
-function riverBgCss(id) { return RIVER_IMG[id] ? `url("${RIVER_IMG[id]}")` : riverPh(id); }
+function riverBgCss(id) { return RIVER_IMG[id] ? `url('${RIVER_IMG[id]}')` : riverPh(id); } // single quotes: safe inside style="..."
 function setSceneRiver(id) {
   const el = $('#riverBg');
   document.body.classList.toggle('hasriver', !!(id && RIVER_IMG[id]));

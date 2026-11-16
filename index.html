@@ -513,6 +513,9 @@ const CONFIG = {
   // รายการรางวัล — ลำดับที่ 1 คือรางวัลใหญ่สุด ระบบจะสุ่มจากรางวัลเล็ก (ลำดับท้าย) ไปหารางวัลใหญ่ (ลำดับที่ 1)
   PRIZES: ['Voucher Grab 300', 'Voucher Grab 200', 'Voucher Grab 100', 'Voucher Grab 100', 'Voucher Grab 100',
            'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน'],
+  // ลำดับการสุ่ม (เลขลำดับรางวัลใน PRIZES) — สลับรางวัลให้กระจาย และเก็บ Voucher Grab 300 ไว้เป็นรางวัลสุดท้าย
+  // SFB → Grab100 → SFB → Grab100 → SFB → Grab200 → SFB → Grab100 → SFB → Grab300
+  DRAW_ORDER: [6, 3, 7, 4, 8, 2, 9, 5, 10, 1],
   IMG_MAX: 256,           // ขนาดภาพกระทง PNG สูงสุด (px)
   ORIGINAL_MAX: 1024,     // ขนาดภาพต้นฉบับสูงสุด (px)
   NAME_MAX: 40,           // ความยาวชื่อสูงสุด
@@ -1642,12 +1645,13 @@ async function onLucky() {
   if (A.result.locked) { renderWinners(); openOv('winnersOv'); return; }
   if (!A.items.size) { toast('ยังไม่มีกระทงในแม่น้ำ', 'warn'); return; }
   const won = new Set(Object.values(A.result.winners).map(w => w.id));
-  // draw order: smallest prize first → grand prize (rank 1) last
-  let queue = []; for (let r = CONFIG.WINNERS; r >= 1; r--) if (!A.result.winners[r]) queue.push(r);
+  // draw order: mixed prizes (CONFIG.DRAW_ORDER), grand prize last
+  const order = (CONFIG.DRAW_ORDER && CONFIG.DRAW_ORDER.length === CONFIG.WINNERS) ? CONFIG.DRAW_ORDER : Array.from({ length: CONFIG.WINNERS }, (_, i) => CONFIG.WINNERS - i);
+  let queue = order.filter(r => !A.result.winners[r]);
   const eligible = () => Array.from(A.items.keys()).filter(id => !won.has(id));
   const need = queue.length;
   if (eligible().length < need) {
-    const ok = await confirmDialog({ title: 'กระทงไม่ครบจำนวน', text: `มีกระทงที่ยังสุ่มได้ ${eligible().length} ใบ (เหลือ ${need} รางวัล) ต้องการสุ่มเท่าที่มี (เริ่มจากรางวัลเล็ก) และล็อกผลหรือไม่?`, ok: 'สุ่มเท่าที่มี' });
+    const ok = await confirmDialog({ title: 'กระทงไม่ครบจำนวน', text: `มีกระทงที่ยังสุ่มได้ ${eligible().length} ใบ (เหลือ ${need} รางวัล) ต้องการสุ่มเท่าที่มี (ตามลำดับรางวัลที่ตั้งไว้) และล็อกผลหรือไม่?`, ok: 'สุ่มเท่าที่มี' });
     if (!ok) return;
     queue = queue.slice(0, eligible().length);
   }
@@ -1825,7 +1829,7 @@ function showStaff() {
   go('welcome'); refreshSentState();
 }
 /* เวอร์ชันของแอป — ถ้าเบราว์เซอร์เปิดไฟล์เก่าจากแคช จะโหลดเวอร์ชันใหม่ให้อัตโนมัติ */
-const APP_VERSION = '2026-11-12.prizes10b';
+const APP_VERSION = '2026-11-16.mixed';
 async function checkFreshVersion() {
   if (!/^https?:/.test(location.protocol)) return;
   try {

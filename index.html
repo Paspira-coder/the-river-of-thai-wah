@@ -512,10 +512,10 @@ const CONFIG = {
   WINNERS: 10,            // จำนวนรางวัล (ต้องเท่ากับจำนวนรายการใน PRIZES)
   // รายการรางวัล — ลำดับที่ 1 คือรางวัลใหญ่สุด ระบบจะสุ่มจากรางวัลเล็ก (ลำดับท้าย) ไปหารางวัลใหญ่ (ลำดับที่ 1)
   PRIZES: ['Voucher Grab 300', 'Voucher Grab 200', 'Voucher Grab 100', 'Voucher Grab 100', 'Voucher Grab 100',
-           'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน'],
+           'ตั๋วหนัง VIP 2 ที่ HUNGER GAMES', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน', 'SFB Point 3 คะแนน'],
   // ลำดับการสุ่ม (เลขลำดับรางวัลใน PRIZES) — สลับรางวัลให้กระจาย และเก็บ Voucher Grab 300 ไว้เป็นรางวัลสุดท้าย
-  // SFB → Grab100 → SFB → Grab100 → SFB → Grab200 → SFB → Grab100 → SFB → Grab300
-  DRAW_ORDER: [6, 3, 7, 4, 8, 2, 9, 5, 10, 1],
+  // SFB → Grab100 → SFB → Grab100 → ตั๋วหนัง → SFB → Grab100 → SFB → Grab200 → Grab300
+  DRAW_ORDER: [7, 3, 8, 4, 6, 9, 5, 10, 2, 1],
   IMG_MAX: 256,           // ขนาดภาพกระทง PNG สูงสุด (px)
   ORIGINAL_MAX: 1024,     // ขนาดภาพต้นฉบับสูงสุด (px)
   NAME_MAX: 40,           // ความยาวชื่อสูงสุด
@@ -1829,7 +1829,7 @@ function showStaff() {
   go('welcome'); refreshSentState();
 }
 /* เวอร์ชันของแอป — ถ้าเบราว์เซอร์เปิดไฟล์เก่าจากแคช จะโหลดเวอร์ชันใหม่ให้อัตโนมัติ */
-const APP_VERSION = '2026-11-16.mixed';
+const APP_VERSION = '2026-11-18.movie';
 async function checkFreshVersion() {
   if (!/^https?:/.test(location.protocol)) return;
   try {
